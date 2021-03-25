@@ -1,11 +1,11 @@
 # Data Delivery Management
 
-[![codecov](https://codecov.io/gh/ONSdigital/blaise-deploy-questionnaire-service/branch/main/graph/badge.svg)](https://codecov.io/gh/ONSdigital/blaise-deploy-questionnaire-service)
-[![CI status](https://github.com/ONSdigital/blaise-deploy-questionnaire-service/workflows/Test%20coverage%20report/badge.svg)](https://github.com/ONSdigital/blaise-deploy-questionnaire-service/workflows/Test%20coverage%20report/badge.svg)
-<img src="https://img.shields.io/github/release/ONSdigital/blaise-deploy-questionnaire-service.svg?style=flat-square" alt="Nisra Case Mover release verison">
-[![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/ONSdigital/blaise-deploy-questionnaire-service.svg)](https://github.com/ONSdigital/blaise-deploy-questionnaire-service/pulls)
-[![Github last commit](https://img.shields.io/github/last-commit/ONSdigital/blaise-deploy-questionnaire-service.svg)](https://github.com/ONSdigital/blaise-deploy-questionnaire-service/commits)
-[![Github contributors](https://img.shields.io/github/contributors/ONSdigital/blaise-deploy-questionnaire-service.svg)](https://github.com/ONSdigital/blaise-deploy-questionnaire-service/graphs/contributors)
+[![codecov](https://codecov.io/gh/ONSdigital/blaise-data-delivery-management/branch/main/graph/badge.svg)](https://codecov.io/gh/ONSdigital/blaise-data-delivery-management)
+[![CI status](https://github.com/ONSdigital/blaise-data-delivery-management/workflows/Test%20coverage%20report/badge.svg)](https://github.com/ONSdigital/blaise-data-delivery-management/workflows/Test%20coverage%20report/badge.svg)
+<img src="https://img.shields.io/github/release/ONSdigital/blaise-data-delivery-management.svg?style=flat-square" alt="Nisra Case Mover release verison">
+[![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/ONSdigital/blaise-data-delivery-management.svg)](https://github.com/ONSdigital/blaise-data-delivery-management/pulls)
+[![Github last commit](https://img.shields.io/github/last-commit/ONSdigital/blaise-data-delivery-management.svg)](https://github.com/ONSdigital/blaise-data-delivery-management/commits)
+[![Github contributors](https://img.shields.io/github/contributors/ONSdigital/blaise-data-delivery-management.svg)](https://github.com/ONSdigital/blaise-data-delivery-management/graphs/contributors)
 
 Service for uploading Instrument/Questionnaire files to Blaise. 
 
@@ -24,7 +24,7 @@ To have the list of instruments load on the page, you'll need to have [Blaise Re
 #### Setup locally steps
 Clone the Repo
 ```shell script
-git clone https://github.com/ONSdigital/blaise-deploy-questionnaire-service.git
+git clone https://github.com/ONSdigital/blaise-data-delivery-management.git
 ```
 
 Create a new .env file and add the following variables.
