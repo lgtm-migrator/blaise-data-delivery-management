@@ -7,19 +7,16 @@
 [![Github last commit](https://img.shields.io/github/last-commit/ONSdigital/blaise-data-delivery-management.svg)](https://github.com/ONSdigital/blaise-data-delivery-management/commits)
 [![Github contributors](https://img.shields.io/github/contributors/ONSdigital/blaise-data-delivery-management.svg)](https://github.com/ONSdigital/blaise-data-delivery-management/graphs/contributors)
 
-Service for uploading Instrument/Questionnaire files to Blaise. 
+Service to see the status of data delivery files and manually trigger data delivery pipeline.
 
-This is done by uploading the Instrument/Questionnaire package to a GCP Bucket then sending a request to the [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest) to install it onto Blaise.  
-
-This project is a React application which when build is rendered by a Node.js express server. The Node.js handles the file being uploaded from the client and uploads the file a GCP bucket using the [@google-cloud/storage module](https://www.npmjs.com/package/@google-cloud/storage).
-
-![Diagram of Data Delivery Management setup](.github/Diagram.png)
+This project is a React application which when build is rendered by a Node.js express server.
 
 ### Setup
 
 #### Prerequisites
 To run Blaise Data Delivery Management locally, you'll need to have [Node installed](https://nodejs.org/en/), as well as [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable).
-To have the list of instruments load on the page, you'll need to have [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest) running locally (On a Windows machine), or you can port forward from a Kubernetes pod from the VM running in a sandbox.  
+To have the list of instruments load on the page, you'll need to have [Blaise data delivery status](https://github.com/ONSdigital/blaise-data-delivery-management) running locally (On a Windows machine), or you
+can set the url to the service running in App Engine in a sandbox.
 
 #### Setup locally steps
 Clone the Repo
@@ -29,19 +26,28 @@ git clone https://github.com/ONSdigital/blaise-data-delivery-management.git
 
 Create a new .env file and add the following variables.
 
-| Variable                      | Description                                                                     | Var Example                  |
-|-------------------------------|---------------------------------------------------------------------------------|------------------------------|
-| PORT                          | Optional variable, specify the Port for express server to run on. If not passed in this is set as 5000 by default. <br><br>It's best not to set this as the react project will try and use the variable as well and conflict. By default React project locally runs on port 3000.                                              | 5009                         |
-| BLAISE_API_URL                | Url that the [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest) is running on to send calls to. | localhost:90 |
-| PROJECT_ID                    | GCP Project ID                                                                  | ons-blaise-dev-matt55        |
+| Variable                        | Description                                                                     | Var Example                  |
+|---------------------------------|---------------------------------------------------------------------------------|------------------------------|
+| PORT                            | Optional variable, specify the Port for express server to run on. If not passed in this is set as 5000 by default. <br><br>It's best not to set this as the react project will try and use the variable as well and conflict. By default React project locally runs on port 3000.                                              | 5009                         |
+| PROJECT_ID                      | GCP Project ID                                                                  | ons-blaise-dev-matt55        |
+| DATA_DELIVERY_STATUS_API        | The URL the [Blaise data delivery status](https://github.com/ONSdigital/blaise-data-delivery-management)| BLAISE_API_URL                | Url that the [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest) is running on to send calls to. | localhost:5008 |
+| AZURE_AUTH_TOKEN                | Azure token to authenticate with the Azure rest API  | super0unique0token  |
+| ENV_NAME                        | Environment label  | Dev | 
+| GIT_BRANCH                      | Branch that data delivery pipeline will run from (this is usually inline with the environment name) | Main | 
+| DATA_DELIVERY_AZURE_PIPELINE_NO | The number for the data delivery pipeline in Azure  | 46 | 
+
 
 
 The .env file should be setup as below
 ```.env
 PORT=5001
-BLAISE_INSTRUMENT_CHECKER_URL='localhost:90'
-PROJECT_ID='ons-blaise-dev-matt55'             
-SERVER_PARK=gusty
+DATA_DELIVERY_STATUS_API=https://data-delivery-status-dot-ons-blaise-v2-dev-matt01.nw.r.appspot.com
+PROJECT_ID=ons-blaise-v2-dev
+AZURE_AUTH_TOKEN=super0unique0token
+ENV_NAME=Dev
+GIT_BRANCH=main
+DATA_DELIVERY_AZURE_PIPELINE_NO=46
+
 ```
 
 Install required modules
@@ -49,9 +55,6 @@ Install required modules
 yarn
 ```
 
-##### Local access to GCP Bucket
-
-To get the service working locally with a remote GCP Bucket, you need to [obtain a JSON service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys), this will need to a service account with create and list permissions to the specified bucket. Save the service account key as  `keys.json` and place in the root of the project. Providing the NODE_ENV is not production, then the GCP storage config (Found at `server/storage/config.js`) will attempt to use this file.  **DO NOT COMMIT THIS FILE** 
 
 ##### Run commands
 
@@ -68,22 +71,30 @@ The following run commands are available, these are all setup in the `package.js
 
 ##### Simple setup for local development
 
-Setup express project to be call Blaise Instrument Checker. By default, will be running on PORT 5000.
+Setup express project that handles the requests to the [Blaise data delivery status](https://github.com/ONSdigital/blaise-data-delivery-management).
+By default, will be running on PORT 5000.
+
 ```shell script
 yarn start-server
 ```
 
-Next to make sure the React project make requests the express server make sure the proxy option is set to the right port in the 'package.json'  
+Next to make sure the React project make requests the express server make sure the proxy option is set to the right port
+in the 'package.json'
+
 ```.json
 "proxy": "http://localhost:5000",
 ```
 
-Run the React project for local development. By default, this will be running on PORT 3000
+Run the React project for local development. By default, this will be running
+on [http://localhost:3000/](http://localhost:3000/)
+
 ```shell script
-yarn start-server
+yarn start-react
 ```
 
-To test express sever serving the React project, you need to compile the React project, then you can see it running at [http://localhost:5000/](http://localhost:5000/)
+To test express sever serving the React project, you need to compile the React project, then you can see it running
+at [http://localhost:5000/](http://localhost:5000/)
+
 ```shell script
 yarn build-react
 ```
@@ -105,13 +116,5 @@ To deploy the locally edited service to app engine in your environment, you can 
 ```.shell
 gcloud builds submit --substitutions=_PROJECT_ID=ons-blaise-v2-dev-matt56,_BLAISE_API_URL=/,_BUCKET_NAME=ons-blaise-dev-matt56-survey-bucket-44,_SERVER_PARK=gusty
 ```
-
-### Dockerfile
-You can run this service in a container, the Dockerfile is setup to:
-- Update and upgrade the Docker container image.
-- Setup Yarn and the required dependencies.
-- Run the tests, the build will fail if the tests fail.
-- Build the React project for serving by express
-- Run Yarn Start on startup
 
 Copyright (c) 2021 Crown Copyright (Government Digital Service)
