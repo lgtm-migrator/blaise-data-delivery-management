@@ -62,6 +62,10 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const [status, result] = await SendAPIRequest(req, res, url, "GET");
 
+        if (status !== 200) {
+            res.status(status).json([]);
+        }
+
         const batchList: DataDeliveryBatchDates[] = [];
         result.map((item: string) => {
             batchList.push(batch_to_data(item));
