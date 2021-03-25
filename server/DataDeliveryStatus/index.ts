@@ -2,7 +2,7 @@ import express, {Request, Response, Router} from "express";
 import axios, {AxiosRequestConfig} from "axios";
 import {EnvironmentVariables} from "../Config";
 import {batch_to_data, dd_filename_to_data} from "../Functions";
-import {AuditLog, DataDeliveryBatchDates} from "../../Interfaces";
+import {DataDeliveryBatchDates} from "../../Interfaces";
 
 type PromiseResponse = [number, any];
 

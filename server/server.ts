@@ -13,7 +13,6 @@ const server = express();
 const logger = createLogger();
 server.use(logger);
 
-import {auditLogError, auditLogInfo, getAuditLogs} from "./audit_logging";
 import DataDelivery from "./DataDelivery";
 import DataDeliveryStatus from "./DataDeliveryStatus";
 
@@ -29,19 +28,6 @@ const environmentVariables = getEnvironmentVariables();
 server.set("views", path.join(__dirname, buildFolder));
 server.engine("html", ejs.renderFile);
 server.use("/static", express.static(path.join(__dirname, `${buildFolder}/static`)));
-
-server.get("/api/audit", function (req: Request, res: Response) {
-    logger(req, res);
-    getAuditLogs()
-        .then((logs) => {
-            req.log.info("Retrieved audit logs");
-            res.status(200).json(logs);
-        })
-        .catch((error) => {
-            req.log.error(error, "Failed calling getAuditLogs");
-            res.status(500).json(error);
-        });
-});
 
 // All Endpoints calling the Blaise API
 server.use("/", DataDelivery(environmentVariables, logger));

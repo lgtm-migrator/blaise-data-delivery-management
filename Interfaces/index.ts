@@ -1,11 +1,3 @@
-interface AuditLog {
-    id: string
-    timestamp: string
-    message: string
-    severity: string
-    service: string
-}
-
 interface DataDeliveryBatchDates {
     date: Date
     dateString: string
@@ -28,4 +20,4 @@ interface DataDeliveryFileStatus {
 }
 
 
-export type {AuditLog, DataDeliveryFile, DataDeliveryBatchDates, DataDeliveryFileStatus};
+export type {DataDeliveryFile, DataDeliveryBatchDates, DataDeliveryFileStatus};
