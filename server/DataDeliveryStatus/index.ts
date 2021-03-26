@@ -2,7 +2,7 @@ import express, {Request, Response, Router} from "express";
 import axios, {AxiosRequestConfig} from "axios";
 import {EnvironmentVariables} from "../Config";
 import {batch_to_data, dd_filename_to_data} from "../Functions";
-import {DataDeliveryBatchData} from "../../Interfaces";
+import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 
 type PromiseResponse = [number, any];
 
@@ -44,15 +44,11 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const [status, result] = await SendAPIRequest(req, res, url, "GET");
 
-        const batchList: DataDeliveryBatchData[] = [];
-        result.map((item: any) => {
+        result.map((item: DataDeliveryFileStatus) => {
             Object.assign(item, dd_filename_to_data(item.dd_filename));
-
         });
 
-        // Object.assign(profile, job);
         res.status(status).json(result);
-
     });
 
     router.get("/api/batch", async function (req: ResponseQuery, res: Response) {
@@ -72,13 +68,12 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         });
 
         res.status(status).json(batchList);
-
     });
 
     router.get("/api/state/descriptions", async function (req: ResponseQuery, res: Response) {
         console.log("Called get Batch Status Descriptions");
 
-        const url = `${DATA_DELIVERY_STATUS_API}/v1//state/descriptions`;
+        const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
 
         const [status, result] = await SendAPIRequest(req, res, url, "GET");
 
@@ -87,7 +82,6 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         }
 
         res.status(status).json(result);
-
     });
 
     interface ResponseQuery extends Request {

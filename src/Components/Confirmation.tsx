@@ -3,7 +3,7 @@ import {Link, Redirect, useHistory} from "react-router-dom";
 import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
 import {sendDataDeliveryRequest} from "../utilities/http";
 
-function Confirmation() : ReactElement{
+function Confirmation(): ReactElement {
     const [redirect, setRedirect] = useState<boolean>(false);
     const [confirm, setConfirm] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -24,11 +24,12 @@ function Confirmation() : ReactElement{
         setLoading(false);
 
         if (!success) {
-            setMessage("Trigger Data Delivery failed");
+            setMessage("Failed to trigger Data Delivery");
+            setRedirect(true);
             return;
         }
 
-        setMessage("Trigger Data Delivery success");
+        setMessage("Triggered Data Delivery successfully, It may take a few minutes for the run to appear in the table below.");
         setRedirect(true);
     }
 

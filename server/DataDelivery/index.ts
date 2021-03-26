@@ -59,36 +59,11 @@ export default function DataDelivery(environmentVariables: EnvironmentVariables,
 
         const url = `https://dev.azure.com/blaise-gcp/csharp/_apis/pipelines/${DATA_DELIVERY_AZURE_PIPELINE_NO}/runs?api-version=6.0-preview.1`;
 
-        const [status, result] = await SendAPIRequest(req, res, url, "POST", data);
-
-        if (status !== 200) {
-            res.status(status).json(data);
-        }
-
-        const intervalID = setInterval(async function () {
-            const pipelineStatus = await checkPipelineStatus(req, res, result.id);
-            if (pipelineStatus === false) {
-                res.status(500).json("Failed to get status");
-            }
-            if (pipelineStatus !== "inProgress") {
-                res.status(200).json(pipelineStatus);
-                clearInterval(intervalID);
-            }
-        }, 10000);
+        const [status] = await SendAPIRequest(req, res, url, "POST", data);
 
 
+        res.status(status).json("completed");
     });
-
-    async function checkPipelineStatus(req: ResponseQuery, res: Response, pipelineId: string) {
-        const url = `https://dev.azure.com/blaise-gcp/csharp/_apis/pipelines/46/runs/${pipelineId}?api-version=6.0-preview.1`;
-
-        const [status, result] = await SendAPIRequest(req, res, url, "GET");
-        if (status !== 200) {
-            return false;
-        }
-        return result.state;
-
-    }
 
     return router;
 }

@@ -54,7 +54,12 @@ function App(): ReactElement {
                             </Route>
                             <Route path="/">
 
-                                {status !== "" && <ONSPanel status="success">{status}</ONSPanel>}
+                                {
+                                    status !== "" &&
+                                    <ONSPanel status={status.includes("success") ? "success" : "error"}>
+                                        <p>{status}</p>
+                                    </ONSPanel>
+                                }
 
                                 <ul className="list list--bare list--inline u-mt-m">
                                     <li className="list__item">
