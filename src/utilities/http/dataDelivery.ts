@@ -1,5 +1,4 @@
 import {requestPromiseJson} from "./requestPromise";
-type getBatchListResponse = [boolean, any[]];
 
 function sendDataDeliveryRequest(): Promise<boolean> {
     console.log("Sending request to trigger data delivery");

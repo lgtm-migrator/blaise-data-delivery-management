@@ -7,7 +7,6 @@ interface DataDeliveryBatchData {
 interface DataDeliveryFile {
     prefix: string
     instrumentName: string
-    date: Date
 }
 
 interface DataDeliveryFileStatus {

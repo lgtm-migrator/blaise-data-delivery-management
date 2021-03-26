@@ -1,7 +1,9 @@
 import {requestPromiseJson} from "./requestPromise";
-import {DataDeliveryBatchData} from "../../../Interfaces";
-type getBatchListResponse = [boolean, any[]];
+import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../../Interfaces";
+
+type getBatchInfoListResponse = [boolean, DataDeliveryFileStatus[]];
 type getAllBatchesResponse = [boolean, DataDeliveryBatchData[]];
+type getStatusDescriptionsResponse = [boolean, any[]];
 
 function getAllBatches(): Promise<getAllBatchesResponse> {
     let list: DataDeliveryBatchData[] = [];
@@ -29,12 +31,12 @@ function getAllBatches(): Promise<getAllBatchesResponse> {
     });
 }
 
-function getBatchInfo(batchName: string): Promise<getBatchListResponse> {
-    let list: any[] = [];
+function getBatchInfo(batchName: string): Promise<getBatchInfoListResponse> {
+    let list: DataDeliveryFileStatus[] = [];
     console.log("Call to getBatchInfo");
         const url = `/api/batch/${batchName}`;
 
-    return new Promise((resolve: (object: getBatchListResponse) => void) => {
+    return new Promise((resolve: (object: getBatchInfoListResponse) => void) => {
         requestPromiseJson("GET", url).then(([status, data]) => {
             console.log(`Response from get Batch Info Status ${status}, data ${data}`);
             if (status === 200) {
@@ -55,12 +57,12 @@ function getBatchInfo(batchName: string): Promise<getBatchListResponse> {
     });
 }
 
-function getBatchStatusDescriptions(): Promise<getBatchListResponse> {
+function getBatchStatusDescriptions(): Promise<getStatusDescriptionsResponse> {
     let list: any[] = [];
     console.log("Call to getBatchStatusDescriptions");
     const url = "/api/state/descriptions";
 
-    return new Promise((resolve: (object: getBatchListResponse) => void) => {
+    return new Promise((resolve: (object: getStatusDescriptionsResponse) => void) => {
         requestPromiseJson("GET", url).then(([status, data]) => {
             console.log(`Response from get Batch Status Descriptions ${status}, data ${data}`);
             if (status === 200) {

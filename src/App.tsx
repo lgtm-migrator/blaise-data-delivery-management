@@ -13,7 +13,7 @@ const divStyle = {
 };
 
 interface Location {
-    state: any
+    state: { status: string }
 }
 
 function App(): ReactElement {

@@ -2,12 +2,12 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {ErrorBoundary} from "./ErrorHandling/ErrorBoundary";
 import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
 import {getBatchInfo} from "../utilities/http";
-import {DataDeliveryFileStatus} from "../../Interfaces";
+import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import dateFormatter from "dayjs";
 import {Link, useLocation} from "react-router-dom";
 
 interface Location {
-    state: any
+    state: { batch: DataDeliveryBatchData }
 }
 
 interface Props {
