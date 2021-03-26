@@ -1,12 +1,14 @@
 import {requestPromiseJson} from "./requestPromise";
+import {DataDeliveryBatchData} from "../../../Interfaces";
 type getBatchListResponse = [boolean, any[]];
+type getAllBatchesResponse = [boolean, DataDeliveryBatchData[]];
 
-function getAllBatches(): Promise<getBatchListResponse> {
-    let list: any[] = [];
+function getAllBatches(): Promise<getAllBatchesResponse> {
+    let list: DataDeliveryBatchData[] = [];
     console.log("Call to getAllBatches");
     const url = "/api/batch";
 
-    return new Promise((resolve: (object: getBatchListResponse) => void) => {
+    return new Promise((resolve: (object: getAllBatchesResponse) => void) => {
         requestPromiseJson("GET", url).then(([status, data]) => {
             console.log(`Response from get All Batches: Status ${status}, data ${data}`);
             if (status === 200) {

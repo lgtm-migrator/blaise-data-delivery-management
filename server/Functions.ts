@@ -54,6 +54,13 @@ function generateDateFromString(dateString: string, timeString: string): Date {
 
 
 export function dd_filename_to_data(dd_filename: string): DataDeliveryFile {
+    if (!dd_filename.match(/^[a-zA-Z]{2}_.{8,}_[0-9]{8}_[0-9]{4,}/)) {
+        return {
+            prefix: "prefix",
+            instrumentName: dd_filename,
+            date: new Date(0)
+        };
+    }
     const [prefix, instrumentName, originalDateString, timeString] = dd_filename.split("_");
     const date = generateDateFromString(originalDateString, timeString);
 

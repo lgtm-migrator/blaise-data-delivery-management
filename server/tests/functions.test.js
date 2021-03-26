@@ -43,6 +43,12 @@ describe("DD file to data test", () => {
         expect(Functions.dd_filename_to_data("dd_OPN2102T_12032021_023052.zip").instrumentName
         ).toBe("OPN2102T");
     });
+
+    it("should return 'OPN2102T' for instrumentName when only instrument name is returned for the filename", () => {
+        expect(Functions.dd_filename_to_data("OPN2102T").instrumentName
+        ).toBe("OPN2102T");
+    });
+
 });
 
 describe("Batch name to data", () => {
