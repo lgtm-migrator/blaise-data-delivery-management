@@ -16,8 +16,6 @@ server.use(logger);
 import DataDelivery from "./DataDelivery";
 import DataDeliveryStatus from "./DataDeliveryStatus";
 
-//axios.defaults.timeout = 10000;
-
 // where ever the react built package is
 const buildFolder = "../../build";
 
@@ -29,8 +27,10 @@ server.set("views", path.join(__dirname, buildFolder));
 server.engine("html", ejs.renderFile);
 server.use("/static", express.static(path.join(__dirname, `${buildFolder}/static`)));
 
-// All Endpoints calling the Blaise API
+// Endpoint to trigger data delivery Azure pipeline
 server.use("/", DataDelivery(environmentVariables, logger));
+
+// All Endpoints calling the Data Delivery Status API
 server.use("/", DataDeliveryStatus(environmentVariables, logger));
 
 // Health Check endpoint

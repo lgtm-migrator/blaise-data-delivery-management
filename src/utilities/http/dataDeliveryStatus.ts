@@ -12,7 +12,7 @@ function getAllBatches(): Promise<getAllBatchesResponse> {
 
     return new Promise((resolve: (object: getAllBatchesResponse) => void) => {
         requestPromiseJson("GET", url).then(([status, data]) => {
-            console.log(`Response from get All Batches: Status ${status}, data ${data}`);
+            console.log(`Response from get All Batches: Status ${status}, data list length ${data.length}`);
             if (status === 200) {
                 if (!Array.isArray(data)) {
                     resolve([false, list]);
@@ -38,7 +38,7 @@ function getBatchInfo(batchName: string): Promise<getBatchInfoListResponse> {
 
     return new Promise((resolve: (object: getBatchInfoListResponse) => void) => {
         requestPromiseJson("GET", url).then(([status, data]) => {
-            console.log(`Response from get Batch Info Status ${status}, data ${data}`);
+            console.log(`Response from get Batch Info Status ${status}, data list length ${data.length}`);
             if (status === 200) {
                 if (!Array.isArray(data)) {
                     resolve([false, list]);
