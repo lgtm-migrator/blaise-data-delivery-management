@@ -10,7 +10,11 @@ interface Location {
     state: any
 }
 
-function BatchStatusList(): ReactElement {
+interface Props {
+    statusDescriptionList: any[]
+}
+
+function BatchStatusList({statusDescriptionList}: Props): ReactElement {
     const [batchList, setBatchList] = useState<DataDeliveryFileStatus[]>([]);
     const [listError, setListError] = useState<string>("Loading ...");
 
@@ -48,7 +52,7 @@ function BatchStatusList(): ReactElement {
                 <Link to={"/"}>Previous</Link>
             </p>
             <h1 className="u-mt-m">Delivery
-                trigger <em>{dateFormatter(new Date(batch.date)).format("DD/MM/YYYY HH:mm")}</em> status</h1>
+                trigger <em>{batch.survey} {dateFormatter(new Date(batch.date)).format("DD/MM/YYYY HH:mm")}</em></h1>
             <ONSButton onClick={() => callGetBatchList()} label="Reload" primary={true} small={true}/>
             <ErrorBoundary errorMessageText={"Failed to load audit logs."}>
                 {
@@ -58,7 +62,7 @@ function BatchStatusList(): ReactElement {
                             <thead className="table__head u-mt-m">
                             <tr className="table__row">
                                 <th scope="col" className="table__header ">
-                                    <span>Questionnaire name</span>
+                                    <span>Questionnaire</span>
                                 </th>
                                 <th scope="col" className="table__header ">
                                     <span>Status</span>
@@ -76,6 +80,7 @@ function BatchStatusList(): ReactElement {
                                                    updated_at,
                                                    instrumentName
                                                }: DataDeliveryFileStatus) => {
+
                                     return (
                                         <tr className="table__row" key={dd_filename.toString()}
                                             data-testid={"batch-table-row"}>
@@ -84,7 +89,12 @@ function BatchStatusList(): ReactElement {
                                                 {instrumentName}
                                             </td>
                                             <td className="table__cell ">
-                                                {state}
+
+                                                {
+                                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                    // @ts-ignore
+                                                    statusDescriptionList[`${state}`]
+                                                }
                                             </td>
                                             <td className="table__cell ">
                                                 {dateFormatter(new Date(updated_at)).format("DD/MM/YYYY HH:mm:ss")}

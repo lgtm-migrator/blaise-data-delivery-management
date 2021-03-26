@@ -53,4 +53,27 @@ function getBatchInfo(batchName: string): Promise<getBatchListResponse> {
     });
 }
 
-export {getAllBatches, getBatchInfo};
+function getBatchStatusDescriptions(): Promise<getBatchListResponse> {
+    let list: any[] = [];
+    console.log("Call to getBatchStatusDescriptions");
+    const url = "/api/state/descriptions";
+
+    return new Promise((resolve: (object: getBatchListResponse) => void) => {
+        requestPromiseJson("GET", url).then(([status, data]) => {
+            console.log(`Response from get Batch Status Descriptions ${status}, data ${data}`);
+            if (status === 200) {
+                list = data;
+                resolve([true, list]);
+            } else if (status === 404) {
+                resolve([true, list]);
+            } else {
+                resolve([false, list]);
+            }
+        }).catch((error: Error) => {
+            console.error(`Response from get Batch Status Descriptions: Error ${error}`);
+            resolve([false, list]);
+        });
+    });
+}
+
+export {getAllBatches, getBatchInfo, getBatchStatusDescriptions};

@@ -75,6 +75,21 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
     });
 
+    router.get("/api/state/descriptions", async function (req: ResponseQuery, res: Response) {
+        console.log("Called get Batch Status Descriptions");
+
+        const url = `${DATA_DELIVERY_STATUS_API}/v1//state/descriptions`;
+
+        const [status, result] = await SendAPIRequest(req, res, url, "GET");
+
+        if (status !== 200) {
+            res.status(status).json([]);
+        }
+
+        res.status(status).json(result);
+
+    });
+
     interface ResponseQuery extends Request {
         query: { filename: string }
     }

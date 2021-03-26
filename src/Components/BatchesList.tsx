@@ -32,7 +32,7 @@ function BatchesList(): ReactElement {
         }
 
         batchList.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
-        setBatchList(batchList);
+        setBatchList(batchList.slice(0, 10));
     }
 
 
