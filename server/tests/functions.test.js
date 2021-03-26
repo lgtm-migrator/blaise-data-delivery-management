@@ -49,3 +49,35 @@ describe("DD file to data test", () => {
         ).toBe("OPN2102T");
     });
 });
+
+describe("Batch name to data", () => {
+    it("should return the survey 'OPN' for batch OPN_26032021_083000", () => {
+        expect(Functions.batch_to_data("OPN_26032021_083000").survey
+        ).toBe("OPN");
+    });
+
+    it("should return the date string '26/03/2021' for batch OPN_26032021_083000", () => {
+        expect(Functions.batch_to_data("OPN_26032021_083000").dateString
+        ).toBe("26/03/2021");
+    });
+
+    it("should return correct date object for batch OPN_26032021_083000", () => {
+        expect(Functions.batch_to_data("OPN_26032021_083000").date
+        ).toStrictEqual(new Date("2021-03-26T08:30:00.000Z"));
+    });
+
+    it("should return original batch name for batch OPN_26032021_083000", () => {
+        expect(Functions.batch_to_data("OPN_26032021_083000").name
+        ).toBe("OPN_26032021_083000");
+    });
+
+    it("should return the a blank survey for batch 26032021_083000", () => {
+        expect(Functions.batch_to_data("26032021_083000").survey
+        ).toBe("");
+    });
+
+    it("should return original batch name for batch that doesn't match expected standard ", () => {
+        expect(Functions.batch_to_data("batch-name-RANDOMM-").name
+        ).toBe("batch-name-RANDOMM-");
+    });
+});

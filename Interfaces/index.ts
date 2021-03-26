@@ -1,4 +1,5 @@
-interface DataDeliveryBatchDates {
+interface DataDeliveryBatchData {
+    survey?: string
     date: Date
     dateString: string
     name: string
@@ -20,4 +21,4 @@ interface DataDeliveryFileStatus {
 }
 
 
-export type {DataDeliveryFile, DataDeliveryBatchDates, DataDeliveryFileStatus};
+export type {DataDeliveryFile, DataDeliveryBatchData, DataDeliveryFileStatus};

@@ -2,7 +2,7 @@ import express, {Request, Response, Router} from "express";
 import axios, {AxiosRequestConfig} from "axios";
 import {EnvironmentVariables} from "../Config";
 import {batch_to_data, dd_filename_to_data} from "../Functions";
-import {DataDeliveryBatchDates} from "../../Interfaces";
+import {DataDeliveryBatchData} from "../../Interfaces";
 
 type PromiseResponse = [number, any];
 
@@ -44,7 +44,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const [status, result] = await SendAPIRequest(req, res, url, "GET");
 
-        const batchList: DataDeliveryBatchDates[] = [];
+        const batchList: DataDeliveryBatchData[] = [];
         result.map((item: any) => {
             Object.assign(item, dd_filename_to_data(item.dd_filename));
 
@@ -66,7 +66,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
             res.status(status).json([]);
         }
 
-        const batchList: DataDeliveryBatchDates[] = [];
+        const batchList: DataDeliveryBatchData[] = [];
         result.map((item: string) => {
             batchList.push(batch_to_data(item));
         });

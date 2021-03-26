@@ -1,4 +1,4 @@
-import {DataDeliveryBatchDates, DataDeliveryFile} from "../Interfaces";
+import {DataDeliveryBatchData, DataDeliveryFile} from "../Interfaces";
 
 function isNumber(n: any) {
     return !isNaN(parseFloat(n)) && isFinite(n);
@@ -70,18 +70,27 @@ export function dd_filename_to_data(dd_filename: string): DataDeliveryFile {
     };
 }
 
-export function batch_to_data(batchName: string): DataDeliveryBatchDates {
-    if (!batchName.match(/^[0-9]{8}_[0-9]{6}$/)) {
+export function batch_to_data(batchName: string): DataDeliveryBatchData {
+    let [survey, originalDateString, timeString] = ["", "", ""];
+
+    if (batchName.match(/^[0-9]{8}_[0-9]{6}$/)) {
+        // example 26032021_080842
+        [originalDateString, timeString] = batchName.split("_");
+    } else if (batchName.match(/^[a-zA-Z]{3}_[0-9]{8}_[0-9]{6}$/)) {
+        // example OPN_26032021_080842
+        [survey, originalDateString, timeString] = batchName.split("_");
+    } else {
         return {
             date: new Date(0),
-            dateString: "dateString",
+            dateString: "",
             name: batchName
         };
     }
-    const [originalDateString, timeString] = batchName.split("_");
+
     const [date, dateString] = generateDateFromString(originalDateString, timeString);
 
     return {
+        survey: survey,
         date: date,
         dateString: dateString,
         name: batchName
