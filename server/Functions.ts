@@ -35,9 +35,7 @@ function field_period_to_text(instrument_name: string): string {
 
 }
 
-type dates = [date: Date, dateString: string]
-
-function generateDateFromString(dateString: string, timeString: string): dates {
+function generateDateFromString(dateString: string, timeString: string): Date {
     const day = dateString.substr(0, 2);
     const month = dateString.substr(2, 2);
     const year = dateString.substr(4, 4);
@@ -51,22 +49,18 @@ function generateDateFromString(dateString: string, timeString: string): dates {
         [hours, minutes] = time;
     }
 
-    return [
-        new Date(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`),
-        `${day}/${month}/${year}`
-    ];
+    return new Date(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
 }
 
 
 export function dd_filename_to_data(dd_filename: string): DataDeliveryFile {
     const [prefix, instrumentName, originalDateString, timeString] = dd_filename.split("_");
-    const [date, dateString] = generateDateFromString(originalDateString, timeString);
+    const date = generateDateFromString(originalDateString, timeString);
 
     return {
         prefix: prefix,
         instrumentName: instrumentName,
-        date: date,
-        dateString: dateString
+        date: date
     };
 }
 
@@ -82,17 +76,15 @@ export function batch_to_data(batchName: string): DataDeliveryBatchData {
     } else {
         return {
             date: new Date(0),
-            dateString: "",
             name: batchName
         };
     }
 
-    const [date, dateString] = generateDateFromString(originalDateString, timeString);
+    const date = generateDateFromString(originalDateString, timeString);
 
     return {
         survey: survey,
         date: date,
-        dateString: dateString,
         name: batchName
     };
 }

@@ -1,7 +1,6 @@
 interface DataDeliveryBatchData {
     survey?: string
     date: Date
-    dateString: string
     name: string
 }
 
@@ -9,7 +8,6 @@ interface DataDeliveryFile {
     prefix: string
     instrumentName: string
     date: Date
-    dateString: string
 }
 
 interface DataDeliveryFileStatus {

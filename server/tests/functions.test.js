@@ -34,11 +34,6 @@ describe("DD file to data test", () => {
         ).toBe("dd");
     });
 
-    it("should return the date string '12/03/2021' for file dd_OPN2102T_12032021_023052.zip", () => {
-        expect(Functions.dd_filename_to_data("dd_OPN2102T_12032021_023052.zip").dateString
-        ).toBe("12/03/2021");
-    });
-
     it("should return correct date object for file dd_OPN2102T_12032021_023052.zip", () => {
         expect(Functions.dd_filename_to_data("dd_OPN2102T_12032021_023052.zip").date
         ).toStrictEqual(new Date("2021-03-12T02:30:52.000Z"));
@@ -54,11 +49,6 @@ describe("Batch name to data", () => {
     it("should return the survey 'OPN' for batch OPN_26032021_083000", () => {
         expect(Functions.batch_to_data("OPN_26032021_083000").survey
         ).toBe("OPN");
-    });
-
-    it("should return the date string '26/03/2021' for batch OPN_26032021_083000", () => {
-        expect(Functions.batch_to_data("OPN_26032021_083000").dateString
-        ).toBe("26/03/2021");
     });
 
     it("should return correct date object for batch OPN_26032021_083000", () => {
