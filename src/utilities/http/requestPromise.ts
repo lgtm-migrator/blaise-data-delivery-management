@@ -21,7 +21,7 @@ function requestPromiseJson(method: string, url: string, body: any = null): Prom
     });
 }
 
-type PromiseResponseList = [boolean, any];
+type PromiseResponseList = [boolean, []];
 
 function requestPromiseJsonList(method: string, url: string, body: any = null): Promise<PromiseResponseList> {
     return new Promise((resolve: (object: PromiseResponseList) => void, reject: (error: string) => void) => {

@@ -10,8 +10,8 @@ import {Router} from "react-router";
 describe("React homepage", () => {
 
     const batches = [
-        {survey: "OPN", date: "2021-03-24T11:30:00.000Z", dateString: "24/03/2021", name: "24032021_113000"},
-        {survey: "OPN", date: "2021-03-12T02:30:00.000Z", dateString: "12/03/2021", name: "12032021_023000"}
+        {survey: "OPN", date: "2021-03-24T11:30:00.000Z", dateString: "24/03/2021", name: "OPN_24032021_113000"},
+        {survey: "OPN", date: "2021-03-12T02:30:00.000Z", dateString: "12/03/2021", name: "OPN_12032021_023000"}
     ];
 
     beforeAll(() => {

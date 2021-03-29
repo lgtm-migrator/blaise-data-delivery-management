@@ -3,9 +3,9 @@ import {mock_server_request_function, mock_server_request_Return_JSON} from "../
 import {getAllBatches, getBatchInfo, getBatchStatusDescriptions} from "./dataDeliveryStatus";
 
 const BatchList = [
-    {survey: "OPN", date: "2021-03-26T11:29:54.000Z", dateString: "26/03/2021", name: "OPN_26032021_112954"},
-    {survey: "OPN", date: "2021-03-25T14:58:38.000Z", dateString: "25/03/2021", name: "OPN_25032021_145838"},
-    {survey: "OPN", date: "2021-03-24T16:50:33.000Z", dateString: "24/03/2021", name: "OPN_24032021_165033"}
+    {survey: "OPN", date: "2021-03-26T11:29:54.000Z", name: "OPN_26032021_112954"},
+    {survey: "OPN", date: "2021-03-25T14:58:38.000Z", name: "OPN_25032021_145838"},
+    {survey: "OPN", date: "2021-03-24T16:50:33.000Z", name: "OPN_24032021_165033"}
 ];
 
 
@@ -146,7 +146,7 @@ describe("Function getBatchInfo(filename: string) ", () => {
     });
 });
 
-const StatusDescritions = {
+const StatusDescriptions = {
     "inactive": "The data delivery instrument has no active survey days, we will not generate a data delivery file, we should never alert",
     "started": "The data delivery process has found an instrument with active survey days",
     "generated": "The data delivery process has generated the required files",
@@ -155,13 +155,13 @@ const StatusDescritions = {
     "in_nifi_bucket": "The data delivery files are in the NiFi bucket",
     "nifi_notified": "NiFi has been notified that we have files to ingest",
     "in_arc": "NiFi has copied the files to ARC (on prem) and sent a receipt",
-    "errored": "An error has occured processing the file (error receipt from NiFi for example)",
+    "errored": "An error has occurred processing the file (error receipt from NiFi for example)",
 };
 
 describe("Function getBatchStatusDescriptions(filename: string) ", () => {
 
     it("It should return true with data if the list is returned successfully", async () => {
-        mock_server_request_Return_JSON(200, StatusDescritions);
+        mock_server_request_Return_JSON(200, StatusDescriptions);
         const [success, batchStatusDescriptions] = await getBatchStatusDescriptions();
         expect(success).toBeTruthy();
         expect(batchStatusDescriptions).toEqual(batchStatusDescriptions);
