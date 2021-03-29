@@ -56,7 +56,7 @@ function App(): ReactElement {
 
                                 {
                                     status !== "" &&
-                                    <ONSPanel status={status.includes("success") ? "success" : "error"}>
+                                    <ONSPanel status={status?.includes("success") ? "success" : "error"}>
                                         <p>{status}</p>
                                     </ONSPanel>
                                 }
