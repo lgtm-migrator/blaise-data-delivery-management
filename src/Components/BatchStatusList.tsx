@@ -82,7 +82,7 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
                                                }: DataDeliveryFileStatus) => {
 
                                     return (
-                                        <tr className="table__row" key={dd_filename.toString()}
+                                        <tr className="table__row" key={dd_filename}
                                             data-testid={"batch-table-row"}>
 
                                             <td className="table__cell ">

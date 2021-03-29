@@ -191,7 +191,8 @@ Object {
                 >
                   <a
                     aria-label="View run status 24/03/2021 11:30:00"
-                    href="/batch/24032021_113000"
+                    data-testid="view-OPN_24032021_113000"
+                    href="/batch/OPN_24032021_113000"
                   >
                     View run status
                   </a>
@@ -216,7 +217,8 @@ Object {
                 >
                   <a
                     aria-label="View run status 12/03/2021 02:30:00"
-                    href="/batch/12032021_023000"
+                    data-testid="view-OPN_12032021_023000"
+                    href="/batch/OPN_12032021_023000"
                   >
                     View run status
                   </a>
@@ -444,7 +446,8 @@ Object {
               >
                 <a
                   aria-label="View run status 24/03/2021 11:30:00"
-                  href="/batch/24032021_113000"
+                  data-testid="view-OPN_24032021_113000"
+                  href="/batch/OPN_24032021_113000"
                 >
                   View run status
                 </a>
@@ -469,7 +472,8 @@ Object {
               >
                 <a
                   aria-label="View run status 12/03/2021 02:30:00"
-                  href="/batch/12032021_023000"
+                  data-testid="view-OPN_12032021_023000"
+                  href="/batch/OPN_12032021_023000"
                 >
                   View run status
                 </a>

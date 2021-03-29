@@ -78,10 +78,12 @@ function BatchesList(): ReactElement {
                                             <td className="table__cell ">
                                                 <Link
                                                     aria-label={`View run status ${dateFormatter(batch.date).format("DD/MM/YYYY HH:mm:ss")}`}
+                                                    data-testid={`view-${batch.name}`}
                                                     to={{
-                                                    pathname: `/batch/${batch.name}`,
-                                                    state: {batch: batch}
-                                                }}>View run status</Link>
+                                                        pathname: `/batch/${batch.name}`,
+                                                        state: {batch: batch}
+                                                    }
+                                                    }>View run status</Link>
                                             </td>
                                         </tr>
                                     );
