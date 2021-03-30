@@ -44,6 +44,11 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const [status, result] = await SendAPIRequest(req, res, url, "GET");
 
+        if (status !== 200) {
+            res.status(status).json([]);
+            return;
+        }
+
         result.map((item: DataDeliveryFileStatus) => {
             Object.assign(item, dd_filename_to_data(item.dd_filename));
         });
@@ -60,6 +65,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         if (status !== 200) {
             res.status(status).json([]);
+            return;
         }
 
         const batchList: DataDeliveryBatchData[] = [];
@@ -79,6 +85,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         if (status !== 200) {
             res.status(status).json([]);
+            return;
         }
 
         res.status(status).json(result);
