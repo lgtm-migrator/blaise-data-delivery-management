@@ -52,7 +52,7 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
                 <Link to={"/"}>Previous</Link>
             </p>
             <h1 className="u-mt-m">Delivery
-                trigger <em>{batch.survey} {dateFormatter(new Date(batch.date)).format("DD/MM/YYYY HH:mm")}</em></h1>
+                trigger <em>{batch.survey} {dateFormatter(batch.date).format("DD/MM/YYYY HH:mm")}</em></h1>
             <ONSButton onClick={() => callGetBatchList()} label="Reload" primary={true} small={true}/>
             <ErrorBoundary errorMessageText={"Failed to load audit logs."}>
                 {
@@ -89,7 +89,6 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
                                                 {instrumentName}
                                             </td>
                                             <td className="table__cell ">
-
                                                 {
                                                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                     // @ts-ignore
@@ -97,7 +96,7 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
                                                 }
                                             </td>
                                             <td className="table__cell ">
-                                                {dateFormatter(new Date(updated_at)).format("DD/MM/YYYY HH:mm:ss")}
+                                                {dateFormatter(updated_at).format("DD/MM/YYYY HH:mm:ss")}
                                             </td>
                                         </tr>
                                     );
