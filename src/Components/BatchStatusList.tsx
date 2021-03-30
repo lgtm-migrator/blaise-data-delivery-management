@@ -52,7 +52,7 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
                 <Link to={"/"}>Previous</Link>
             </p>
             <h1 className="u-mt-m">Delivery
-                trigger <em>{batch.survey} {dateFormatter(batch.date).format("DD/MM/YYYY HH:mm")}</em></h1>
+                trigger <em>{batch.survey} {batch.dateString}</em></h1>
             <ONSButton onClick={() => callGetBatchList()} label="Reload" primary={true} small={true}/>
             <ErrorBoundary errorMessageText={"Failed to load audit logs."}>
                 {

@@ -5,11 +5,11 @@ export const BatchListFromAPI = [
 ];
 
 export const BatchListServerProcessed = [
-    {survey: "OPN", date: "2021-03-26T11:29:54.000Z", name: "OPN_26032021_112954"},
-    {survey: "OPN", date: "2021-03-25T14:58:38.000Z", name: "OPN_25032021_145838"},
-    {survey: "OPN", date: "2021-03-24T16:50:33.000Z", name: "OPN_24032021_165033"}
+    {survey: "OPN", date: "2021-03-26T11:29:54.000Z", dateString: "26/03/2021 11:29:54", name: "OPN_26032021_112954"},
+    {survey: "OPN", date: "2021-03-25T14:58:38.000Z", dateString: "25/03/2021 14:58:38", name: "OPN_25032021_145838"},
+    {survey: "OPN", date: "2021-03-24T16:50:33.000Z", dateString: "24/03/2021 16:50:33", name: "OPN_24032021_165033"}
 ];
-// "batch":"OPN_26032021_121540","dd_filename":"OPN2004A","state":"inactive","updated_at":"2021-03-26T12:21:10+00:00"
+
 export const BatchInfoListFromAPI = [
     {
         batch: "OPN_26032021_112954",

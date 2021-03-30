@@ -68,16 +68,11 @@ function BatchesList(): ReactElement {
                                                 {batch.survey}
                                             </td>
                                             <td className="table__cell ">
-                                                {
-                                                    batch.date.toString() === new Date(0).toISOString() ?
-                                                        batch.name
-                                                        :
-                                                        dateFormatter(batch.date).format("DD/MM/YYYY HH:mm:ss")
-                                                }
+                                                {batch.dateString}
                                             </td>
                                             <td className="table__cell ">
                                                 <Link
-                                                    aria-label={`View run status ${dateFormatter(batch.date).format("DD/MM/YYYY HH:mm:ss")}`}
+                                                    aria-label={`View run status ${batch.dateString}`}
                                                     data-testid={`view-${batch.name}`}
                                                     to={{
                                                         pathname: `/batch/${batch.name}`,

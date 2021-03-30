@@ -1,6 +1,7 @@
 interface DataDeliveryBatchData {
     survey?: string
     date: Date
+    dateString: string
     name: string
 }
 

@@ -1,6 +1,9 @@
 import {DataDeliveryBatchData, DataDeliveryFile} from "../Interfaces";
 
-function generateDateFromString(dateString: string, timeString: string): Date {
+
+type DateTypes = [Date, string]
+
+function generateDateFromString(dateString: string, timeString: string): DateTypes {
     const day = dateString.substr(0, 2);
     const month = dateString.substr(2, 2);
     const year = dateString.substr(4, 4);
@@ -14,7 +17,10 @@ function generateDateFromString(dateString: string, timeString: string): Date {
         [hours, minutes] = time;
     }
 
-    return new Date(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
+    return [
+        new Date(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`),
+        `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
+    ];
 }
 
 
@@ -45,16 +51,18 @@ export function batch_to_data(batchName: string): DataDeliveryBatchData {
         [survey, originalDateString, timeString] = batchName.split("_");
     } else {
         return {
-            date: new Date(0),
+            date: new Date(),
+            dateString: batchName,
             name: batchName
         };
     }
 
-    const date = generateDateFromString(originalDateString, timeString);
+    const [date, dateString] = generateDateFromString(originalDateString, timeString);
 
     return {
         survey: survey,
         date: date,
+        dateString: dateString,
         name: batchName
     };
 }

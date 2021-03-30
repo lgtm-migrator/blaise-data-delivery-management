@@ -25,14 +25,14 @@ describe("Batch name to data", () => {
         ).toBe("OPN");
     });
 
-    it("should return correct date object for batch OPN_30032021_141600", () => {
-        expect(Functions.batch_to_data("OPN_30032021_141600").date
-        ).toStrictEqual(new Date("2021-03-30T13:16:00.000Z"));
+    it("should return correct datetime string for batch OPN_30032021_141600", () => {
+        expect(Functions.batch_to_data("OPN_30032021_141600").dateString
+        ).toStrictEqual("30/03/2021 14:16:00");
     });
 
-    it("should return correct date object for batch OPN_26032021_083000", () => {
-        expect(Functions.batch_to_data("OPN_26032021_083000").date
-        ).toStrictEqual(new Date("2021-03-26T08:30:00.000Z"));
+    it("should return correct datetime string for batch OPN_26032021_083000", () => {
+        expect(Functions.batch_to_data("OPN_26032021_083000").dateString
+        ).toStrictEqual("26/03/2021 08:30:00");
     });
 
     it("should return original batch name for batch OPN_26032021_083000", () => {
