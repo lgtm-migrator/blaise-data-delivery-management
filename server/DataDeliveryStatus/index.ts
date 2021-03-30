@@ -3,38 +3,14 @@ import axios, {AxiosRequestConfig} from "axios";
 import {EnvironmentVariables} from "../Config";
 import {batch_to_data, dd_filename_to_data} from "../Functions";
 import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
+import {SendAPIRequest} from "../SendRequest";
+import * as PinoHttp from "pino-http";
 
 type PromiseResponse = [number, any];
 
-export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: any): Router {
+export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
     const {DATA_DELIVERY_STATUS_API}: EnvironmentVariables = environmentVariables;
     const router = express.Router();
-
-    // Generic function to make requests to the API
-    function SendAPIRequest(req: Request, res: Response, url: string, method: AxiosRequestConfig["method"], data: any = null) {
-        logger(req, res);
-
-        return new Promise((resolve: (object: PromiseResponse) => void) => {
-            axios({
-                url: url,
-                method: method,
-                data: data,
-                validateStatus: function (status) {
-                    return status >= 200;
-                },
-            }).then((response) => {
-                if (response.status >= 200 && response.status < 300) {
-                    req.log.info(`Status ${response.status} from ${method} ${url}`);
-                } else {
-                    req.log.warn(`Status ${response.status} from ${method} ${url}`);
-                }
-                resolve([response.status, response.data]);
-            }).catch((error) => {
-                req.log.error(error, `${method} ${url} endpoint failed`);
-                resolve([500, null]);
-            });
-        });
-    }
 
     router.get("/api/batch/:batchName", async function (req: ResponseQuery, res: Response) {
         const {batchName} = req.params;
@@ -42,7 +18,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch/${batchName}`;
 
-        const [status, result] = await SendAPIRequest(req, res, url, "GET");
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
 
         if (status !== 200) {
             res.status(status).json([]);
@@ -61,7 +37,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch`;
 
-        const [status, result] = await SendAPIRequest(req, res, url, "GET");
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
 
         if (status !== 200) {
             res.status(status).json([]);
@@ -81,7 +57,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
 
-        const [status, result] = await SendAPIRequest(req, res, url, "GET");
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
 
         if (status !== 200) {
             res.status(status).json([]);

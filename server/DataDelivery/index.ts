@@ -1,10 +1,9 @@
 import express, {Request, Response, Router} from "express";
-import axios, {AxiosRequestConfig} from "axios";
 import {EnvironmentVariables} from "../Config";
+import * as PinoHttp from "pino-http";
+import {SendAPIRequest} from "../SendRequest";
 
-type PromiseResponse = [number, any];
-
-export default function DataDelivery(environmentVariables: EnvironmentVariables, logger: any): Router {
+export default function DataDelivery(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
     const {PROJECT_ID, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO}: EnvironmentVariables = environmentVariables;
     const router = express.Router();
 
@@ -14,33 +13,6 @@ export default function DataDelivery(environmentVariables: EnvironmentVariables,
         "Content-Type": "application/json",
         Authorization: `Basic ${base64token}`
     };
-
-    // Generic function to make requests to the API
-    function SendAPIRequest(req: Request, res: Response, url: string, method: AxiosRequestConfig["method"], data: any = null) {
-        logger(req, res);
-
-        return new Promise((resolve: (object: PromiseResponse) => void) => {
-            axios({
-                url: url,
-                method: method,
-                data: data,
-                headers,
-                validateStatus: function (status) {
-                    return status >= 200;
-                },
-            }).then((response) => {
-                if (response.status >= 200 && response.status < 300) {
-                    req.log.info(`Status ${response.status} from ${method} ${url}`);
-                } else {
-                    req.log.warn(`Status ${response.status} from ${method} ${url}`);
-                }
-                resolve([response.status, response.data]);
-            }).catch((error) => {
-                req.log.error(error, `${method} ${url} endpoint failed`);
-                resolve([500, null]);
-            });
-        });
-    }
 
     interface ResponseQuery extends Request {
         query: { filename: string }
@@ -59,8 +31,7 @@ export default function DataDelivery(environmentVariables: EnvironmentVariables,
 
         const url = `https://dev.azure.com/blaise-gcp/csharp/_apis/pipelines/${DATA_DELIVERY_AZURE_PIPELINE_NO}/runs?api-version=6.0-preview.1`;
 
-        const [status] = await SendAPIRequest(req, res, url, "POST", data);
-
+        const [status] = await SendAPIRequest(logger, req, res, url, "POST", data, headers);
 
         res.status(status).json("completed");
     });
