@@ -8,7 +8,7 @@ import {
     BatchInfoListServerProcessed,
     BatchListFromAPI,
     BatchListServerProcessed, StatusDescriptions
-} from "./mock_objects";
+} from "./mockObjects";
 
 // Mock Express Server
 const request = supertest(app);

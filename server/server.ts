@@ -13,7 +13,7 @@ const server = express();
 const logger = createLogger();
 server.use(logger);
 
-import DataDelivery from "./DataDelivery";
+import DataDeliveryTrigger from "./DataDeliveryTrigger";
 import DataDeliveryStatus from "./DataDeliveryStatus";
 
 // where ever the react built package is
@@ -28,7 +28,7 @@ server.engine("html", ejs.renderFile);
 server.use("/static", express.static(path.join(__dirname, `${buildFolder}/static`)));
 
 // Endpoint to trigger data delivery Azure pipeline
-server.use("/", DataDelivery(environmentVariables, logger));
+server.use("/", DataDeliveryTrigger(environmentVariables, logger));
 
 // All Endpoints calling the Data Delivery Status API
 server.use("/", DataDeliveryStatus(environmentVariables, logger));

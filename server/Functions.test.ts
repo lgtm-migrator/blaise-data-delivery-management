@@ -1,4 +1,4 @@
-import Functions from "../Functions";
+import Functions from "./Functions";
 
 
 describe("DD file to data test", () => {
