@@ -86,7 +86,7 @@ function Confirmation(): ReactElement {
                     label={"Cancel"}
                     primary={false}
                     id="cancel-overwrite"
-                    onClick={() => confirmOption()}/>
+                    onClick={() => history.push("/")}/>
                 }
             </form>
         </>

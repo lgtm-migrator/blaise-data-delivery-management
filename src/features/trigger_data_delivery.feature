@@ -20,6 +20,11 @@ Feature: Trigger data delivery
     When I confirm that I do NOT want to proceed
     Then I am returned to the landing page
 
+  Scenario: Cancel Trigger data delivery confirmation
+    Given I have been presented with a confirmation to trigger data delivery
+    When I click the cancel button
+    Then I am returned to the landing page
+
   Scenario: Don't select an option
     Given I have been presented with a confirmation to trigger data delivery
     When I select confirm without choosing an option

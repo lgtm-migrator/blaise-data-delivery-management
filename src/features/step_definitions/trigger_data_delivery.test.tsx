@@ -198,6 +198,41 @@ defineFeature(feature, test => {
         });
     });
 
+    test("Cancel Trigger data delivery confirmation", ({given, when, then, and}) => {
+        given("I have been presented with a confirmation to trigger data delivery", async () => {
+            mock_fetch_requests(mock_server_responses_trigger_fails);
+            const history = createMemoryHistory();
+            render(
+                <Router history={history}>
+                    <App/>
+                </Router>
+            );
+            await act(async () => {
+                await flushPromises();
+                fireEvent.click(screen.getByText(/Trigger Data Delivery/));
+                await flushPromises();
+            });
+            await waitFor((() => {
+                expect(screen.getByText(/Are you sure you want to trigger Data Delivery?/i)).toBeDefined();
+            }));
+        });
+
+        when("I click the cancel button", async () => {
+            await act(async () => {
+                await flushPromises();
+                fireEvent.click(screen.getByText(/Cancel/));
+                await flushPromises();
+                await flushPromises();
+            });
+        });
+
+        then("I am returned to the landing page", async () => {
+            await waitFor((() => {
+                expect(screen.getByText(/Data delivery runs/i)).toBeDefined();
+            }));
+        });
+    });
+
     test("Don't select an option", ({given, when, then}) => {
         given("I have been presented with a confirmation to trigger data delivery", async () => {
             mock_fetch_requests(mock_server_responses_trigger_fails);
