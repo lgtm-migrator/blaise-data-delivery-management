@@ -1,10 +1,11 @@
 import React, {ReactElement, useEffect, useState} from "react";
 import {ErrorBoundary} from "./ErrorHandling/ErrorBoundary";
-import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
+import {ONSButton} from "blaise-design-system-react-components";
 import {getBatchInfo} from "../utilities/http";
 import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import dateFormatter from "dayjs";
 import {Link, useLocation} from "react-router-dom";
+import {getDDFileStatusStyle} from "../utilities/BatchStatusColour";
 
 interface Location {
     state: { batch: DataDeliveryBatchData }
@@ -89,11 +90,13 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
                                                 {instrumentName}
                                             </td>
                                             <td className="table__cell ">
+                                                <span className={`status status--${getDDFileStatusStyle(state)}`}>
                                                 {
                                                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                     // @ts-ignore
                                                     statusDescriptionList[`${state}`]
                                                 }
+                                                </span>
                                             </td>
                                             <td className="table__cell ">
                                                 {dateFormatter(updated_at).format("DD/MM/YYYY HH:mm:ss")}
