@@ -46,6 +46,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const batchList: DataDeliveryBatchData[] = [];
         result.map((item: string) => {
+            if (item === "") return;
             batchList.push(batch_to_data(item));
         });
 
