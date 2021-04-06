@@ -43,6 +43,7 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
             setListError("No data delivery files for this run found.");
         }
 
+        batchList.sort((a: DataDeliveryFileStatus, b: DataDeliveryFileStatus) => new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf());
         setBatchList(batchList);
     }
 
