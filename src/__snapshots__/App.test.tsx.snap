@@ -148,6 +148,14 @@ Object {
                   scope="col"
                 >
                   <span>
+                    Survey
+                  </span>
+                </th>
+                <th
+                  class="table__header "
+                  scope="col"
+                >
+                  <span>
                     Data delivery run time
                   </span>
                 </th>
@@ -171,13 +179,20 @@ Object {
                 <td
                   class="table__cell "
                 >
+                  OPN
+                </td>
+                <td
+                  class="table__cell "
+                >
                   24/03/2021 11:30:00
                 </td>
                 <td
                   class="table__cell "
                 >
                   <a
-                    href="/batch/24032021_113000"
+                    aria-label="View run status 24/03/2021 11:30:00"
+                    data-testid="view-OPN_24032021_113000"
+                    href="/batch/OPN_24032021_113000"
                   >
                     View run status
                   </a>
@@ -190,13 +205,20 @@ Object {
                 <td
                   class="table__cell "
                 >
+                  OPN
+                </td>
+                <td
+                  class="table__cell "
+                >
                   12/03/2021 02:30:00
                 </td>
                 <td
                   class="table__cell "
                 >
                   <a
-                    href="/batch/12032021_023000"
+                    aria-label="View run status 12/03/2021 02:30:00"
+                    data-testid="view-OPN_12032021_023000"
+                    href="/batch/OPN_12032021_023000"
                   >
                     View run status
                   </a>
@@ -381,6 +403,14 @@ Object {
                 scope="col"
               >
                 <span>
+                  Survey
+                </span>
+              </th>
+              <th
+                class="table__header "
+                scope="col"
+              >
+                <span>
                   Data delivery run time
                 </span>
               </th>
@@ -404,13 +434,20 @@ Object {
               <td
                 class="table__cell "
               >
+                OPN
+              </td>
+              <td
+                class="table__cell "
+              >
                 24/03/2021 11:30:00
               </td>
               <td
                 class="table__cell "
               >
                 <a
-                  href="/batch/24032021_113000"
+                  aria-label="View run status 24/03/2021 11:30:00"
+                  data-testid="view-OPN_24032021_113000"
+                  href="/batch/OPN_24032021_113000"
                 >
                   View run status
                 </a>
@@ -423,13 +460,20 @@ Object {
               <td
                 class="table__cell "
               >
+                OPN
+              </td>
+              <td
+                class="table__cell "
+              >
                 12/03/2021 02:30:00
               </td>
               <td
                 class="table__cell "
               >
                 <a
-                  href="/batch/12032021_023000"
+                  aria-label="View run status 12/03/2021 02:30:00"
+                  data-testid="view-OPN_12032021_023000"
+                  href="/batch/OPN_12032021_023000"
                 >
                   View run status
                 </a>

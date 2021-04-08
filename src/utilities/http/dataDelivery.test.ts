@@ -34,13 +34,24 @@ describe("Function sendDataDeliveryRequest() ", () => {
         expect(success).toBeFalsy();
     });
 
-    it("It should return false with an empty list if request JSON is invalid", async () => {
+    it("It should return false if request JSON is invalid", async () => {
+        mock_server_request_function(() =>
+            Promise.resolve({
+                status: 200,
+                json: () => Promise.reject("Failed"),
+            })
+        );
+        const success = await sendDataDeliveryRequest();
+        expect(success).toBeFalsy();
+    });
+
+    it("It should return false if request JSON is invalid", async () => {
         mock_server_request_Return_JSON(200, {name: "NAME"});
         const success = await sendDataDeliveryRequest();
         expect(success).toBeFalsy();
     });
 
-    it("It should return false with an empty list if request call fails", async () => {
+    it("It should return false request call fails", async () => {
         mock_server_request_function(() =>
             Promise.resolve(() => {
                 throw "error";

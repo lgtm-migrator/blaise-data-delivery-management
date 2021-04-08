@@ -2,12 +2,12 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {ErrorBoundary} from "./ErrorHandling/ErrorBoundary";
 import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
 import {getAllBatches} from "../utilities/http";
-import {DataDeliveryBatchDates} from "../../Interfaces";
+import {DataDeliveryBatchData} from "../../Interfaces";
 import dateFormatter from "dayjs";
 import {Link} from "react-router-dom";
 
 function BatchesList(): ReactElement {
-    const [batchList, setBatchList] = useState<DataDeliveryBatchDates[]>([]);
+    const [batchList, setBatchList] = useState<DataDeliveryBatchData[]>([]);
     const [listError, setListError] = useState<string>("Loading ...");
 
     useEffect(() => {
@@ -31,8 +31,8 @@ function BatchesList(): ReactElement {
             setListError("No data delivery runs found.");
         }
 
-        batchList.sort((a: DataDeliveryBatchDates, b: DataDeliveryBatchDates) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
-        setBatchList(batchList);
+        batchList.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+        setBatchList(batchList.slice(0, 10));
     }
 
 
@@ -48,6 +48,9 @@ function BatchesList(): ReactElement {
                             <thead className="table__head u-mt-m">
                             <tr className="table__row">
                                 <th scope="col" className="table__header ">
+                                    <span>Survey</span>
+                                </th>
+                                <th scope="col" className="table__header ">
                                     <span>Data delivery run time</span>
                                 </th>
                                 <th scope="col" className="table__header ">
@@ -57,23 +60,25 @@ function BatchesList(): ReactElement {
                             </thead>
                             <tbody className="table__body">
                             {
-                                batchList.map((batch: DataDeliveryBatchDates) => {
+                                batchList.map((batch: DataDeliveryBatchData) => {
                                     return (
                                         <tr className="table__row" key={batch.name}
                                             data-testid={"batches-table-row"}>
                                             <td className="table__cell ">
-                                                {
-                                                    batch.date.toString() === new Date(0).toISOString() ?
-                                                        batch.name
-                                                        :
-                                                        dateFormatter(batch.date).format("DD/MM/YYYY HH:mm:ss")
-                                                }
+                                                {batch.survey}
                                             </td>
                                             <td className="table__cell ">
-                                                <Link to={{
-                                                    pathname: `/batch/${batch.name}`,
-                                                    state: {batch: batch}
-                                                }}>View run status</Link>
+                                                {batch.dateString}
+                                            </td>
+                                            <td className="table__cell ">
+                                                <Link
+                                                    aria-label={`View run status ${batch.dateString}`}
+                                                    data-testid={`view-${batch.name}`}
+                                                    to={{
+                                                        pathname: `/batch/${batch.name}`,
+                                                        state: {batch: batch}
+                                                    }
+                                                    }>View run status</Link>
                                             </td>
                                         </tr>
                                     );

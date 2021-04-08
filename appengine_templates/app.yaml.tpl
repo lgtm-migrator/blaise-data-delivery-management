@@ -1,13 +1,16 @@
-service: dqs-ui
-runtime: nodejs12
+service: ddm-ui
+runtime: nodejs14
 
 vpc_access_connector:
   name: projects/_PROJECT_ID/locations/europe-west2/connectors/vpcconnect
 
 env_variables:
-  BLAISE_API_URL: _BLAISE_API_URL
   PROJECT_ID: _PROJECT_ID
   DATA_DELIVERY_STATUS_API: _DATA_DELIVERY_STATUS_API
+  AZURE_AUTH_TOKEN: _AZURE_AUTH_TOKEN
+  ENV_NAME: _ENV_NAME
+  GIT_BRANCH: _GIT_BRANCH
+  DATA_DELIVERY_AZURE_PIPELINE_NO: _DATA_DELIVERY_AZURE_PIPELINE_NO
 
 basic_scaling:
   idle_timeout: 10m

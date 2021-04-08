@@ -3,32 +3,38 @@ import {Link, Redirect, useHistory} from "react-router-dom";
 import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
 import {sendDataDeliveryRequest} from "../utilities/http";
 
-function Confirmation() : ReactElement{
+function Confirmation(): ReactElement {
+    const [formError, setFormError] = useState<string>("");
     const [redirect, setRedirect] = useState<boolean>(false);
-    const [confirm, setConfirm] = useState<boolean>(false);
+    const [confirm, setConfirm] = useState<boolean | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
     const history = useHistory();
 
     async function confirmOption() {
-        setLoading(true);
-        setMessage("");
-
+        if (confirm === null) {
+            setFormError("Select an answer");
+            return;
+        }
         if (!confirm) {
             history.push("/");
             return;
         }
+
+        setLoading(true);
+        setMessage("");
 
         const success = await sendDataDeliveryRequest();
 
         setLoading(false);
 
         if (!success) {
-            setMessage("Trigger Data Delivery failed");
+            setMessage("Failed to trigger Data Delivery.");
+            setRedirect(true);
             return;
         }
 
-        setMessage("Trigger Data Delivery success");
+        setMessage("Triggered Data Delivery successfully, It may take a few minutes for the run to appear in the table below.");
         setRedirect(true);
     }
 
@@ -55,13 +61,46 @@ function Confirmation() : ReactElement{
                 </ONSPanel>
             }
 
-            <form onSubmit={() => confirmOption()} className="u-mt-m">
-                <fieldset className="fieldset">
-                    <legend className="fieldset__legend">
-                    </legend>
-                    <div className="radios__items">
+            <form className="u-mt-m">
+                {
+                    formError === "" ?
+                        confirmDeleteRadios(setConfirm)
+                        :
+                        <ONSPanel status={"error"}>
+                            <p className="panel__error">
+                                <strong>{formError}</strong>
+                            </p>
+                            {confirmDeleteRadios(setConfirm)}
+                        </ONSPanel>
+                }
 
-                        <p className="radios__item">
+                <br/>
+                <ONSButton
+                    label={"Continue"}
+                    primary={true}
+                    loading={loading}
+                    id="confirm-continue"
+                    onClick={() => confirmOption()}/>
+                {!loading &&
+                <ONSButton
+                    label={"Cancel"}
+                    primary={false}
+                    id="cancel-overwrite"
+                    onClick={() => history.push("/")}/>
+                }
+            </form>
+        </>
+    );
+}
+
+function confirmDeleteRadios(setConfirm: (value: (((prevState: (boolean | null)) => (boolean | null)) | boolean | null)) => void) {
+    return (
+        <fieldset className="fieldset">
+            <legend className="fieldset__legend">
+            </legend>
+            <div className="radios__items">
+
+                <p className="radios__item">
                         <span className="radio">
                         <input
                             type="radio"
@@ -76,8 +115,8 @@ function Confirmation() : ReactElement{
                             Yes, trigger Data Delivery
                         </label>
                     </span></p>
-                        <br/>
-                        <p className="radios__item">
+                <br/>
+                <p className="radios__item">
                         <span className="radio">
                         <input
                             type="radio"
@@ -92,26 +131,9 @@ function Confirmation() : ReactElement{
                             No, do not trigger Data Delivery
                         </label>
                     </span>
-                        </p>
-                    </div>
-                </fieldset>
-
-                <br/>
-                <ONSButton
-                    label={"Continue"}
-                    primary={true}
-                    loading={loading}
-                    id="confirm-continue"
-                    onClick={() => confirmOption()}/>
-                {!loading &&
-                <ONSButton
-                    label={"Cancel"}
-                    primary={false}
-                    id="cancel-overwrite"
-                    onClick={() => confirmOption()}/>
-                }
-            </form>
-        </>
+                </p>
+            </div>
+        </fieldset>
     );
 }
 
