@@ -16,6 +16,7 @@ interface DataDeliveryFileStatus {
     state: string
     updated_at: string
     instrumentName: string
+    error_info: string
 }
 
 
