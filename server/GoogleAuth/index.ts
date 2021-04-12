@@ -1,12 +1,18 @@
 import {GoogleAuth} from "google-auth-library";
 
-export default async function getAuthToken(DDS_CLIENT_ID: string): Promise<string> {
-    try {
+export default class GoogleAuthProvider {
+    IdToken: string;
+
+    constructor(DDS_CLIENT_ID: string) {
+        let IdToken = "";
         const auth = new GoogleAuth();
-        const {idTokenProvider} = await auth.getIdTokenClient(DDS_CLIENT_ID);
-        return await idTokenProvider.fetchIdToken(DDS_CLIENT_ID);
-    } catch {
-        console.log("Could not get Google Auth credentials");
-        return "";
+
+        auth.getIdTokenClient(DDS_CLIENT_ID).then(({idTokenProvider}) => {
+            idTokenProvider.fetchIdToken(DDS_CLIENT_ID).then((token) => IdToken = token)
+        }).catch((error) => {
+                console.error(error, "Could not get Google Auth credentials");
+            }
+        );
+        this.IdToken = IdToken;
     }
 }
