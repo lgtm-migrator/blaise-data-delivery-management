@@ -1,6 +1,6 @@
 import express, {Request, Response, Router} from "express";
 import {EnvironmentVariables} from "../Config";
-import {batch_to_data, dd_filename_to_data} from "../Functions";
+import {batch_to_data, dd_filename_to_data} from "../../src/Functions";
 import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import {SendAPIRequest} from "../SendRequest";
 import * as PinoHttp from "pino-http";
