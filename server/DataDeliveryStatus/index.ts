@@ -19,8 +19,9 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         console.log("Called get batch status");
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch/${batchName}`;
-        const token = await googleAuthProvider.getAuthToken();
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET",null,{Authorization: `Bearer ${token}`});
+
+        const authHeader = await googleAuthProvider.getAuthHeader();
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", authHeader);
         // console.log(result);
 
         if (status !== 200) {
@@ -80,8 +81,8 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
 
-        const token = await googleAuthProvider.getAuthToken();
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${token}`});
+        const authHeader = await googleAuthProvider.getAuthHeader();
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", authHeader);
 
         if (status !== 200) {
             res.status(status).json([]);

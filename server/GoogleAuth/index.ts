@@ -5,13 +5,13 @@ export default class GoogleAuthProvider {
     private auth: GoogleAuth;
 
     constructor(DDS_CLIENT_ID: string) {
-        const auth = new GoogleAuth();
-        this.auth = auth;
+        this.auth = new GoogleAuth();
         this.DDS_CLIENT_ID = DDS_CLIENT_ID;
     }
 
-    async getAuthToken(): Promise<string> {
+    async getAuthHeader(): Promise<{ Authorization: string }> {
         const {idTokenProvider} = await this.auth.getIdTokenClient(this.DDS_CLIENT_ID);
-        return await idTokenProvider.fetchIdToken(this.DDS_CLIENT_ID);
+        const token = await idTokenProvider.fetchIdToken(this.DDS_CLIENT_ID);
+        return {Authorization: `Bearer ${token}`};
     }
 }
