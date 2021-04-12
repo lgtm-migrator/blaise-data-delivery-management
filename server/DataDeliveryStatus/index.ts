@@ -6,10 +6,13 @@ import {SendAPIRequest} from "../SendRequest";
 import * as PinoHttp from "pino-http";
 
 import {GoogleAuth} from "google-auth-library";
+import getAuthToken from "../GoogleAuth";
 
 export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
     const {DATA_DELIVERY_STATUS_API, DDS_CLIENT_ID}: EnvironmentVariables = environmentVariables;
     const router = express.Router();
+
+    const IdAuthToken = getAuthToken(DDS_CLIENT_ID);
 
     router.get("/api/batch/:batchName", async function (req: ResponseQuery, res: Response) {
         const {batchName} = req.params;
@@ -17,11 +20,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch/${batchName}`;
 
-        const auth = new GoogleAuth();
-        const {idTokenProvider} = await auth.getIdTokenClient(DDS_CLIENT_ID);
-        const IdToken = await idTokenProvider.fetchIdToken(DDS_CLIENT_ID);
-        console.log(`ID Token: ${IdToken}`);
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET",null,{Authorization: `Bearer ${IdToken}`});
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET",null,{Authorization: `Bearer ${IdAuthToken}`});
 
         if (status !== 200) {
             res.status(status).json([]);
@@ -80,9 +79,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
 
-        const auth = new GoogleAuth();
-        const {idTokenProvider} = await auth.getIdTokenClient(DDS_CLIENT_ID);
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${idTokenProvider}`});
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${IdAuthToken}`});
 
         if (status !== 200) {
             res.status(status).json([]);
