@@ -8,7 +8,7 @@ describe("Config setup", () => {
 
 
     it("should return the correct environment variables", () => {
-        const {PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO} = getEnvironmentVariables();
+        const {PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID} = getEnvironmentVariables();
 
         expect(PROJECT_ID).toBe("a-project-name");
         expect(DATA_DELIVERY_STATUS_API).toBe("mock-api");
@@ -16,6 +16,7 @@ describe("Config setup", () => {
         expect(ENV_NAME).toBe("mock-env");
         expect(GIT_BRANCH).toBe("mock-branch");
         expect(DATA_DELIVERY_AZURE_PIPELINE_NO).toBe("mock-pipeline-no");
+        expect(DDS_CLIENT_ID).toBe("mock-client-id");
     });
 
     it("should return variables with default string if variables are not defined", () => {
@@ -27,7 +28,7 @@ describe("Config setup", () => {
             DATA_DELIVERY_AZURE_PIPELINE_NO: undefined,
         });
 
-        const {PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO} = getEnvironmentVariables();
+        const {PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID} = getEnvironmentVariables();
 
 
         expect(PROJECT_ID).toBe("ENV_VAR_NOT_SET");
@@ -36,5 +37,6 @@ describe("Config setup", () => {
         expect(ENV_NAME).toBe("ENV_VAR_NOT_SET");
         expect(GIT_BRANCH).toBe("ENV_VAR_NOT_SET");
         expect(DATA_DELIVERY_AZURE_PIPELINE_NO).toBe("ENV_VAR_NOT_SET");
+        expect(DDS_CLIENT_ID).toBe("ENV_VAR_NOT_SET");
     });
 });

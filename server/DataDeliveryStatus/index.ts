@@ -6,10 +6,12 @@ import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import {SendAPIRequest} from "../SendRequest";
 import * as PinoHttp from "pino-http";
 
+import {GoogleAuth} from "google-auth-library";
+
 type PromiseResponse = [number, any];
 
 export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
-    const {DATA_DELIVERY_STATUS_API}: EnvironmentVariables = environmentVariables;
+    const {DATA_DELIVERY_STATUS_API, DDS_CLIENT_ID}: EnvironmentVariables = environmentVariables;
     const router = express.Router();
 
     router.get("/api/batch/:batchName", async function (req: ResponseQuery, res: Response) {
@@ -36,21 +38,41 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         console.log("Called get data delivery status");
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch`;
+        
+        const targetAudience = `${DDS_CLIENT_ID}.apps.googleusercontent.com`;
 
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
 
-        if (status !== 200) {
-            res.status(status).json([]);
+        const auth = new GoogleAuth();
+
+        async function request() {
+            console.info(`request IAP ${url} with target audience ${targetAudience}`);
+            const client = await auth.getIdTokenClient(targetAudience);
+            const response = await client.request({url});
+            console.info(response.data);
+            res.status(response.status).json(response.data);
             return;
         }
 
-        const batchList: DataDeliveryBatchData[] = [];
-        result.map((item: string) => {
-            if (item === "") return;
-            batchList.push(batch_to_data(item));
+        request().catch(err => {
+            console.error(err.message);
+            res.status(500).json([]);
+            return;
         });
 
-        res.status(status).json(batchList);
+        // const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
+        //
+        // if (status !== 200) {
+        //     res.status(status).json([]);
+        //     return;
+        // }
+        //
+        // const batchList: DataDeliveryBatchData[] = [];
+        // result.map((item: string) => {
+        //     if (item === "") return;
+        //     batchList.push(batch_to_data(item));
+        // });
+        //
+        // res.status(status).json(batchList);
     });
 
     router.get("/api/state/descriptions", async function (req: ResponseQuery, res: Response) {
