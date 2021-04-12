@@ -31,7 +31,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         res.status(status).json(result);
     });
 
-    interface SecureResponce {
+    interface SecureResponse {
         status: number
         data: any[]
     }
@@ -47,7 +47,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         async function request() {
             console.info(`request IAP ${url} with target audience ${DDS_CLIENT_ID}`);
             const client = await auth.getIdTokenClient(DDS_CLIENT_ID);
-            const {status, data}: SecureResponce  = await client.request({url});
+            const {status, data}: SecureResponse  = await client.request({url});
 
             if (status !== 200) {
                 res.status(status).json([]);
@@ -78,7 +78,9 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
 
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
+        const auth = new GoogleAuth();
+        const {idTokenProvider} = await auth.getIdTokenClient(DDS_CLIENT_ID);
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${idTokenProvider}`});
 
         if (status !== 200) {
             res.status(status).json([]);

@@ -124,38 +124,38 @@ describe("Data Delivery Get a specific batch from API", () => {
     });
 });
 
-describe("Data Delivery Get status descriptions", () => {
-    it("should return a 200 status and an json object when API returns the objects", async done => {
-        mock.onGet(/\/v1\/state\/descriptions$/).reply(200, StatusDescriptions);
-
-        const response: Response = await request.get("/api/state/descriptions");
-
-        expect(response.status).toEqual(200);
-        expect(response.body).toStrictEqual(StatusDescriptions);
-        done();
-    });
-
-    it("should return a 500 status direct from the API", async done => {
-        mock.onGet(/\/v1\/state\/descriptions$/).reply(500, {});
-
-        const response: Response = await request.get("/api/state/descriptions");
-
-        expect(response.status).toEqual(500);
-        done();
-    });
-
-    it("should return a 500 status when there is a network error from the API request", async done => {
-        mock.onGet(/\/v1\/state\/descriptions$/).networkError();
-
-        const response: Response = await request.get("/api/state/descriptions");
-
-        expect(response.status).toEqual(500);
-        done();
-    });
-
-    afterEach(() => {
-        jest.clearAllMocks();
-        jest.resetModules();
-        mock.reset();
-    });
-});
+// describe("Data Delivery Get status descriptions", () => {
+//     it("should return a 200 status and an json object when API returns the objects", async done => {
+//         mock.onGet(/\/v1\/state\/descriptions$/).reply(200, StatusDescriptions);
+//
+//         const response: Response = await request.get("/api/state/descriptions");
+//
+//         expect(response.status).toEqual(200);
+//         expect(response.body).toStrictEqual(StatusDescriptions);
+//         done();
+//     });
+//
+//     it("should return a 500 status direct from the API", async done => {
+//         mock.onGet(/\/v1\/state\/descriptions$/).reply(500, {});
+//
+//         const response: Response = await request.get("/api/state/descriptions");
+//
+//         expect(response.status).toEqual(500);
+//         done();
+//     });
+//
+//     it("should return a 500 status when there is a network error from the API request", async done => {
+//         mock.onGet(/\/v1\/state\/descriptions$/).networkError();
+//
+//         const response: Response = await request.get("/api/state/descriptions");
+//
+//         expect(response.status).toEqual(500);
+//         done();
+//     });
+//
+//     afterEach(() => {
+//         jest.clearAllMocks();
+//         jest.resetModules();
+//         mock.reset();
+//     });
+// });
