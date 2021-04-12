@@ -14,7 +14,7 @@ import {
 const request = supertest(app);
 // Create Mock adapter for Axios requests
 const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
-const jsonHeaders = {contentType: "application/json"}
+const jsonHeaders = {"content-type": "application/json"};
 
 describe("Data Delivery Get all batches from API", () => {
     it("should return a 200 status and an empty json list when API returns a empty list", async done => {

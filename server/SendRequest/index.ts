@@ -23,9 +23,8 @@ export function SendAPIRequest(logger: PinoHttp.HttpLogger, req: Request, res: R
                 req.log.warn(`Status ${response.status} from ${method} ${url}`);
             }
             let contentType = "";
-            console.log(response.headers);
             try {
-                contentType = response.headers.contentType;
+                contentType = response.headers["content-type"];
             } finally {
                 resolve([response.status, response.data, contentType]);
             }
