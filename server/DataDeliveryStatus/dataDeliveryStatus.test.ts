@@ -51,6 +51,15 @@ describe("Data Delivery Get all batches from API", () => {
         done();
     });
 
+    it("should return a 400 status if the content type is not application/json", async done => {
+        mock.onGet(/\/v1\/batch$/).reply(200, BatchListFromAPI, {"content-type": "bacon"});
+
+        const response: Response = await request.get("/api/batch");
+
+        expect(response.status).toEqual(400);
+        done();
+    });
+
     it("should return a 500 status direct from the API", async done => {
         mock.onGet(/\/v1\/batch$/).reply(500, {}, jsonHeaders);
 
@@ -99,6 +108,15 @@ describe("Data Delivery Get a specific batch from API", () => {
         done();
     });
 
+    it("should return a 400 status if the content type is not application/json", async done => {
+        mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(200, BatchListFromAPI, {"content-type": "bacon"});
+
+        const response: Response = await request.get("/api/batch/OPN_26032021_112954");
+
+        expect(response.status).toEqual(400);
+        done();
+    });
+
     it("should return a 500 status direct from the API", async done => {
         mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(500, {}, jsonHeaders);
 
@@ -132,6 +150,15 @@ describe("Data Delivery Get status descriptions", () => {
 
         expect(response.status).toEqual(200);
         expect(response.body).toStrictEqual(StatusDescriptions);
+        done();
+    });
+
+    it("should return a 400 status if the content type is not application/json", async done => {
+        mock.onGet(/\/v1\/state\/descriptions$/).reply(200, BatchListFromAPI, {"content-type": "bacon"});
+
+        const response: Response = await request.get("/api/state/descriptions");
+
+        expect(response.status).toEqual(400);
         done();
     });
 
