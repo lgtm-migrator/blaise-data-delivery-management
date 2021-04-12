@@ -1,5 +1,4 @@
 import express, {Request, Response, Router} from "express";
-import axios, {AxiosRequestConfig} from "axios";
 import {EnvironmentVariables} from "../Config";
 import {batch_to_data, dd_filename_to_data} from "../Functions";
 import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
@@ -7,8 +6,6 @@ import {SendAPIRequest} from "../SendRequest";
 import * as PinoHttp from "pino-http";
 
 import {GoogleAuth} from "google-auth-library";
-
-type PromiseResponse = [number, any];
 
 export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
     const {DATA_DELIVERY_STATUS_API, DDS_CLIENT_ID}: EnvironmentVariables = environmentVariables;
@@ -34,6 +31,11 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         res.status(status).json(result);
     });
 
+    interface SecureResponce {
+        status: number
+        data: any[]
+    }
+
     router.get("/api/batch", async function (req: ResponseQuery, res: Response) {
         console.log("Called get data delivery status");
 
@@ -45,9 +47,22 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         async function request() {
             console.info(`request IAP ${url} with target audience ${DDS_CLIENT_ID}`);
             const client = await auth.getIdTokenClient(DDS_CLIENT_ID);
-            const response = await client.request({url});
-            console.info(response.data);
-            res.status(response.status).json(response.data);
+            const {status, data}: SecureResponce  = await client.request({url});
+
+            if (status !== 200) {
+                res.status(status).json([]);
+                return;
+            }
+
+            const batchList: DataDeliveryBatchData[] = [];
+            data.map((item: string) => {
+                if (item === "") return;
+                batchList.push(batch_to_data(item));
+            });
+
+            res.status(status).json(batchList);
+
+            res.status(status).json(data);
             return;
         }
 
@@ -56,21 +71,6 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
             res.status(500).json([]);
             return;
         });
-
-        // const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
-        //
-        // if (status !== 200) {
-        //     res.status(status).json([]);
-        //     return;
-        // }
-        //
-        // const batchList: DataDeliveryBatchData[] = [];
-        // result.map((item: string) => {
-        //     if (item === "") return;
-        //     batchList.push(batch_to_data(item));
-        // });
-        //
-        // res.status(status).json(batchList);
     });
 
     router.get("/api/state/descriptions", async function (req: ResponseQuery, res: Response) {
