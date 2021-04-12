@@ -76,53 +76,53 @@ const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
 //     });
 // });
 
-describe("Data Delivery Get a specific batch from API", () => {
-    it("should return a 200 status and an empty json list when API returns a empty list", async done => {
-        mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(200, []);
-
-
-        const response: Response = await request.get("/api/batch/OPN_26032021_112954");
-
-        expect(response.status).toEqual(200);
-        expect(response.body).toStrictEqual([]);
-        done();
-    });
-
-    it("should return a 200 status and an json list of 2 items when API returns a 2 item list", async done => {
-        mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(200, BatchInfoListFromAPI);
-
-        const response: Response = await request.get("/api/batch/OPN_26032021_112954");
-
-        expect(response.status).toEqual(200);
-        expect(response.body).toStrictEqual(BatchInfoListServerProcessed);
-        expect(response.body.length).toStrictEqual(2);
-        done();
-    });
-
-    it("should return a 500 status direct from the API", async done => {
-        mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(500, {});
-
-        const response: Response = await request.get("/api/batch/OPN_26032021_112954");
-
-        expect(response.status).toEqual(500);
-        done();
-    });
-
-    it("should return a 500 status when there is a network error from the API request", async done => {
-        mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).networkError();
-
-        const response: Response = await request.get("/api/batch/OPN_26032021_112954");
-
-        expect(response.status).toEqual(500);
-        done();
-    });
-
-    afterEach(() => {
-        jest.clearAllMocks();
-        jest.resetModules();
-        mock.reset();
-    });
-});
+// describe("Data Delivery Get a specific batch from API", () => {
+//     it("should return a 200 status and an empty json list when API returns a empty list", async done => {
+//         mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(200, []);
+//
+//
+//         const response: Response = await request.get("/api/batch/OPN_26032021_112954");
+//
+//         expect(response.status).toEqual(200);
+//         expect(response.body).toStrictEqual([]);
+//         done();
+//     });
+//
+//     it("should return a 200 status and an json list of 2 items when API returns a 2 item list", async done => {
+//         mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(200, BatchInfoListFromAPI);
+//
+//         const response: Response = await request.get("/api/batch/OPN_26032021_112954");
+//
+//         expect(response.status).toEqual(200);
+//         expect(response.body).toStrictEqual(BatchInfoListServerProcessed);
+//         expect(response.body.length).toStrictEqual(2);
+//         done();
+//     });
+//
+//     it("should return a 500 status direct from the API", async done => {
+//         mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(500, {});
+//
+//         const response: Response = await request.get("/api/batch/OPN_26032021_112954");
+//
+//         expect(response.status).toEqual(500);
+//         done();
+//     });
+//
+//     it("should return a 500 status when there is a network error from the API request", async done => {
+//         mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).networkError();
+//
+//         const response: Response = await request.get("/api/batch/OPN_26032021_112954");
+//
+//         expect(response.status).toEqual(500);
+//         done();
+//     });
+//
+//     afterEach(() => {
+//         jest.clearAllMocks();
+//         jest.resetModules();
+//         mock.reset();
+//     });
+// });
 
 // describe("Data Delivery Get status descriptions", () => {
 //     it("should return a 200 status and an json object when API returns the objects", async done => {
