@@ -19,9 +19,9 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         console.log("Called get batch status");
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch/${batchName}`;
-        console.log(`Token ${googleAuthProvider.IdToken} `);
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET",null,{Authorization: `Bearer ${googleAuthProvider.IdToken}`});
-        console.log(result);
+        const token = await googleAuthProvider.getAuthToken();
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET",null,{Authorization: `Bearer ${token}`});
+        // console.log(result);
 
         if (status !== 200) {
             res.status(status).json([]);
@@ -79,8 +79,9 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         console.log("Called get Batch Status Descriptions");
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
-        console.log(`Token ${googleAuthProvider.IdToken} `);
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${googleAuthProvider.IdToken}`});
+
+        const token = await googleAuthProvider.getAuthToken();
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${token}`});
 
         if (status !== 200) {
             res.status(status).json([]);
