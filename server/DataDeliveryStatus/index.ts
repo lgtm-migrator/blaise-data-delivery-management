@@ -21,7 +21,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch/${batchName}`;
 
         const authHeader = await googleAuthProvider.getAuthHeader();
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", authHeader);
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
         // console.log(result);
 
         if (status !== 200) {
@@ -82,7 +82,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
 
         const authHeader = await googleAuthProvider.getAuthHeader();
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", authHeader);
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
 
         if (status !== 200) {
             res.status(status).json([]);
