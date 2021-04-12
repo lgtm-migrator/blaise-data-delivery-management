@@ -6,6 +6,7 @@ import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import dateFormatter from "dayjs";
 import {Link, useLocation} from "react-router-dom";
 import {getDDFileStatusStyle} from "../utilities/BatchStatusColour";
+import {batch_to_data} from "../Functions";
 
 interface Location {
     state: { batch: DataDeliveryBatchData }
@@ -20,7 +21,10 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
     const [listError, setListError] = useState<string>("Loading ...");
 
     const location = useLocation();
-    const {batch} = (location as Location).state || {batch: {}};
+
+    const {batch} = (location as Location).state || {batch: batch_to_data(location.pathname.split("/")[2])};
+
+
 
     useEffect(() => {
         callGetBatchList().then(() => console.log("callGetBatchList Complete"));
