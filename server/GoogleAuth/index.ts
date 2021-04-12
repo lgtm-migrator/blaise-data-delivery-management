@@ -8,7 +8,7 @@ export default class GoogleAuthProvider {
         const auth = new GoogleAuth();
 
         auth.getIdTokenClient(DDS_CLIENT_ID).then(({idTokenProvider}) => {
-            idTokenProvider.fetchIdToken(DDS_CLIENT_ID).then((token) => IdToken = token)
+            idTokenProvider.fetchIdToken(DDS_CLIENT_ID).then((token) => IdToken = token);
         }).catch((error) => {
                 console.error(error, "Could not get Google Auth credentials");
             }
