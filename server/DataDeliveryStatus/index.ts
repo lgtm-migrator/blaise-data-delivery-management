@@ -21,7 +21,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         const {idTokenProvider} = await auth.getIdTokenClient(DDS_CLIENT_ID);
         const IdToken = await idTokenProvider.fetchIdToken(DDS_CLIENT_ID);
         console.log(`ID Token: ${IdToken}`);
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${IdToken}`});
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET",null,{Authorization: `Bearer ${IdToken}`});
 
         if (status !== 200) {
             res.status(status).json([]);
