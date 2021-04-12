@@ -20,7 +20,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         const auth = new GoogleAuth();
         const {idTokenProvider} = await auth.getIdTokenClient(DDS_CLIENT_ID);
         const IdToken = await idTokenProvider.fetchIdToken(DDS_CLIENT_ID);
-        console.log(IdToken);
+        console.log(`ID Token: ${IdToken}`);
         const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${IdToken}`});
 
         if (status !== 200) {
@@ -65,8 +65,6 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
             });
 
             res.status(status).json(batchList);
-
-            res.status(status).json(data);
             return;
         }
 
