@@ -47,6 +47,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         const authHeader = await googleAuthProvider.getAuthHeader();
         const [status, result, contentType] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
 
+        console.log(`type ${contentType}`);
         if (status !== 200) {
             res.status(status).json([]);
             return;
@@ -80,6 +81,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
             res.status(status).json([]);
             return;
         }
+        console.log(`type ${contentType}`);
 
         if (contentType !== "application/json") {
             console.warn("Response was not JSON, most likely invalid auth");
