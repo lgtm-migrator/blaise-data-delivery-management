@@ -20,7 +20,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch/${batchName}`;
 
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET",null,{Authorization: `Bearer ${IdAuthToken}`});
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET",null,{Authorization: `Bearer ${await IdAuthToken}`});
 
         if (status !== 200) {
             res.status(status).json([]);
@@ -79,7 +79,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
 
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${IdAuthToken}`});
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", {Authorization: `Bearer ${await IdAuthToken}`});
 
         if (status !== 200) {
             res.status(status).json([]);
