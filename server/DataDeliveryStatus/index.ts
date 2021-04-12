@@ -38,15 +38,13 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         console.log("Called get data delivery status");
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch`;
-        
-        const targetAudience = `${DDS_CLIENT_ID}.apps.googleusercontent.com`;
 
 
         const auth = new GoogleAuth();
 
         async function request() {
-            console.info(`request IAP ${url} with target audience ${targetAudience}`);
-            const client = await auth.getIdTokenClient(targetAudience);
+            console.info(`request IAP ${url} with target audience ${DDS_CLIENT_ID}`);
+            const client = await auth.getIdTokenClient(DDS_CLIENT_ID);
             const response = await client.request({url});
             console.info(response.data);
             res.status(response.status).json(response.data);
