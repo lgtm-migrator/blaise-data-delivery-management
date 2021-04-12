@@ -46,34 +46,22 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch`;
 
+        const authHeader = await googleAuthProvider.getAuthHeader();
+        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
 
-        const auth = new GoogleAuth();
-
-        async function request() {
-            console.info(`request IAP ${url} with target audience ${DDS_CLIENT_ID}`);
-            const client = await auth.getIdTokenClient(DDS_CLIENT_ID);
-            const {status, data}: SecureResponse  = await client.request({url});
-
-            if (status !== 200) {
-                res.status(status).json([]);
-                return;
-            }
-
-            const batchList: DataDeliveryBatchData[] = [];
-            data.map((item: string) => {
-                if (item === "") return;
-                batchList.push(batch_to_data(item));
-            });
-
-            res.status(status).json(batchList);
+        if (status !== 200) {
+            res.status(status).json([]);
             return;
         }
 
-        request().catch(err => {
-            console.error(err.message);
-            res.status(500).json([]);
-            return;
+        const batchList: DataDeliveryBatchData[] = [];
+        result.map((item: string) => {
+            if (item === "") return;
+            batchList.push(batch_to_data(item));
         });
+
+        res.status(status).json(batchList);
+        return;
     });
 
     router.get("/api/state/descriptions", async function (req: ResponseQuery, res: Response) {
