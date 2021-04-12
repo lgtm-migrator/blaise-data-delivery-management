@@ -19,7 +19,11 @@ export default class GoogleAuthProvider {
     }
 
     private async getAuthToken() {
-        const {idTokenProvider} = await this.auth.getIdTokenClient(this.DDS_CLIENT_ID);
-        this.token = await idTokenProvider.fetchIdToken(this.DDS_CLIENT_ID);
+        try {
+            const {idTokenProvider} = await this.auth.getIdTokenClient(this.DDS_CLIENT_ID);
+            this.token = await idTokenProvider.fetchIdToken(this.DDS_CLIENT_ID);
+        } catch (error) {
+            console.error("Could not get the Google auth token credentials");
+        }
     }
 }

@@ -4,8 +4,6 @@ import {batch_to_data, dd_filename_to_data} from "../Functions";
 import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import {SendAPIRequest} from "../SendRequest";
 import * as PinoHttp from "pino-http";
-
-import {GoogleAuth} from "google-auth-library";
 import GoogleAuthProvider from "../GoogleAuth";
 
 export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
@@ -22,10 +20,15 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const authHeader = await googleAuthProvider.getAuthHeader();
         const [status, result] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
-        // console.log(result);
 
         if (status !== 200) {
             res.status(status).json([]);
+            return;
+        }
+
+        if (result.includes("<!DOCTYPE html>")) {
+            console.warn("Response was not JSON");
+            res.status(400).json([]);
             return;
         }
 
@@ -35,11 +38,6 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         res.status(status).json(result);
     });
-
-    interface SecureResponse {
-        status: number
-        data: any[]
-    }
 
     router.get("/api/batch", async function (req: ResponseQuery, res: Response) {
         console.log("Called get data delivery status");
@@ -51,6 +49,12 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         if (status !== 200) {
             res.status(status).json([]);
+            return;
+        }
+
+        if (result.includes("<!DOCTYPE html>")) {
+            console.warn("Response was not JSON, most likely invalid auth");
+            res.status(400).json([]);
             return;
         }
 
@@ -74,6 +78,12 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         if (status !== 200) {
             res.status(status).json([]);
+            return;
+        }
+
+        if (result.includes("<!DOCTYPE html>")) {
+            console.warn("Response was not JSON");
+            res.status(400).json([]);
             return;
         }
 
