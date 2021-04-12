@@ -80,7 +80,8 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
                                                    dd_filename,
                                                    state,
                                                    updated_at,
-                                                   instrumentName
+                                                   instrumentName,
+                                                   error_info
                                                }: DataDeliveryFileStatus) => {
 
                                     return (
@@ -92,11 +93,15 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
                                             </td>
                                             <td className="table__cell ">
                                                 <span className={`status status--${getDDFileStatusStyle(state)}`}>
-                                                {
-                                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                                    // @ts-ignore
-                                                    statusDescriptionList[`${state}`]
-                                                }
+                                                    {
+                                                        (state === "errored" && error_info !== null ?
+                                                                error_info
+                                                                :
+                                                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                                // @ts-ignore
+                                                                statusDescriptionList[`${state}`]
+                                                        )
+                                                    }
                                                 </span>
                                             </td>
                                             <td className="table__cell ">
