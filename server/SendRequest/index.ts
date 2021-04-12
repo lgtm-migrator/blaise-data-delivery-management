@@ -2,7 +2,7 @@
 import {Request, Response} from "express";
 import axios, {AxiosRequestConfig} from "axios";
 import * as PinoHttp from "pino-http";
-type PromiseResponse = [number, any];
+type PromiseResponse = [number, any, string];
 
 export function SendAPIRequest(logger: PinoHttp.HttpLogger, req: Request, res: Response, url: string, method: AxiosRequestConfig["method"], data: any = null, headers: any = null): Promise<PromiseResponse>  {
     logger(req, res);
@@ -22,10 +22,15 @@ export function SendAPIRequest(logger: PinoHttp.HttpLogger, req: Request, res: R
             } else {
                 req.log.warn(`Status ${response.status} from ${method} ${url}`);
             }
-            resolve([response.status, response.data]);
+            let contentType = "";
+            try {
+                contentType = response.headers["content-type"];
+            } finally {
+                resolve([response.status, response.data, contentType]);
+            }
         }).catch((error) => {
             req.log.error(error, `${method} ${url} endpoint failed`);
-            resolve([500, null]);
+            resolve([500, null, ""]);
         });
     });
 }

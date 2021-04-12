@@ -1,16 +1,16 @@
 import express, {Request, Response, Router} from "express";
-import axios, {AxiosRequestConfig} from "axios";
 import {EnvironmentVariables} from "../Config";
 import {batch_to_data, dd_filename_to_data} from "../Functions";
 import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import {SendAPIRequest} from "../SendRequest";
 import * as PinoHttp from "pino-http";
-
-type PromiseResponse = [number, any];
+import GoogleAuthProvider from "../GoogleAuth";
 
 export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
-    const {DATA_DELIVERY_STATUS_API}: EnvironmentVariables = environmentVariables;
+    const {DATA_DELIVERY_STATUS_API, DDS_CLIENT_ID}: EnvironmentVariables = environmentVariables;
     const router = express.Router();
+
+    const googleAuthProvider = new GoogleAuthProvider(DDS_CLIENT_ID);
 
     router.get("/api/batch/:batchName", async function (req: ResponseQuery, res: Response) {
         const {batchName} = req.params;
@@ -18,10 +18,17 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch/${batchName}`;
 
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
+        const authHeader = await googleAuthProvider.getAuthHeader();
+        const [status, result, contentType] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
 
         if (status !== 200) {
             res.status(status).json([]);
+            return;
+        }
+
+        if (contentType !== "application/json") {
+            console.warn("Response was not JSON, most likely invalid auth");
+            res.status(400).json([]);
             return;
         }
 
@@ -37,10 +44,18 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch`;
 
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
+        const authHeader = await googleAuthProvider.getAuthHeader();
+        const [status, result, contentType] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
+
 
         if (status !== 200) {
             res.status(status).json([]);
+            return;
+        }
+
+        if (contentType !== "application/json") {
+            console.warn("Response was not JSON, most likely invalid auth");
+            res.status(400).json([]);
             return;
         }
 
@@ -51,6 +66,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         });
 
         res.status(status).json(batchList);
+        return;
     });
 
     router.get("/api/state/descriptions", async function (req: ResponseQuery, res: Response) {
@@ -58,10 +74,18 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
 
-        const [status, result] = await SendAPIRequest(logger, req, res, url, "GET");
+        const authHeader = await googleAuthProvider.getAuthHeader();
+        const [status, result, contentType] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
 
         if (status !== 200) {
             res.status(status).json([]);
+            return;
+        }
+
+
+        if (contentType !== "application/json") {
+            console.warn("Response was not JSON, most likely invalid auth");
+            res.status(400).json([]);
             return;
         }
 
