@@ -1,12 +1,5 @@
-interface AuditLog {
-    id: string
-    timestamp: string
-    message: string
-    severity: string
-    service: string
-}
-
-interface DataDeliveryBatchDates {
+interface DataDeliveryBatchData {
+    survey?: string
     date: Date
     dateString: string
     name: string
@@ -15,8 +8,6 @@ interface DataDeliveryBatchDates {
 interface DataDeliveryFile {
     prefix: string
     instrumentName: string
-    date: Date
-    dateString: string
 }
 
 interface DataDeliveryFileStatus {
@@ -25,7 +16,8 @@ interface DataDeliveryFileStatus {
     state: string
     updated_at: string
     instrumentName: string
+    error_info: string
 }
 
 
-export type {AuditLog, DataDeliveryFile, DataDeliveryBatchDates, DataDeliveryFileStatus};
+export type {DataDeliveryFile, DataDeliveryBatchData, DataDeliveryFileStatus};

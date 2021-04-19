@@ -2,20 +2,29 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {ErrorBoundary} from "./ErrorHandling/ErrorBoundary";
 import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
 import {getBatchInfo} from "../utilities/http";
-import {DataDeliveryFileStatus} from "../../Interfaces";
+import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import dateFormatter from "dayjs";
 import {Link, useLocation} from "react-router-dom";
+import {getDDFileStatusStyle} from "../utilities/BatchStatusColour";
+import {batch_to_data} from "../Functions";
 
 interface Location {
-    state: any
+    state: { batch: DataDeliveryBatchData }
 }
 
-function BatchStatusList(): ReactElement {
+interface Props {
+    statusDescriptionList: any[]
+}
+
+function BatchStatusList({statusDescriptionList}: Props): ReactElement {
     const [batchList, setBatchList] = useState<DataDeliveryFileStatus[]>([]);
     const [listError, setListError] = useState<string>("Loading ...");
 
     const location = useLocation();
-    const {batch} = (location as Location).state || {batch: {}};
+
+    const {batch} = (location as Location).state || {batch: batch_to_data(location.pathname.split("/")[2])};
+
+
 
     useEffect(() => {
         callGetBatchList().then(() => console.log("callGetBatchList Complete"));
@@ -38,6 +47,7 @@ function BatchStatusList(): ReactElement {
             setListError("No data delivery files for this run found.");
         }
 
+        batchList.sort((a: DataDeliveryFileStatus, b: DataDeliveryFileStatus) => new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf());
         setBatchList(batchList);
     }
 
@@ -48,7 +58,7 @@ function BatchStatusList(): ReactElement {
                 <Link to={"/"}>Previous</Link>
             </p>
             <h1 className="u-mt-m">Delivery
-                trigger <em>{dateFormatter(new Date(batch.date)).format("DD/MM/YYYY HH:mm")}</em> status</h1>
+                trigger <em>{batch.survey} {batch.dateString}</em></h1>
             <ONSButton onClick={() => callGetBatchList()} label="Reload" primary={true} small={true}/>
             <ErrorBoundary errorMessageText={"Failed to load audit logs."}>
                 {
@@ -58,7 +68,7 @@ function BatchStatusList(): ReactElement {
                             <thead className="table__head u-mt-m">
                             <tr className="table__row">
                                 <th scope="col" className="table__header ">
-                                    <span>Questionnaire name</span>
+                                    <span>Questionnaire</span>
                                 </th>
                                 <th scope="col" className="table__header ">
                                     <span>Status</span>
@@ -74,20 +84,32 @@ function BatchStatusList(): ReactElement {
                                                    dd_filename,
                                                    state,
                                                    updated_at,
-                                                   instrumentName
+                                                   instrumentName,
+                                                   error_info
                                                }: DataDeliveryFileStatus) => {
+
                                     return (
-                                        <tr className="table__row" key={dd_filename.toString()}
+                                        <tr className="table__row" key={dd_filename}
                                             data-testid={"batch-table-row"}>
 
                                             <td className="table__cell ">
                                                 {instrumentName}
                                             </td>
                                             <td className="table__cell ">
-                                                {state}
+                                                <span className={`status status--${getDDFileStatusStyle(state)}`}>
+                                                    {
+                                                        (state === "errored" && error_info !== null ?
+                                                                error_info
+                                                                :
+                                                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                                // @ts-ignore
+                                                                statusDescriptionList[`${state}`]
+                                                        )
+                                                    }
+                                                </span>
                                             </td>
                                             <td className="table__cell ">
-                                                {dateFormatter(new Date(updated_at)).format("DD/MM/YYYY HH:mm:ss")}
+                                                {dateFormatter(updated_at).format("DD/MM/YYYY HH:mm:ss")}
                                             </td>
                                         </tr>
                                     );
