@@ -1,7 +1,7 @@
 {
-  "short_name": "DQS",
+  "short_name": "DDM",
   "name": "Data Delivery Management",
-  "description": "Deploy and manage installed questionnaires in Blaise",
+  "description": "View the status of and trigger Data Delivery runs",
   "icons": [
     {
       "src": "/static/android-chrome-192x192.png",
@@ -27,10 +27,10 @@
   "theme_color": "#3b7a9e",
   "shortcuts": [
     {
-      "name": "Deploy new questionnaire",
-      "short_name": "Deploy",
-      "description": "Deploy a new questionnaire to Blaise",
-      "url": "/upload?source=pwa",
+      "name": "Trigger data delivery",
+      "short_name": "Trigger DD",
+      "description": "Trigger a new data delivery export",
+      "url": "/trigger?source=pwa",
       "icons": [
         {
           "src": "/static/android-chrome-192x192.png",
