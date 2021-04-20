@@ -90,7 +90,6 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
             return;
         }
 
-
         if (contentType !== "application/json") {
             req.log.warn("Response was not JSON, most likely invalid auth");
             res.status(400).json([]);

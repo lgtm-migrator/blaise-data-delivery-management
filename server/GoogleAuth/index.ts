@@ -13,29 +13,33 @@ export default class GoogleAuthProvider {
     }
 
     async getAuthHeader(): Promise<{ Authorization: string }> {
-        if (this.token === "") {
+        if (!this.isValidToken()) {
             await this.getAuthToken();
         }
-        await this.verifyToken();
         return {Authorization: `Bearer ${this.token}`};
     }
 
-    private async verifyToken() {
+    private isValidToken(): boolean {
+        if (this.token === "") {
+            return false;
+        }
         const decodedToken = jwt.decode(this.token, {json: true});
         if (decodedToken === null) {
             console.log("Failed to decode token, Calling for new Google auth Token");
-            await this.getAuthToken();
+            return false;
         } else if (GoogleAuthProvider.hasTokenExpired(decodedToken["exp"])) {
             console.log("Auth Token Expired, Calling for new Google auth Token");
-            await this.getAuthToken();
+
+            return false;
         }
+
+        return true;
     }
 
     private async getAuthToken() {
         try {
             const {idTokenProvider} = await this.auth.getIdTokenClient(this.DDS_CLIENT_ID);
             this.token = await idTokenProvider.fetchIdToken(this.DDS_CLIENT_ID);
-            // return await this.auth.getRequestHeaders(this.DDS_CLIENT_ID);
         } catch (error) {
             console.error("Could not get the Google auth token credentials");
         }
