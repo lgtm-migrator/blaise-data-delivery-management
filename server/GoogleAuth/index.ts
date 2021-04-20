@@ -1,4 +1,4 @@
-import {GoogleAuth} from "google-auth-library";
+import {GoogleAuth, Headers} from "google-auth-library";
 
 export default class GoogleAuthProvider {
     private readonly DDS_CLIENT_ID: string;
@@ -12,9 +12,10 @@ export default class GoogleAuthProvider {
     }
 
     async getAuthHeader(): Promise<{ Authorization: string }> {
-        if (this.token === "") {
-            await this.getAuthToken();
-        }
+        // if (this.token === "") {
+        //     await this.getAuthToken();
+        // }
+        await this.getAuthToken();
         return {Authorization: `Bearer ${this.token}`};
     }
 
@@ -22,6 +23,7 @@ export default class GoogleAuthProvider {
         try {
             const {idTokenProvider} = await this.auth.getIdTokenClient(this.DDS_CLIENT_ID);
             this.token = await idTokenProvider.fetchIdToken(this.DDS_CLIENT_ID);
+            // return await this.auth.getRequestHeaders(this.DDS_CLIENT_ID);
         } catch (error) {
             console.error("Could not get the Google auth token credentials");
         }

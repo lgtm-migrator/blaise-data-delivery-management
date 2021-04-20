@@ -5,6 +5,7 @@ import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import {SendAPIRequest} from "../SendRequest";
 import * as PinoHttp from "pino-http";
 import GoogleAuthProvider from "../GoogleAuth";
+import {auth} from "google-auth-library";
 
 export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
     const {DATA_DELIVERY_STATUS_API, DDS_CLIENT_ID}: EnvironmentVariables = environmentVariables;
@@ -45,6 +46,9 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch`;
 
         const authHeader = await googleAuthProvider.getAuthHeader();
+        console.log(`Auth header ${authHeader.Authorization}`);
+        logger(req, res);
+        req.log.info(`(Req log) Auth header ${authHeader.Authorization}`);
         const [status, result, contentType] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
 
 
