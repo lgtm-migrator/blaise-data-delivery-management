@@ -13,13 +13,22 @@ export default class GoogleAuthProvider {
     }
 
     async getAuthHeader(): Promise<{ Authorization: string }> {
-        // if (this.token === "") {
-        //     await this.getAuthToken();
-        // }
-        await this.getAuthToken();
-        const decodedToken = jwt.decode(this.token);
-        console.log(decodedToken);
+        if (this.token === "") {
+            await this.getAuthToken();
+        }
+        await this.verifyToken();
         return {Authorization: `Bearer ${this.token}`};
+    }
+
+    private async verifyToken() {
+        const decodedToken = jwt.decode(this.token, {json: true});
+        if (decodedToken === null) {
+            console.log("Failed to decode token, Calling for new Google auth Token");
+            await this.getAuthToken();
+        } else if (GoogleAuthProvider.hasTokenExpired(decodedToken["exp"])) {
+            console.log("Auth Token Expired, Calling for new Google auth Token");
+            await this.getAuthToken();
+        }
     }
 
     private async getAuthToken() {
@@ -30,5 +39,9 @@ export default class GoogleAuthProvider {
         } catch (error) {
             console.error("Could not get the Google auth token credentials");
         }
+    }
+
+    private static hasTokenExpired(expireTimestamp: string): boolean {
+        return new Date(expireTimestamp) >= new Date();
     }
 }
