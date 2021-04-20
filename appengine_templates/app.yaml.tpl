@@ -14,8 +14,8 @@ env_variables:
   DDS_CLIENT_ID: _DDS_CLIENT_ID
 
 basic_scaling:
-  idle_timeout: 10m
-  max_instances: 10
+  idle_timeout: 1m
+  max_instances: 1
 
 handlers:
 - url: /.*
