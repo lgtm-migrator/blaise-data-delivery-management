@@ -1,4 +1,4 @@
-import {GoogleAuth, Headers} from "google-auth-library";
+import {GoogleAuth} from "google-auth-library";
 
 export default class GoogleAuthProvider {
     private readonly DDS_CLIENT_ID: string;
