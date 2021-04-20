@@ -1,4 +1,5 @@
 import {GoogleAuth} from "google-auth-library";
+import jwt from "jsonwebtoken";
 
 export default class GoogleAuthProvider {
     private readonly DDS_CLIENT_ID: string;
@@ -16,6 +17,8 @@ export default class GoogleAuthProvider {
         //     await this.getAuthToken();
         // }
         await this.getAuthToken();
+        const decodedToken = jwt.decode(this.token);
+        console.log(decodedToken);
         return {Authorization: `Bearer ${this.token}`};
     }
 
