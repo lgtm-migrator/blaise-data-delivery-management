@@ -4,13 +4,13 @@ import {batch_to_data, dd_filename_to_data} from "../../src/Functions";
 import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import {SendAPIRequest} from "../SendRequest";
 import * as PinoHttp from "pino-http";
-import GoogleAuthProvider from "../GoogleAuth";
+import AuthProvider from "../AuthProvider";
 
 export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
     const {DATA_DELIVERY_STATUS_API, DDS_CLIENT_ID}: EnvironmentVariables = environmentVariables;
     const router = express.Router();
 
-    const googleAuthProvider = new GoogleAuthProvider(DDS_CLIENT_ID);
+    const authProvider = new AuthProvider(DDS_CLIENT_ID);
 
     router.get("/api/batch/:batchName", async function (req: ResponseQuery, res: Response) {
         const {batchName} = req.params;
@@ -19,7 +19,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch/${batchName}`;
 
-        const authHeader = await googleAuthProvider.getAuthHeader();
+        const authHeader = await authProvider.getAuthHeader();
         req.log.info(authHeader, "Obtained Google auth request header");
 
         const [status, result, contentType] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
@@ -48,7 +48,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/batch`;
 
-        const authHeader = await googleAuthProvider.getAuthHeader();
+        const authHeader = await authProvider.getAuthHeader();
         req.log.info(authHeader, "Obtained Google auth request header");
 
         const [status, result, contentType] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
@@ -80,7 +80,7 @@ export default function DataDeliveryStatus(environmentVariables: EnvironmentVari
 
         const url = `${DATA_DELIVERY_STATUS_API}/v1/state/descriptions`;
 
-        const authHeader = await googleAuthProvider.getAuthHeader();
+        const authHeader = await authProvider.getAuthHeader();
         req.log.info(authHeader, "Obtained Google auth request header");
 
         const [status, result, contentType] = await SendAPIRequest(logger, req, res, url, "GET", null, authHeader);
