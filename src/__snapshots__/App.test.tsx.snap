@@ -103,20 +103,6 @@ Object {
           class="page__main"
           id="main-content"
         >
-          <ul
-            class="list list--bare list--inline u-mt-m"
-          >
-            <li
-              class="list__item"
-            >
-              <a
-                href="/trigger"
-                id="audit-logs-link"
-              >
-                Trigger Data Delivery
-              </a>
-            </li>
-          </ul>
           <h1
             class="u-mt-m"
           >
@@ -358,20 +344,6 @@ Object {
         class="page__main"
         id="main-content"
       >
-        <ul
-          class="list list--bare list--inline u-mt-m"
-        >
-          <li
-            class="list__item"
-          >
-            <a
-              href="/trigger"
-              id="audit-logs-link"
-            >
-              Trigger Data Delivery
-            </a>
-          </li>
-        </ul>
         <h1
           class="u-mt-m"
         >

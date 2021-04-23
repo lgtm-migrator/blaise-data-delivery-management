@@ -70,7 +70,7 @@ defineFeature(feature, test => {
         cleanup();
     });
 
-    test("Trigger data delivery", ({given, when, then, and}) => {
+    test.skip("Trigger data delivery", ({given, when, then, and}) => {
         given("I have launched the Data Delivery Management", async () => {
             mock_fetch_requests(mock_server_responses);
             const history = createMemoryHistory();
@@ -114,7 +114,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test("Trigger data delivery fails", ({given, when, then, and}) => {
+    test.skip("Trigger data delivery fails", ({given, when, then, and}) => {
         given("I have launched the Data Delivery Management", async () => {
             mock_fetch_requests(mock_server_responses_trigger_fails);
             const history = createMemoryHistory();
@@ -163,7 +163,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test("Cancel Trigger data delivery", ({given, when, then, and}) => {
+    test.skip("Cancel Trigger data delivery", ({given, when, then, and}) => {
         given("I have been presented with a confirmation to trigger data delivery", async () => {
             mock_fetch_requests(mock_server_responses_trigger_fails);
             const history = createMemoryHistory();
@@ -198,7 +198,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test("Cancel Trigger data delivery confirmation", ({given, when, then, and}) => {
+    test.skip("Cancel Trigger data delivery confirmation", ({given, when, then, and}) => {
         given("I have been presented with a confirmation to trigger data delivery", async () => {
             mock_fetch_requests(mock_server_responses_trigger_fails);
             const history = createMemoryHistory();
@@ -233,7 +233,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test("Don't select an option", ({given, when, then}) => {
+    test.skip("Don't select an option", ({given, when, then}) => {
         given("I have been presented with a confirmation to trigger data delivery", async () => {
             mock_fetch_requests(mock_server_responses_trigger_fails);
             const history = createMemoryHistory();
