@@ -170,15 +170,15 @@ Object {
                 <td
                   class="table__cell "
                 >
-                  26/03/2021 11:29:54
+                  24/03/2021 11:30:00
                 </td>
                 <td
                   class="table__cell "
                 >
                   <a
-                    aria-label="View run status 26/03/2021 11:29:54"
-                    data-testid="view-OPN_26032021_112954"
-                    href="/batch/OPN_26032021_112954"
+                    aria-label="View run status 24/03/2021 11:30:00"
+                    data-testid="view-OPN_24032021_113000"
+                    href="/batch/OPN_24032021_113000"
                   >
                     View run status
                   </a>
@@ -196,223 +196,15 @@ Object {
                 <td
                   class="table__cell "
                 >
-                  24/03/2021 14:58:38
+                  12/03/2021 02:30:00
                 </td>
                 <td
                   class="table__cell "
                 >
                   <a
-                    aria-label="View run status 24/03/2021 14:58:38"
-                    data-testid="view-OPN_24032021_145838"
-                    href="/batch/OPN_24032021_145838"
-                  >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
-              >
-                <td
-                  class="table__cell "
-                >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  23/03/2021 11:29:54
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 23/03/2021 11:29:54"
-                    data-testid="view-OPN_23032021_112954"
-                    href="/batch/OPN_23032021_112954"
-                  >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
-              >
-                <td
-                  class="table__cell "
-                >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  22/03/2021 14:58:38
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 22/03/2021 14:58:38"
-                    data-testid="view-OPN_22032021_145838"
-                    href="/batch/OPN_22032021_145838"
-                  >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
-              >
-                <td
-                  class="table__cell "
-                >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  21/03/2021 11:29:54
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 21/03/2021 11:29:54"
-                    data-testid="view-OPN_21032021_112954"
-                    href="/batch/OPN_21032021_112954"
-                  >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
-              >
-                <td
-                  class="table__cell "
-                >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  20/03/2021 14:58:38
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 20/03/2021 14:58:38"
-                    data-testid="view-OPN_20032021_145838"
-                    href="/batch/OPN_20032021_145838"
-                  >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
-              >
-                <td
-                  class="table__cell "
-                >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  19/03/2021 11:29:54
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 19/03/2021 11:29:54"
-                    data-testid="view-OPN_19032021_112954"
-                    href="/batch/OPN_19032021_112954"
-                  >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
-              >
-                <td
-                  class="table__cell "
-                >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  18/03/2021 14:58:38
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 18/03/2021 14:58:38"
-                    data-testid="view-OPN_18032021_145838"
-                    href="/batch/OPN_18032021_145838"
-                  >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
-              >
-                <td
-                  class="table__cell "
-                >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  17/03/2021 11:29:54
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 17/03/2021 11:29:54"
-                    data-testid="view-OPN_17032021_112954"
-                    href="/batch/OPN_17032021_112954"
-                  >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
-              >
-                <td
-                  class="table__cell "
-                >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  16/03/2021 14:58:38
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 16/03/2021 14:58:38"
-                    data-testid="view-OPN_16032021_145838"
-                    href="/batch/OPN_16032021_145838"
+                    aria-label="View run status 12/03/2021 02:30:00"
+                    data-testid="view-OPN_12032021_023000"
+                    href="/batch/OPN_12032021_023000"
                   >
                     View run status
                   </a>
@@ -420,77 +212,6 @@ Object {
               </tr>
             </tbody>
           </table>
-          <div>
-            <nav
-              aria-label="Pagination (Page 1 of 3)"
-              class="pagination"
-            >
-              <div
-                class="pagination__position"
-              >
-                Page 
-                1
-                 of 
-                3
-              </div>
-              <ul
-                class="pagination__items"
-                style="margin-left: 0px;"
-              >
-                <li
-                  class="pagination__item  pagination__item--current "
-                  style="cursor: pointer; margin-right: 0.5rem;"
-                >
-                  <a
-                    aria-label="Go to page 1"
-                    class="pagination__link"
-                    id="link"
-                    style="cursor: pointer; outline: 0; text-decoration: underline;"
-                  >
-                    1
-                  </a>
-                </li>
-                <li
-                  class="pagination__item "
-                  style="cursor: pointer; margin-right: 0.5rem;"
-                >
-                  <a
-                    aria-label="Go to page 2"
-                    class="pagination__link"
-                    id="link"
-                    style="cursor: pointer; outline: 0; text-decoration: underline;"
-                  >
-                    2
-                  </a>
-                </li>
-                <li
-                  class="pagination__item "
-                  style="cursor: pointer; margin-right: 0.5rem;"
-                >
-                  <a
-                    aria-label="Go to page 3"
-                    class="pagination__link"
-                    id="link"
-                    style="cursor: pointer; outline: 0; text-decoration: underline;"
-                  >
-                    3
-                  </a>
-                </li>
-                <li
-                  class="pagination__item pagination__item--next"
-                >
-                  <button
-                    aria-label="Go to the next page"
-                    class="pagination__link"
-                    id="next"
-                    style="cursor: pointer; outline: 0; text-decoration: underline;"
-                  >
-                    Next
-                  </button>
-                </li>
-              </ul>
-            </nav>
-          </div>
         </main>
       </div>
       <footer
@@ -690,15 +411,15 @@ Object {
               <td
                 class="table__cell "
               >
-                26/03/2021 11:29:54
+                24/03/2021 11:30:00
               </td>
               <td
                 class="table__cell "
               >
                 <a
-                  aria-label="View run status 26/03/2021 11:29:54"
-                  data-testid="view-OPN_26032021_112954"
-                  href="/batch/OPN_26032021_112954"
+                  aria-label="View run status 24/03/2021 11:30:00"
+                  data-testid="view-OPN_24032021_113000"
+                  href="/batch/OPN_24032021_113000"
                 >
                   View run status
                 </a>
@@ -716,223 +437,15 @@ Object {
               <td
                 class="table__cell "
               >
-                24/03/2021 14:58:38
+                12/03/2021 02:30:00
               </td>
               <td
                 class="table__cell "
               >
                 <a
-                  aria-label="View run status 24/03/2021 14:58:38"
-                  data-testid="view-OPN_24032021_145838"
-                  href="/batch/OPN_24032021_145838"
-                >
-                  View run status
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
-            >
-              <td
-                class="table__cell "
-              >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                23/03/2021 11:29:54
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 23/03/2021 11:29:54"
-                  data-testid="view-OPN_23032021_112954"
-                  href="/batch/OPN_23032021_112954"
-                >
-                  View run status
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
-            >
-              <td
-                class="table__cell "
-              >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                22/03/2021 14:58:38
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 22/03/2021 14:58:38"
-                  data-testid="view-OPN_22032021_145838"
-                  href="/batch/OPN_22032021_145838"
-                >
-                  View run status
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
-            >
-              <td
-                class="table__cell "
-              >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                21/03/2021 11:29:54
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 21/03/2021 11:29:54"
-                  data-testid="view-OPN_21032021_112954"
-                  href="/batch/OPN_21032021_112954"
-                >
-                  View run status
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
-            >
-              <td
-                class="table__cell "
-              >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                20/03/2021 14:58:38
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 20/03/2021 14:58:38"
-                  data-testid="view-OPN_20032021_145838"
-                  href="/batch/OPN_20032021_145838"
-                >
-                  View run status
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
-            >
-              <td
-                class="table__cell "
-              >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                19/03/2021 11:29:54
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 19/03/2021 11:29:54"
-                  data-testid="view-OPN_19032021_112954"
-                  href="/batch/OPN_19032021_112954"
-                >
-                  View run status
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
-            >
-              <td
-                class="table__cell "
-              >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                18/03/2021 14:58:38
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 18/03/2021 14:58:38"
-                  data-testid="view-OPN_18032021_145838"
-                  href="/batch/OPN_18032021_145838"
-                >
-                  View run status
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
-            >
-              <td
-                class="table__cell "
-              >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                17/03/2021 11:29:54
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 17/03/2021 11:29:54"
-                  data-testid="view-OPN_17032021_112954"
-                  href="/batch/OPN_17032021_112954"
-                >
-                  View run status
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
-            >
-              <td
-                class="table__cell "
-              >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                16/03/2021 14:58:38
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 16/03/2021 14:58:38"
-                  data-testid="view-OPN_16032021_145838"
-                  href="/batch/OPN_16032021_145838"
+                  aria-label="View run status 12/03/2021 02:30:00"
+                  data-testid="view-OPN_12032021_023000"
+                  href="/batch/OPN_12032021_023000"
                 >
                   View run status
                 </a>
@@ -940,77 +453,6 @@ Object {
             </tr>
           </tbody>
         </table>
-        <div>
-          <nav
-            aria-label="Pagination (Page 1 of 3)"
-            class="pagination"
-          >
-            <div
-              class="pagination__position"
-            >
-              Page 
-              1
-               of 
-              3
-            </div>
-            <ul
-              class="pagination__items"
-              style="margin-left: 0px;"
-            >
-              <li
-                class="pagination__item  pagination__item--current "
-                style="cursor: pointer; margin-right: 0.5rem;"
-              >
-                <a
-                  aria-label="Go to page 1"
-                  class="pagination__link"
-                  id="link"
-                  style="cursor: pointer; outline: 0; text-decoration: underline;"
-                >
-                  1
-                </a>
-              </li>
-              <li
-                class="pagination__item "
-                style="cursor: pointer; margin-right: 0.5rem;"
-              >
-                <a
-                  aria-label="Go to page 2"
-                  class="pagination__link"
-                  id="link"
-                  style="cursor: pointer; outline: 0; text-decoration: underline;"
-                >
-                  2
-                </a>
-              </li>
-              <li
-                class="pagination__item "
-                style="cursor: pointer; margin-right: 0.5rem;"
-              >
-                <a
-                  aria-label="Go to page 3"
-                  class="pagination__link"
-                  id="link"
-                  style="cursor: pointer; outline: 0; text-decoration: underline;"
-                >
-                  3
-                </a>
-              </li>
-              <li
-                class="pagination__item pagination__item--next"
-              >
-                <button
-                  aria-label="Go to the next page"
-                  class="pagination__link"
-                  id="next"
-                  style="cursor: pointer; outline: 0; text-decoration: underline;"
-                >
-                  Next
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </div>
       </main>
     </div>
     <footer
