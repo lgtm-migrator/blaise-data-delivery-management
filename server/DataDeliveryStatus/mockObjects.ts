@@ -22,6 +22,12 @@ export const BatchInfoListFromAPI = [
         dd_filename: "dd_OPN2101A_26032021_112954.zip",
         state: "generated",
         updated_at: "2021-03-26T12:29:54.000Z"
+    },
+    {
+        batch: "LMS_27042021_112954",
+        dd_filename: "dd_LMS2101_AA1_27042021_112954.zip",
+        state: "generated",
+        updated_at: "2021-04-27T12:29:54.000Z"
     }
 ];
 
@@ -41,6 +47,14 @@ export const BatchInfoListServerProcessed = [
         prefix: "dd",
         state: "generated",
         updated_at: "2021-03-26T12:29:54.000Z"
+    },
+    {
+        batch: "LMS_27042021_112954",
+        dd_filename: "dd_LMS2101_AA1_27042021_112954.zip",
+        instrumentName: "LMS2101_AA1",
+        prefix: "dd",
+        state: "generated",
+        updated_at: "2021-04-27T12:29:54.000Z"
     }
 ];
 
