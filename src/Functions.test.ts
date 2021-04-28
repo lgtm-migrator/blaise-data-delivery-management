@@ -17,6 +17,11 @@ describe("DD file to data test", () => {
         ).toBe("OPN2102T");
     });
 
+    it("should return 'LMS2101_AA1' for instrumentName for file dd_LMS2101_AA1_27042021_043113.zip", () => {
+        expect(Functions.dd_filename_to_data("dd_LMS2101_AA1_27042021_043113.zip").instrumentName
+        ).toBe("LMS2101_AA1");
+    });
+
 });
 
 describe("Batch name to data", () => {

@@ -32,11 +32,11 @@ export function dd_filename_to_data(dd_filename: string): DataDeliveryFile {
         };
     }
 
-    const [prefix, instrumentName] = dd_filename.split("_");
+    const [prefix, instrumentName, instrumentCohort] = dd_filename.split("_");
 
     return {
         prefix: prefix,
-        instrumentName: instrumentName,
+        instrumentName: `${instrumentName}${(instrumentName.startsWith("LM") ? `_${instrumentCohort}` : "")}`,
     };
 }
 

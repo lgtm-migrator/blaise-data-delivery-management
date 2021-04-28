@@ -104,7 +104,7 @@ describe("Data Delivery Get a specific batch from API", () => {
 
         expect(response.status).toEqual(200);
         expect(response.body).toStrictEqual(BatchInfoListServerProcessed);
-        expect(response.body.length).toStrictEqual(2);
+        expect(response.body.length).toStrictEqual(3);
         done();
     });
 
