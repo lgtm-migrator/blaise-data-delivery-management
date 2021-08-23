@@ -1,6 +1,5 @@
 import React, {ReactElement, useEffect, useState} from "react";
-import {ErrorBoundary} from "./ErrorHandling/ErrorBoundary";
-import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
+import {ErrorBoundary, ONSButton, ONSPanel} from "blaise-design-system-react-components";
 import {getBatchInfo} from "../utilities/http";
 import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import dateFormatter from "dayjs";

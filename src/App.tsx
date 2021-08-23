@@ -1,8 +1,6 @@
 import React, {ReactElement, useEffect, useState} from "react";
-import {DefaultErrorBoundary} from "./Components/ErrorHandling/DefaultErrorBoundary";
-import {Switch, Route, Link, useLocation} from "react-router-dom";
-import {ErrorBoundary} from "./Components/ErrorHandling/ErrorBoundary";
-import {Footer, Header, BetaBanner, ONSPanel} from "blaise-design-system-react-components";
+import {Switch, Route, useLocation} from "react-router-dom";
+import {Footer, Header, BetaBanner, ONSPanel, DefaultErrorBoundary, ErrorBoundary} from "blaise-design-system-react-components";
 import Confirmation from "./Components/Confirmation";
 import BatchesList from "./Components/BatchesList";
 import BatchStatusList from "./Components/BatchStatusList";
