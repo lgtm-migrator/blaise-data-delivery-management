@@ -1,9 +1,7 @@
 import React, {ReactElement, useEffect, useState} from "react";
-import {ErrorBoundary} from "./ErrorHandling/ErrorBoundary";
-import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
+import {ErrorBoundary, ONSButton, ONSPanel} from "blaise-design-system-react-components";
 import {getAllBatches} from "../utilities/http";
 import {DataDeliveryBatchData} from "../../Interfaces";
-import dateFormatter from "dayjs";
 import {Link} from "react-router-dom";
 
 function BatchesList(): ReactElement {
