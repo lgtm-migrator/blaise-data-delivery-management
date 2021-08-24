@@ -108,110 +108,114 @@ Object {
           >
             Data delivery runs
           </h1>
-          <button
-            class="btn btn--small "
-            data-testid="button"
-            type="button"
+          <div
+            class="elementToFadeIn"
           >
-            <span
-              class="btn__inner"
+            <button
+              class="btn btn--small "
+              data-testid="button"
+              type="button"
             >
-              Reload
-            </span>
-          </button>
-          <table
-            class="table "
-            id="batches-table"
-          >
-            <thead
-              class="table__head u-mt-m"
-            >
-              <tr
-                class="table__row"
+              <span
+                class="btn__inner"
               >
-                <th
-                  class="table__header "
-                  scope="col"
-                >
-                  <span>
-                    Survey
-                  </span>
-                </th>
-                <th
-                  class="table__header "
-                  scope="col"
-                >
-                  <span>
-                    Data delivery run time
-                  </span>
-                </th>
-                <th
-                  class="table__header "
-                  scope="col"
-                >
-                  <span>
-                    View run status
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="table__body"
+                Reload
+              </span>
+            </button>
+            <table
+              class="table "
+              id="batches-table"
             >
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
+              <thead
+                class="table__head u-mt-m"
               >
-                <td
-                  class="table__cell "
+                <tr
+                  class="table__row"
                 >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  24/03/2021 11:30:00
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 24/03/2021 11:30:00"
-                    data-testid="view-OPN_24032021_113000"
-                    href="/batch/OPN_24032021_113000"
+                  <th
+                    class="table__header "
+                    scope="col"
                   >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-              <tr
-                class="table__row"
-                data-testid="batches-table-row"
-              >
-                <td
-                  class="table__cell "
-                >
-                  OPN
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  12/03/2021 02:30:00
-                </td>
-                <td
-                  class="table__cell "
-                >
-                  <a
-                    aria-label="View run status 12/03/2021 02:30:00"
-                    data-testid="view-OPN_12032021_023000"
-                    href="/batch/OPN_12032021_023000"
+                    <span>
+                      Survey
+                    </span>
+                  </th>
+                  <th
+                    class="table__header "
+                    scope="col"
                   >
-                    View run status
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                    <span>
+                      Data delivery run time
+                    </span>
+                  </th>
+                  <th
+                    class="table__header "
+                    scope="col"
+                  >
+                    <span>
+                      View run status
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="table__body"
+              >
+                <tr
+                  class="table__row"
+                  data-testid="batches-table-row"
+                >
+                  <td
+                    class="table__cell "
+                  >
+                    OPN
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
+                    24/03/2021 11:30:00
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
+                    <a
+                      aria-label="View run status 24/03/2021 11:30:00"
+                      data-testid="view-OPN_24032021_113000"
+                      href="/batch/OPN_24032021_113000"
+                    >
+                      View run status
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  class="table__row"
+                  data-testid="batches-table-row"
+                >
+                  <td
+                    class="table__cell "
+                  >
+                    OPN
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
+                    12/03/2021 02:30:00
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
+                    <a
+                      aria-label="View run status 12/03/2021 02:30:00"
+                      data-testid="view-OPN_12032021_023000"
+                      href="/batch/OPN_12032021_023000"
+                    >
+                      View run status
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </main>
       </div>
       <footer
@@ -349,110 +353,114 @@ Object {
         >
           Data delivery runs
         </h1>
-        <button
-          class="btn btn--small "
-          data-testid="button"
-          type="button"
+        <div
+          class="elementToFadeIn"
         >
-          <span
-            class="btn__inner"
+          <button
+            class="btn btn--small "
+            data-testid="button"
+            type="button"
           >
-            Reload
-          </span>
-        </button>
-        <table
-          class="table "
-          id="batches-table"
-        >
-          <thead
-            class="table__head u-mt-m"
-          >
-            <tr
-              class="table__row"
+            <span
+              class="btn__inner"
             >
-              <th
-                class="table__header "
-                scope="col"
-              >
-                <span>
-                  Survey
-                </span>
-              </th>
-              <th
-                class="table__header "
-                scope="col"
-              >
-                <span>
-                  Data delivery run time
-                </span>
-              </th>
-              <th
-                class="table__header "
-                scope="col"
-              >
-                <span>
-                  View run status
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            class="table__body"
+              Reload
+            </span>
+          </button>
+          <table
+            class="table "
+            id="batches-table"
           >
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
+            <thead
+              class="table__head u-mt-m"
             >
-              <td
-                class="table__cell "
+              <tr
+                class="table__row"
               >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                24/03/2021 11:30:00
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 24/03/2021 11:30:00"
-                  data-testid="view-OPN_24032021_113000"
-                  href="/batch/OPN_24032021_113000"
+                <th
+                  class="table__header "
+                  scope="col"
                 >
-                  View run status
-                </a>
-              </td>
-            </tr>
-            <tr
-              class="table__row"
-              data-testid="batches-table-row"
-            >
-              <td
-                class="table__cell "
-              >
-                OPN
-              </td>
-              <td
-                class="table__cell "
-              >
-                12/03/2021 02:30:00
-              </td>
-              <td
-                class="table__cell "
-              >
-                <a
-                  aria-label="View run status 12/03/2021 02:30:00"
-                  data-testid="view-OPN_12032021_023000"
-                  href="/batch/OPN_12032021_023000"
+                  <span>
+                    Survey
+                  </span>
+                </th>
+                <th
+                  class="table__header "
+                  scope="col"
                 >
-                  View run status
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                  <span>
+                    Data delivery run time
+                  </span>
+                </th>
+                <th
+                  class="table__header "
+                  scope="col"
+                >
+                  <span>
+                    View run status
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="table__body"
+            >
+              <tr
+                class="table__row"
+                data-testid="batches-table-row"
+              >
+                <td
+                  class="table__cell "
+                >
+                  OPN
+                </td>
+                <td
+                  class="table__cell "
+                >
+                  24/03/2021 11:30:00
+                </td>
+                <td
+                  class="table__cell "
+                >
+                  <a
+                    aria-label="View run status 24/03/2021 11:30:00"
+                    data-testid="view-OPN_24032021_113000"
+                    href="/batch/OPN_24032021_113000"
+                  >
+                    View run status
+                  </a>
+                </td>
+              </tr>
+              <tr
+                class="table__row"
+                data-testid="batches-table-row"
+              >
+                <td
+                  class="table__cell "
+                >
+                  OPN
+                </td>
+                <td
+                  class="table__cell "
+                >
+                  12/03/2021 02:30:00
+                </td>
+                <td
+                  class="table__cell "
+                >
+                  <a
+                    aria-label="View run status 12/03/2021 02:30:00"
+                    data-testid="view-OPN_12032021_023000"
+                    href="/batch/OPN_12032021_023000"
+                  >
+                    View run status
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </main>
     </div>
     <footer
