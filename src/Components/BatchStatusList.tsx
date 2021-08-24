@@ -1,5 +1,5 @@
 import React, {ReactElement, useEffect, useState} from "react";
-import {ErrorBoundary, ONSButton, ONSPanel} from "blaise-design-system-react-components";
+import {ErrorBoundary, ONSButton, ONSLoadingPanel, ONSPanel} from "blaise-design-system-react-components";
 import {getBatchInfo} from "../utilities/http";
 import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
 import dateFormatter from "dayjs";
@@ -18,11 +18,11 @@ interface Props {
 function BatchStatusList({statusDescriptionList}: Props): ReactElement {
     const [batchList, setBatchList] = useState<DataDeliveryFileStatus[]>([]);
     const [listError, setListError] = useState<string>("Loading ...");
+    const [loading, setLoading] = useState<boolean>(true);
 
     const location = useLocation();
 
     const {batch} = (location as Location).state || {batch: batch_to_data(location.pathname.split("/")[2])};
-
 
 
     useEffect(() => {
@@ -31,9 +31,11 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
 
     async function callGetBatchList() {
         setBatchList([]);
-        setListError("Loading ...");
+        setLoading(true);
 
         const [success, batchList] = await getBatchInfo(batch.name);
+
+        setLoading(false);
 
         if (!success) {
             setListError("Unable to load batch info");
@@ -56,45 +58,49 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
             <p>
                 <Link to={"/"}>Previous</Link>
             </p>
-            <h1 className="u-mt-m">Delivery
-                trigger <em>{batch.survey} {batch.dateString}</em></h1>
-            <ONSButton onClick={() => callGetBatchList()} label="Reload" primary={true} small={true}/>
-            <ErrorBoundary errorMessageText={"Failed to load audit logs."}>
-                {
-                    batchList && batchList.length > 0
-                        ?
-                        <table id="batch-table" className="table ">
-                            <thead className="table__head u-mt-m">
-                            <tr className="table__row">
-                                <th scope="col" className="table__header ">
-                                    <span>Questionnaire</span>
-                                </th>
-                                <th scope="col" className="table__header ">
-                                    <span>Status</span>
-                                </th>
-                                <th scope="col" className="table__header ">
-                                    <span>Last update</span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody className="table__body">
+            <h1 className="u-mt-m">Delivery trigger <em>{batch.survey} {batch.dateString}</em></h1>
+            {
+                loading ?
+                    <ONSLoadingPanel/>
+                    :
+                    <div className={"elementToFadeIn"}>
+                        <ONSButton onClick={() => callGetBatchList()} label="Reload" primary={true} small={true}/>
+                        <ErrorBoundary errorMessageText={"Failed to load audit logs."}>
                             {
-                                batchList.map(({
-                                                   dd_filename,
-                                                   state,
-                                                   updated_at,
-                                                   instrumentName,
-                                                   error_info
-                                               }: DataDeliveryFileStatus) => {
+                                batchList && batchList.length > 0
+                                    ?
+                                    <table id="batch-table" className="table ">
+                                        <thead className="table__head u-mt-m">
+                                        <tr className="table__row">
+                                            <th scope="col" className="table__header ">
+                                                <span>Questionnaire</span>
+                                            </th>
+                                            <th scope="col" className="table__header ">
+                                                <span>Status</span>
+                                            </th>
+                                            <th scope="col" className="table__header ">
+                                                <span>Last update</span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody className="table__body">
+                                        {
+                                            batchList.map(({
+                                                               dd_filename,
+                                                               state,
+                                                               updated_at,
+                                                               instrumentName,
+                                                               error_info
+                                                           }: DataDeliveryFileStatus) => {
 
-                                    return (
-                                        <tr className="table__row" key={dd_filename}
-                                            data-testid={"batch-table-row"}>
+                                                return (
+                                                    <tr className="table__row" key={dd_filename}
+                                                        data-testid={"batch-table-row"}>
 
-                                            <td className="table__cell ">
-                                                {instrumentName}
-                                            </td>
-                                            <td className="table__cell ">
+                                                        <td className="table__cell ">
+                                                            {instrumentName}
+                                                        </td>
+                                                        <td className="table__cell ">
                                                 <span className={`status status--${getDDFileStatusStyle(state)}`}>
                                                     {
                                                         (state === "errored" && error_info !== null ?
@@ -106,20 +112,22 @@ function BatchStatusList({statusDescriptionList}: Props): ReactElement {
                                                         )
                                                     }
                                                 </span>
-                                            </td>
-                                            <td className="table__cell ">
-                                                {dateFormatter(updated_at).format("DD/MM/YYYY HH:mm:ss")}
-                                            </td>
-                                        </tr>
-                                    );
-                                })
+                                                        </td>
+                                                        <td className="table__cell ">
+                                                            {dateFormatter(updated_at).format("DD/MM/YYYY HH:mm:ss")}
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
+                                        }
+                                        </tbody>
+                                    </table>
+                                    :
+                                    <ONSPanel>{listError}</ONSPanel>
                             }
-                            </tbody>
-                        </table>
-                        :
-                        <ONSPanel>{listError}</ONSPanel>
-                }
-            </ErrorBoundary>
+                        </ErrorBoundary>
+                    </div>
+            }
         </>
     );
 }
