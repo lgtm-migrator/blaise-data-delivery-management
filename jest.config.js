@@ -7,3 +7,10 @@ process.env = Object.assign(process.env, {
     DATA_DELIVERY_STATUS_API: "mock-api",
     DDS_CLIENT_ID: "mock-client-id"
 });
+
+module.exports = {
+    moduleNameMapper: {
+        "\\.(css|less|scss)$": "identity-obj-proxy",
+        "\\.(jpg)$": "identity-obj-proxy"
+    }
+};
