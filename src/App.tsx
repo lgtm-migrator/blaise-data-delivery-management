@@ -1,10 +1,18 @@
 import React, {ReactElement, useEffect, useState} from "react";
 import {Switch, Route, useLocation} from "react-router-dom";
-import {Footer, Header, BetaBanner, ONSPanel, DefaultErrorBoundary, ErrorBoundary} from "blaise-design-system-react-components";
+import {
+    Footer,
+    Header,
+    BetaBanner,
+    ONSPanel,
+    DefaultErrorBoundary,
+    ErrorBoundary,
+} from "blaise-design-system-react-components";
 import Confirmation from "./Components/Confirmation";
 import BatchesList from "./Components/BatchesList";
 import BatchStatusList from "./Components/BatchStatusList";
 import {getBatchStatusDescriptions} from "./utilities/http";
+import "./style.css";
 
 const divStyle = {
     minHeight: "calc(67vh)"
@@ -67,6 +75,7 @@ function App(): ReactElement {
                                 {/*    </li>*/}
                                 {/*</ul>*/}
 
+                                <h1 className="u-mt-m">Data delivery runs</h1>
                                 <ErrorBoundary errorMessageText={"Unable to load batch list table correctly"}>
                                     <BatchesList/>
                                 </ErrorBoundary>
