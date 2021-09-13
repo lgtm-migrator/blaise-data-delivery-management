@@ -153,6 +153,14 @@ Object {
                     scope="col"
                   >
                     <span>
+                      Run started
+                    </span>
+                  </th>
+                  <th
+                    class="table__header "
+                    scope="col"
+                  >
+                    <span>
                       View run status
                     </span>
                   </th>
@@ -174,6 +182,16 @@ Object {
                     class="table__cell "
                   >
                     24/03/2021 11:30:00
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
+                    <time
+                      datetime="2021-03-24T11:30:00.000Z"
+                      title="2021-03-24 11:30"
+                    >
+                      6 days ago
+                    </time>
                   </td>
                   <td
                     class="table__cell "
@@ -200,6 +218,16 @@ Object {
                     class="table__cell "
                   >
                     12/03/2021 02:30:00
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
+                    <time
+                      datetime="2021-03-12T02:30:00.000Z"
+                      title="2021-03-12 02:30"
+                    >
+                      3 weeks ago
+                    </time>
                   </td>
                   <td
                     class="table__cell "
@@ -398,6 +426,14 @@ Object {
                   scope="col"
                 >
                   <span>
+                    Run started
+                  </span>
+                </th>
+                <th
+                  class="table__header "
+                  scope="col"
+                >
+                  <span>
                     View run status
                   </span>
                 </th>
@@ -419,6 +455,16 @@ Object {
                   class="table__cell "
                 >
                   24/03/2021 11:30:00
+                </td>
+                <td
+                  class="table__cell "
+                >
+                  <time
+                    datetime="2021-03-24T11:30:00.000Z"
+                    title="2021-03-24 11:30"
+                  >
+                    6 days ago
+                  </time>
                 </td>
                 <td
                   class="table__cell "
@@ -445,6 +491,16 @@ Object {
                   class="table__cell "
                 >
                   12/03/2021 02:30:00
+                </td>
+                <td
+                  class="table__cell "
+                >
+                  <time
+                    datetime="2021-03-12T02:30:00.000Z"
+                    title="2021-03-12 02:30"
+                  >
+                    3 weeks ago
+                  </time>
                 </td>
                 <td
                   class="table__cell "

@@ -7,6 +7,7 @@ import {act} from "react-dom/test-utils";
 import {createMemoryHistory} from "history";
 import {Router} from "react-router";
 import {DataDeliveryBatchData} from "../Interfaces";
+import MockDate from "mockdate";
 
 describe("React homepage", () => {
 
@@ -27,7 +28,14 @@ describe("React homepage", () => {
 
 
     beforeAll(() => {
+        MockDate.set(new Date("2021-03-30T02:30:00.000Z"));
         mock_server_request_Return_JSON(200, batches);
+    });
+
+    afterAll(() => {
+        jest.clearAllMocks();
+        cleanup();
+        MockDate.reset();
     });
 
     it("view instrument page matches Snapshot", async () => {
@@ -69,11 +77,6 @@ describe("React homepage", () => {
             expect(queryByText(/Loading/i)).not.toBeInTheDocument();
         });
 
-    });
-
-    afterAll(() => {
-        jest.clearAllMocks();
-        cleanup();
     });
 });
 
