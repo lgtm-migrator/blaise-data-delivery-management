@@ -49,23 +49,24 @@ function App(): ReactElement {
             <BetaBanner/>
             <Header title={"Data Delivery Management"}/>
             <div style={divStyle} className="page__container container">
-                <main id="main-content" className="page__main">
-                    <DefaultErrorBoundary>
-                        <Switch>
-                            <Route path="/trigger">
-                                <Confirmation/>
-                            </Route>
-                            <Route path="/batch">
-                                <BatchStatusList statusDescriptionList={statusDescriptionList}/>
-                            </Route>
-                            <Route path="/">
+                <DefaultErrorBoundary>
+                    <Switch>
+                        <Route path="/trigger">
+                            <Confirmation/>
+                        </Route>
+                        <Route path="/batch">
+                            <BatchStatusList statusDescriptionList={statusDescriptionList}/>
+                        </Route>
+                        <Route path="/">
 
-                                {
-                                    status !== "" &&
-                                    <ONSPanel status={status?.includes("success") ? "success" : "error"}>
-                                        <p>{status}</p>
-                                    </ONSPanel>
-                                }
+                            {
+                                status !== "" &&
+                                <ONSPanel status={status?.includes("success") ? "success" : "error"}>
+                                    <p>{status}</p>
+                                </ONSPanel>
+                            }
+
+                            <main id="main-content" className="page__main u-mt-no">
 
                                 {/*<ul className="list list--bare list--inline u-mt-m">*/}
                                 {/*    <li className="list__item">*/}
@@ -79,10 +80,10 @@ function App(): ReactElement {
                                 <ErrorBoundary errorMessageText={"Unable to load batch list table correctly"}>
                                     <BatchesList/>
                                 </ErrorBoundary>
-                            </Route>
-                        </Switch>
-                    </DefaultErrorBoundary>
-                </main>
+                            </main>
+                        </Route>
+                    </Switch>
+                </DefaultErrorBoundary>
             </div>
             <Footer/>
         </>
