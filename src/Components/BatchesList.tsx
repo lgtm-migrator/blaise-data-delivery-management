@@ -3,6 +3,7 @@ import {ErrorBoundary, ONSButton, ONSLoadingPanel, ONSPanel} from "blaise-design
 import {getAllBatches} from "../utilities/http";
 import {DataDeliveryBatchData} from "../../Interfaces";
 import {Link} from "react-router-dom";
+import TimeAgo from "react-timeago";
 
 function BatchesList(): ReactElement {
     const [batchList, setBatchList] = useState<DataDeliveryBatchData[]>([]);
@@ -55,6 +56,9 @@ function BatchesList(): ReactElement {
                                         <span>Data delivery run time</span>
                                     </th>
                                     <th scope="col" className="table__header ">
+                                        <span>Run started</span>
+                                    </th>
+                                    <th scope="col" className="table__header ">
                                         <span>View run status</span>
                                     </th>
                                 </tr>
@@ -70,6 +74,9 @@ function BatchesList(): ReactElement {
                                                 </td>
                                                 <td className="table__cell ">
                                                     {batch.dateString}
+                                                </td>
+                                                <td className="table__cell ">
+                                                    {<TimeAgo live={false} date={batch.date}/>}
                                                 </td>
                                                 <td className="table__cell ">
                                                     <Link
