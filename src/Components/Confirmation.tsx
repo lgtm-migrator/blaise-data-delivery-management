@@ -1,7 +1,8 @@
 import React, {ReactElement, useState} from "react";
-import {Link, Redirect, useHistory} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
 import {sendDataDeliveryRequest} from "../utilities/http";
+import Breadcrumbs from "./Breadcrumbs";
 
 function Confirmation(): ReactElement {
     const [formError, setFormError] = useState<string>("");
@@ -47,53 +48,59 @@ function Confirmation(): ReactElement {
                         state: {status: message}
                     }}/>
             }
-            <p>
-                <Link to={"/"}>Previous</Link>
-            </p>
-            <h1>
-                Are you sure you want to trigger Data Delivery?
-            </h1>
+            <Breadcrumbs BreadcrumbList={
+                [
+                    {link: "/", title: "Home"},
+                ]
+            }/>
 
-            {
-                message !== "" &&
-                <ONSPanel status={message.includes("success") ? "success" : "error"}>
-                    <p>{message}</p>
-                </ONSPanel>
-            }
+            <main id="main-content" className="page__main u-mt-no">
+                <h1 className="u-mb-l">
+                    Are you sure you want to trigger Data Delivery?
+                </h1>
 
-            <form className="u-mt-m">
                 {
-                    formError === "" ?
-                        confirmDeleteRadios(setConfirm)
-                        :
-                        <ONSPanel status={"error"}>
-                            <p className="panel__error">
-                                <strong>{formError}</strong>
-                            </p>
-                            {confirmDeleteRadios(setConfirm)}
-                        </ONSPanel>
+                    message !== "" &&
+                    <ONSPanel status={message.includes("success") ? "success" : "error"}>
+                        <p>{message}</p>
+                    </ONSPanel>
                 }
 
-                <br/>
-                <ONSButton
-                    label={"Continue"}
-                    primary={true}
-                    loading={loading}
-                    id="confirm-continue"
-                    onClick={() => confirmOption()}/>
-                {!loading &&
-                <ONSButton
-                    label={"Cancel"}
-                    primary={false}
-                    id="cancel-overwrite"
-                    onClick={() => history.push("/")}/>
-                }
-            </form>
+                <form className="u-mt-m">
+                    {
+                        formError === "" ?
+                            confirmDeleteRadios(setConfirm)
+                            :
+                            <ONSPanel status={"error"}>
+                                <p className="panel__error">
+                                    <strong>{formError}</strong>
+                                </p>
+                                {confirmDeleteRadios(setConfirm)}
+                            </ONSPanel>
+                    }
+
+                    <br/>
+                    <ONSButton
+                        label={"Continue"}
+                        primary={true}
+                        loading={loading}
+                        id="confirm-continue"
+                        onClick={() => confirmOption()}/>
+                    {!loading &&
+                    <ONSButton
+                        label={"Cancel"}
+                        primary={false}
+                        id="cancel-overwrite"
+                        onClick={() => history.push("/")}/>
+                    }
+                </form>
+            </main>
         </>
     );
 }
 
-function confirmDeleteRadios(setConfirm: (value: (((prevState: (boolean | null)) => (boolean | null)) | boolean | null)) => void) {
+function confirmDeleteRadios(setConfirm: (value: (((prevState: (boolean | null)) => (boolean | null)) |
+    boolean | null)) => void) {
     return (
         <fieldset className="fieldset">
             <legend className="fieldset__legend">
@@ -101,36 +108,36 @@ function confirmDeleteRadios(setConfirm: (value: (((prevState: (boolean | null))
             <div className="radios__items">
 
                 <p className="radios__item">
-                        <span className="radio">
-                        <input
-                            type="radio"
-                            id="confirm-overwrite"
-                            className="radio__input js-radio "
-                            value="True"
-                            name="confirm-delete"
-                            aria-label="No"
-                            onChange={() => setConfirm(true)}
-                        />
-                        <label className="radio__label " htmlFor="confirm-overwrite">
-                            Yes, trigger Data Delivery
-                        </label>
-                    </span></p>
+            <span className="radio">
+            <input
+                type="radio"
+                id="confirm-overwrite"
+                className="radio__input js-radio "
+                value="True"
+                name="confirm-delete"
+                aria-label="No"
+                onChange={() => setConfirm(true)}
+            />
+            <label className="radio__label " htmlFor="confirm-overwrite">
+            Yes, trigger Data Delivery
+            </label>
+            </span></p>
                 <br/>
                 <p className="radios__item">
-                        <span className="radio">
-                        <input
-                            type="radio"
-                            id="cancel-keep"
-                            className="radio__input js-radio "
-                            value="False"
-                            name="confirm-delete"
-                            aria-label="Yes"
-                            onChange={() => setConfirm(false)}
-                        />
-                        <label className="radio__label " htmlFor="cancel-keep">
-                            No, do not trigger Data Delivery
-                        </label>
-                    </span>
+            <span className="radio">
+            <input
+                type="radio"
+                id="cancel-keep"
+                className="radio__input js-radio "
+                value="False"
+                name="confirm-delete"
+                aria-label="Yes"
+                onChange={() => setConfirm(false)}
+            />
+            <label className="radio__label " htmlFor="cancel-keep">
+            No, do not trigger Data Delivery
+            </label>
+            </span>
                 </p>
             </div>
         </fieldset>
