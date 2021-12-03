@@ -18,6 +18,7 @@ describe("Batch name to data", () => {
         ["OPN_30032021_141600", "OPN", "30/03/2021 14:16:00"],
         ["LMS_30032021_141600", "LMS", "30/03/2021 14:16:00"],
         ["LM_30032021_141600", "LM", "30/03/2021 14:16:00"],
+        ["30032021_141600", "", "30/03/2021 14:16:00"],
         ["batch-name-RANDOMM-", undefined, "batch-name-RANDOMM-"]
     ])("should return the parsed survey info", (batchName, survey, dateString) => {
         const batch_data = Functions.batch_to_data(batchName);
