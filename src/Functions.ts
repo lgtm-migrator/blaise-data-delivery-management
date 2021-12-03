@@ -46,7 +46,7 @@ export function batch_to_data(batchName: string): DataDeliveryBatchData {
     if (batchName.match(/^[0-9]{8}_[0-9]{6}$/)) {
         // example 26032021_080842
         [originalDateString, timeString] = batchName.split("_");
-    } else if (batchName.match(/^[a-zA-Z]{3}_[0-9]{8}_[0-9]{6}$/)) {
+    } else if (batchName.match(/^[a-zA-Z]{1,3}_[0-9]{8}_[0-9]{6}$/)) {
         // example OPN_26032021_080842
         [survey, originalDateString, timeString] = batchName.split("_");
     } else {
