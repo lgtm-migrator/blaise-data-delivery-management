@@ -1,5 +1,5 @@
-import React, {ReactElement, useEffect, useState} from "react";
-import {Switch, Route, useLocation} from "react-router-dom";
+import React, { ReactElement, useEffect, useState } from "react";
+import { Switch, Route, useLocation } from "react-router-dom";
 import {
     Footer,
     Header,
@@ -11,7 +11,7 @@ import {
 import Confirmation from "./Components/Confirmation";
 import BatchesList from "./Components/BatchesList";
 import BatchStatusList from "./Components/BatchStatusList";
-import {getBatchStatusDescriptions} from "./utilities/http";
+import { getBatchStatusDescriptions } from "./utilities/http";
 import "./style.css";
 
 const divStyle = {
@@ -25,15 +25,15 @@ interface Location {
 function App(): ReactElement {
 
     const location = useLocation();
-    const {status} = (location as Location).state || {status: ""};
-    const [statusDescriptionList, setStatusDescriptionList] = useState<any[]>([]);
+    const { status } = (location as Location).state || { status: "" };
+    const [statusDescriptionList, setStatusDescriptionList] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
         callGetBatchStatusDescriptions().then(() => console.log("getBatchStatusDescriptions Complete"));
     }, []);
 
     async function callGetBatchStatusDescriptions() {
-        setStatusDescriptionList([]);
+        setStatusDescriptionList({});
 
         const [success, statusDescriptionList] = await getBatchStatusDescriptions();
 
@@ -46,16 +46,16 @@ function App(): ReactElement {
 
     return (
         <>
-            <BetaBanner/>
-            <Header title={"Data Delivery Management"}/>
+            <BetaBanner />
+            <Header title={"Data Delivery Management"} />
             <div style={divStyle} className="page__container container">
                 <DefaultErrorBoundary>
                     <Switch>
                         <Route path="/trigger">
-                            <Confirmation/>
+                            <Confirmation />
                         </Route>
                         <Route path="/batch">
-                            <BatchStatusList statusDescriptionList={statusDescriptionList}/>
+                            <BatchStatusList statusDescriptionList={statusDescriptionList} />
                         </Route>
                         <Route path="/">
 
@@ -78,14 +78,14 @@ function App(): ReactElement {
 
                                 <h1 className="u-mt-m">Data delivery runs</h1>
                                 <ErrorBoundary errorMessageText={"Unable to load batch list table correctly"}>
-                                    <BatchesList/>
+                                    <BatchesList />
                                 </ErrorBoundary>
                             </main>
                         </Route>
                     </Switch>
                 </DefaultErrorBoundary>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 }
