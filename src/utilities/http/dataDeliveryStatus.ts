@@ -1,9 +1,9 @@
-import {requestPromiseJson, requestPromiseJsonList} from "./requestPromise";
-import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../../Interfaces";
+import { requestPromiseJson, requestPromiseJsonList } from "./requestPromise";
+import { DataDeliveryBatchData, DataDeliveryFileStatus } from "../../../Interfaces";
 
 type getBatchInfoListResponse = [boolean, DataDeliveryFileStatus[]];
 type getAllBatchesResponse = [boolean, DataDeliveryBatchData[]];
-type getStatusDescriptionsResponse = [boolean, any[]];
+type getStatusDescriptionsResponse = [boolean, { [key: string]: string }];
 
 function getAllBatches(): Promise<getAllBatchesResponse> {
     console.log("Call to getAllBatches");
@@ -36,7 +36,7 @@ function getBatchInfo(batchName: string): Promise<getBatchInfoListResponse> {
 }
 
 function getBatchStatusDescriptions(): Promise<getStatusDescriptionsResponse> {
-    let list: any[] = [];
+    let list: { [key: string]: string } = {};
     console.log("Call to getBatchStatusDescriptions");
     const url = "/api/state/descriptions";
 
@@ -58,4 +58,4 @@ function getBatchStatusDescriptions(): Promise<getStatusDescriptionsResponse> {
     });
 }
 
-export {getAllBatches, getBatchInfo, getBatchStatusDescriptions};
+export { getAllBatches, getBatchInfo, getBatchStatusDescriptions };
