@@ -12,5 +12,9 @@ module.exports = {
     moduleNameMapper: {
         "\\.(css|less|scss)$": "identity-obj-proxy",
         "\\.(jpg)$": "identity-obj-proxy"
-    }
+    },
+    coveragePathIgnorePatterns: [
+        "/node_modules/"
+    ],
+    testTimeout: 20000
 };
