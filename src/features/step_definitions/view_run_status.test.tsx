@@ -1,22 +1,22 @@
 // React
 import React from "react";
 // Test modules
-import {defineFeature, loadFeature} from "jest-cucumber";
-import {act, cleanup, fireEvent, render, screen} from "@testing-library/react";
-import {createMemoryHistory} from "history";
+import { defineFeature, loadFeature } from "jest-cucumber";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import App from "../../App";
-import {Router} from "react-router";
+import { Router } from "react-router";
 import "@testing-library/jest-dom";
 // Mock elements
 import flushPromises from "../../tests/utils";
-import {mock_fetch_requests} from "./functions";
-import {BatchInfoList, BatchList, StatusDescriptions} from "./mock_objects";
+import { mock_fetch_requests } from "./functions";
+import { BatchInfoList, BatchList, StatusDescriptions } from "./mock_objects";
 
 
 // Load in feature details from .feature file
 const feature = loadFeature(
     "./src/features/view_run_status.feature",
-    {tagFilter: "not @server and not @integration"}
+    { tagFilter: "not @server and not @integration" }
 );
 
 const mock_server_responses = (url: string) => {
@@ -51,12 +51,12 @@ defineFeature(feature, test => {
         mock_fetch_requests(mock_server_responses);
     });
 
-    test("List all recent Data Delivery runs", ({given, when, then, and}) => {
+    test("List all recent Data Delivery runs", ({ given, when, then, and }) => {
         given("I have launched the Data Delivery Management", () => {
             const history = createMemoryHistory();
             render(
                 <Router history={history}>
-                    <App/>
+                    <App />
                 </Router>
             );
         });
@@ -94,12 +94,12 @@ defineFeature(feature, test => {
         });
     });
 
-    test("View run status", ({given, when, then, and}) => {
+    test("View run status", ({ given, when, then, and }) => {
         given("I can see the run I wish to see the status of", async () => {
             const history = createMemoryHistory();
             render(
                 <Router history={history}>
-                    <App/>
+                    <App />
                 </Router>
             );
             await act(async () => {
@@ -137,6 +137,12 @@ defineFeature(feature, test => {
             if (secondRowData !== null) {
                 expect(secondRowData[0].textContent).toEqual("OPN2101A");
                 expect(secondRowData[1].textContent).toEqual("The data delivery process has generated the required files");
+            }
+            const listItemThree = list[2];
+            const thirdRowData = listItemThree.childNodes;
+            if (secondRowData !== null) {
+                expect(thirdRowData[0].textContent).toEqual("OPN2106A");
+                expect(thirdRowData[1].textContent).toEqual("Some error_info was here and that");
             }
         });
     });

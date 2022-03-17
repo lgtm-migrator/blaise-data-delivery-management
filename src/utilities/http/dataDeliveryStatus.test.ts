@@ -1,11 +1,11 @@
-import {cleanup} from "@testing-library/react";
-import {mock_server_request_function, mock_server_request_Return_JSON} from "../../tests/utils";
-import {getAllBatches, getBatchInfo, getBatchStatusDescriptions} from "./dataDeliveryStatus";
+import { cleanup } from "@testing-library/react";
+import { mock_server_request_function, mock_server_request_Return_JSON } from "../../tests/utils";
+import { getAllBatches, getBatchInfo, getBatchStatusDescriptions } from "./dataDeliveryStatus";
 
 const BatchList = [
-    {survey: "OPN", date: "2021-03-26T11:29:54.000Z", name: "OPN_26032021_112954"},
-    {survey: "OPN", date: "2021-03-25T14:58:38.000Z", name: "OPN_25032021_145838"},
-    {survey: "OPN", date: "2021-03-24T16:50:33.000Z", name: "OPN_24032021_165033"}
+    { survey: "OPN", date: "2021-03-26T11:29:54.000Z", name: "OPN_26032021_112954" },
+    { survey: "OPN", date: "2021-03-25T14:58:38.000Z", name: "OPN_25032021_145838" },
+    { survey: "OPN", date: "2021-03-24T16:50:33.000Z", name: "OPN_24032021_165033" }
 ];
 
 
@@ -45,7 +45,7 @@ describe("Function getAllBatches(filename: string) ", () => {
     });
 
     it("It should return false with an empty list if request JSON is invalid", async () => {
-        mock_server_request_Return_JSON(200, {name: "NAME"});
+        mock_server_request_Return_JSON(200, { name: "NAME" });
         const [success, batches] = await getAllBatches();
         expect(success).toBeFalsy();
         expect(batches).toEqual([]);
@@ -123,7 +123,7 @@ describe("Function getBatchInfo(filename: string) ", () => {
     });
 
     it("It should return false with an empty list if request JSON is invalid", async () => {
-        mock_server_request_Return_JSON(200, {name: "NAME"});
+        mock_server_request_Return_JSON(200, { name: "NAME" });
         const [success, batchInfo] = await getBatchInfo("OPN_26032021_121540");
         expect(success).toBeFalsy();
         expect(batchInfo).toEqual([]);
@@ -171,14 +171,14 @@ describe("Function getBatchStatusDescriptions(filename: string) ", () => {
         mock_server_request_Return_JSON(404, []);
         const [success, batchStatusDescriptions] = await getBatchStatusDescriptions();
         expect(success).toBeTruthy();
-        expect(batchStatusDescriptions).toEqual([]);
+        expect(batchStatusDescriptions).toEqual({});
     });
 
     it("It should return false with an empty list if request returns an error code", async () => {
         mock_server_request_Return_JSON(500, {});
         const [success, batchStatusDescriptions] = await getBatchStatusDescriptions();
         expect(success).toBeFalsy();
-        expect(batchStatusDescriptions).toEqual([]);
+        expect(batchStatusDescriptions).toEqual({});
     });
 
     it("It should return false with an empty list if request call fails", async () => {
@@ -189,7 +189,7 @@ describe("Function getBatchStatusDescriptions(filename: string) ", () => {
         );
         const [success, batchStatusDescriptions] = await getBatchStatusDescriptions();
         expect(success).toBeFalsy();
-        expect(batchStatusDescriptions).toEqual([]);
+        expect(batchStatusDescriptions).toEqual({});
     });
 
     afterAll(() => {
@@ -197,5 +197,3 @@ describe("Function getBatchStatusDescriptions(filename: string) ", () => {
         cleanup();
     });
 });
-
-
