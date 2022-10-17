@@ -161,6 +161,14 @@ Object {
                     scope="col"
                   >
                     <span>
+                      Status
+                    </span>
+                  </th>
+                  <th
+                    class="table__header "
+                    scope="col"
+                  >
+                    <span>
                       View run status
                     </span>
                   </th>
@@ -427,6 +435,14 @@ Object {
                 >
                   <span>
                     Run started
+                  </span>
+                </th>
+                <th
+                  class="table__header "
+                  scope="col"
+                >
+                  <span>
+                    Status
                   </span>
                 </th>
                 <th
