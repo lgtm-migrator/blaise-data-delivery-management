@@ -64,6 +64,8 @@ function BatchesList(): ReactElement {
         // NOTE: Cut down batch size to 10 before iterating over the batch
         batchListResponse = batchListResponse.slice(0, 10);
 
+        setBatchList(batchListResponse);
+
         // NOTE: Loop through batch list:
         //          await batch info for each batch:
         //              iterate over batch entries and return array of statuses
@@ -94,8 +96,8 @@ function BatchesList(): ReactElement {
         });
         
         console.log(batchListWithStatus, "HELLO");
-        
-        setBatchList(batchListResponse);
+
+        // setBatchList(batchListWithStatus);
     }
 
     if (loading) {
