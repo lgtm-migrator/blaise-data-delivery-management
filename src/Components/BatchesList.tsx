@@ -96,9 +96,10 @@ function BatchesList(): ReactElement {
                 status: batchStatus
             };
         });
-
-        const batchListModified = await Promise.all(batchListWithStatus).then(batch => {
-            console.log(batch);
+        
+        let batchListModified;
+        await Promise.all(batchListWithStatus).then(batch => {
+            batchListModified.push(batch);
         });
         
         console.log(batchListModified, "HELLO");
