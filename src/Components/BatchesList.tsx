@@ -43,9 +43,6 @@ function BatchesList(): ReactElement {
         setBatchList([]);
         setLoading(true);
 
-        // NOTE: Changed from const to let:
-        //  the batch size is cut down to 10 earlier on before setting into state
-        //  allow modification of properties, i.e. adding status into object
         const [success, batchListResponse] = await getAllBatches();
         setLoading(false);
 
@@ -61,7 +58,7 @@ function BatchesList(): ReactElement {
         }
 
         batchListResponse.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
-        setBatchList(batchListResponse.slice(0, 10));
+        // setBatchList(batchListResponse.slice(0, 10));
 
         // NOTE: Cut down batch size to 10 before iterating over the batch
         // NOTE: Loop through batch list:
@@ -70,13 +67,8 @@ function BatchesList(): ReactElement {
         //              determine overall batch statuses using array of statuses      
         //              return modified batch data with status
         //          return list of batch data with status defined
-        const batchListWithStatus = batchListResponse.slice(0, 10).map(async (batch: DataDeliveryBatchData) => {
-            // console.log(batch);
-
+        const batchListPromises = batchListResponse.slice(0, 10).map(async (batch: DataDeliveryBatchData) => {
             const [success, batchInfoList] = await getBatchInfo(batch.name);
-
-            // console.log(batchInfoList);
-            
             // NOTE: If no batch entries found 
             if (!success) {
                 return {
@@ -88,7 +80,6 @@ function BatchesList(): ReactElement {
             const batchEntryStatuses: string[] = batchInfoList.map((infoList: DataDeliveryFileStatus) => {
                 return getDDFileStatusStyle(infoList.state, undefined);
             });
-
             const batchStatus = determineOverallStatus(batchEntryStatuses);
 
             return {
@@ -97,11 +88,9 @@ function BatchesList(): ReactElement {
             };
         });
         
-        const batchListModified = await Promise.allSettled(batchListWithStatus);
+        const batchListWithStatus: DataDeliveryBatchData[] | any[] = await Promise.allSettled(batchListPromises);
         
-        console.log(batchListModified, "HELLO");
-
-        // setBatchList(batchListWithStatus);
+        setBatchList(batchListWithStatus);
     }
 
     if (loading) {
