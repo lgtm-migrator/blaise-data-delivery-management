@@ -38,25 +38,25 @@ describe("Batches List:", () => {
             survey: "OPN",
             date: new Date("2021-03-24T11:30:00.000Z"),
             dateString: "24/03/2021 11:30:00",
+            status: "success",
             name: "OPN_24032021_113000"
         },
         {
             survey: "OPN",
             date: new Date("2021-03-12T02:30:00.000Z"),
             dateString: "12/03/2021 02:30:00",
+            status: "failure",
             name: "OPN_12032021_023000"
         }
     ];
 
     beforeEach(() => {
-        MockDate.set(new Date("2021-03-30T02:30:00.000Z"));
         mock_server_request_Return_JSON(200, batches);
     });
 
     afterEach(() => {
         jest.clearAllMocks();
         cleanup();
-        MockDate.reset();
     });
 
     it("matches the snapshot", async () => {
@@ -67,7 +67,7 @@ describe("Batches List:", () => {
             </Router>
         );
 
-        expect(await wrapper).toMatchSnapshot();
+        expect(wrapper).toMatchSnapshot();
     });
 
     it("displays table headings", async () => {
@@ -83,7 +83,7 @@ describe("Batches List:", () => {
         await waitFor(() => {
             expect(screen.getByText(/Survey/)).toBeDefined();
             expect(screen.getByText(/Data delivery run time/)).toBeDefined();
-            expect(screen.getByText(/Survey/)).toBeDefined();
+            expect(screen.getByText(/Status/)).toBeDefined();
             expect(screen.getAllByText(/View run status/)).toBeDefined();
             expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
         });
@@ -91,17 +91,25 @@ describe("Batches List:", () => {
         await waitFor(() => {
             expect(screen.getByText(/Survey/)).toBeDefined();
             expect(screen.getByText(/Data delivery run time/)).toBeDefined();
-            expect(screen.getByText(/Survey/)).toBeDefined();
+            expect(screen.getByText(/Status/)).toBeDefined();
             expect(screen.getAllByText(/View run status/)).toBeDefined();
             expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
         });
     });
 
-    it("displays a green circle when the questionnaire status is in_arc", async () => {
-        render(
-            <BatchesList />
+    it("displays a green circle under status", async () => {
+        const history = createMemoryHistory();
+        const wrapper = render(
+            <Router history={history}>
+                <BatchesList/>
+            </Router>
         );
 
-        expect(screen.queryByText(/Status/i))
-    });
+        expect(screen.queryByText(/Loading/i)).toBeInTheDocument();
+
+        await waitFor(() => {
+            expect(screen.getAllByTitle(/batchStatus/i)).toBeDefined();
+            expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
+        });
+    })
 });

@@ -5,8 +5,15 @@ import {DataDeliveryBatchData} from "../../Interfaces";
 import {Link} from "react-router-dom";
 import TimeAgo from "react-timeago";
 
+import { DataDeliveryFileStatus } from "../../Interfaces";
+import { getBatchInfo } from "../utilities/http";
+import { getDDFileStatusStyle } from "../utilities/BatchStatusColour";
+import { readFile } from "fs";
+import BatchStatusList from "./BatchStatusList";
+
 function BatchesList(): ReactElement {
     const [batchList, setBatchList] = useState<DataDeliveryBatchData[]>([]);
+    const [batchInfoList, setBatchInfoList] = useState<DataDeliveryFileStatus[]>([]);
     const [listError, setListError] = useState<string>("Loading ...");
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -14,11 +21,33 @@ function BatchesList(): ReactElement {
         callGetBatchList().then(() => console.log("callGetBatchList Complete"));
     }, []);
 
+    function determineOverallStatus(batchEntryStatuses: string[]) {
+        const redAlerts = batchEntryStatuses.includes("error");
+        const greyAlerts = batchEntryStatuses.includes("dead");
+        const amberAlerts = batchEntryStatuses.includes("pending");
+        
+        if (redAlerts) {
+            return "error";
+        }
+        else if (greyAlerts) {
+            return "dead";
+        }
+        else if (amberAlerts) {
+            return "pending";
+        }
+        else {
+            return "success";
+        }
+    }
+
     async function callGetBatchList() {
         setBatchList([]);
         setLoading(true);
 
-        const [success, batchList] = await getAllBatches();
+        // NOTE: Changed from const to let:
+        //  the batch size is cut down to 10 earlier on before setting into state
+        //  allow modification of properties, i.e. adding status into object
+        let [success, batchListResponse] = await getAllBatches();
         setLoading(false);
 
         if (!success) {
@@ -26,14 +55,48 @@ function BatchesList(): ReactElement {
             return;
         }
 
-        console.log(batchList);
+        console.log(batchListResponse);
 
-        if (batchList.length === 0) {
+        if (batchListResponse.length === 0) {
             setListError("No data delivery runs found.");
         }
 
-        batchList.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
-        setBatchList(batchList.slice(0, 10));
+        batchListResponse.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+        // NOTE: Cut down batch size to 10 before iterating over the batch
+        batchListResponse = batchListResponse.slice(0, 10);
+
+        // NOTE: Loop through batch list:
+        //          await batch info for each batch:
+        //              iterate over batch entries and return array of statuses
+        //              determine overall batch statuses using array of statuses      
+        //              return modified batch data with status
+        //          return list of batch data with status defined
+        const batchListWithStatus = batchListResponse.map(async (batch: DataDeliveryBatchData) => {
+            const [success, batchInfoList] = await getBatchInfo(batch.name);
+            
+            // NOTE: If no batch entries found 
+            if (!success) {
+                return {
+                    ...batch,
+                    status: 'dead'
+                }
+            }
+
+            const batchEntryStatuses: string[] = batchInfoList.map((infoList: DataDeliveryFileStatus) => {
+                return getDDFileStatusStyle(infoList.state, undefined);
+            });
+
+            const batchStatus = determineOverallStatus(batchEntryStatuses);
+            
+            return {
+                ...batch,
+                status: batchStatus
+            }
+        });
+        
+        console.log(batchListWithStatus);
+        
+        setBatchList(batchListWithStatus);
     }
 
     if (loading) {
@@ -59,13 +122,16 @@ function BatchesList(): ReactElement {
                                         <span>Run started</span>
                                     </th>
                                     <th scope="col" className="table__header ">
+                                        <span>Status</span>
+                                    </th>
+                                    <th scope="col" className="table__header ">
                                         <span>View run status</span>
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody className="table__body">
                                 {
-                                    batchList.map((batch: DataDeliveryBatchData) => {
+                                    batchList.map((batch: DataDeliveryBatchData, index) => {
                                         return (
                                             <tr className="table__row" key={batch.name}
                                                 data-testid={"batches-table-row"}>
@@ -77,6 +143,10 @@ function BatchesList(): ReactElement {
                                                 </td>
                                                 <td className="table__cell ">
                                                     {<TimeAgo live={false} date={batch.date}/>}
+                                                </td>
+                                                {/* NOTE: Placeholder for UI testing */}
+                                                <td className="table__cell ">
+                                                    <span title={`batchStatus${index}`} className={`status status--${'success'}`}/>
                                                 </td>
                                                 <td className="table__cell ">
                                                     <Link
