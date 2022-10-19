@@ -72,30 +72,30 @@ function BatchesList(): ReactElement {
         //              determine overall batch statuses using array of statuses      
         //              return modified batch data with status
         //          return list of batch data with status defined
-        const batchListWithStatus = batchListResponse.map(async (batch: DataDeliveryBatchData) => {
-            const [success, batchInfoList] = await getBatchInfo(batch.name);
+        // const batchListWithStatus = batchListResponse.map(async (batch: DataDeliveryBatchData) => {
+        //     const [success, batchInfoList] = await getBatchInfo(batch.name);
             
-            // NOTE: If no batch entries found 
-            if (!success) {
-                return {
-                    ...batch,
-                    status: "dead"
-                };
-            }
+        //     // NOTE: If no batch entries found 
+        //     if (!success) {
+        //         return {
+        //             ...batch,
+        //             status: "dead"
+        //         };
+        //     }
 
-            const batchEntryStatuses: string[] = batchInfoList.map((infoList: DataDeliveryFileStatus) => {
-                return getDDFileStatusStyle(infoList.state, undefined);
-            });
+        //     const batchEntryStatuses: string[] = batchInfoList.map((infoList: DataDeliveryFileStatus) => {
+        //         return getDDFileStatusStyle(infoList.state, undefined);
+        //     });
 
-            const batchStatus = determineOverallStatus(batchEntryStatuses);
+        //     const batchStatus = determineOverallStatus(batchEntryStatuses);
 
-            return {
-                ...batch,
-                status: batchStatus
-            };
-        });
+        //     return {
+        //         ...batch,
+        //         status: batchStatus
+        //     };
+        // });
         
-        console.log(batchListWithStatus, "HELLO");
+        // console.log(batchListWithStatus, "HELLO");
 
         // setBatchList(batchListWithStatus);
     }
