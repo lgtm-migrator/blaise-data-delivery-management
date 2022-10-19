@@ -71,11 +71,11 @@ function BatchesList(): ReactElement {
         //              return modified batch data with status
         //          return list of batch data with status defined
         const batchListWithStatus = batchListResponse.slice(0, 10).map(async (batch: DataDeliveryBatchData) => {
-            console.log(batch);
+            // console.log(batch);
 
             const [success, batchInfoList] = await getBatchInfo(batch.name);
 
-            console.log(batchInfoList);
+            // console.log(batchInfoList);
             
             // NOTE: If no batch entries found 
             if (!success) {
@@ -97,7 +97,9 @@ function BatchesList(): ReactElement {
             };
         });
 
-        const batchListModified = Promise.all(batchListWithStatus);
+        const batchListModified = await Promise.all(batchListWithStatus).then(batch => {
+            console.log(batch);
+        });
         
         console.log(batchListModified, "HELLO");
 
