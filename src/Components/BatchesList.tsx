@@ -72,7 +72,7 @@ function BatchesList(): ReactElement {
         //              determine overall batch statuses using array of statuses      
         //              return modified batch data with status
         //          return list of batch data with status defined
-        const batchListWithStatus = batchListResponse.map(async (batch: DataDeliveryBatchData) => {
+        const batchListWithStatus = batchListResponse.slice(0, 10).map(async (batch: DataDeliveryBatchData) => {
             const [success, batchInfoList] = await getBatchInfo(batch.name);
             
             // NOTE: If no batch entries found 
