@@ -61,11 +61,9 @@ function BatchesList(): ReactElement {
         }
 
         batchListResponse.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+        // setBatchList(batchListResponse.slice(0, 10));
+
         // NOTE: Cut down batch size to 10 before iterating over the batch
-        // batchListResponse = batchListResponse.slice(0, 10);
-
-        setBatchList(batchListResponse.slice(0, 10));
-
         // NOTE: Loop through batch list:
         //          await batch info for each batch:
         //              iterate over batch entries and return array of statuses
@@ -73,7 +71,11 @@ function BatchesList(): ReactElement {
         //              return modified batch data with status
         //          return list of batch data with status defined
         const batchListWithStatus = batchListResponse.slice(0, 10).map(async (batch: DataDeliveryBatchData) => {
+            console.log(batch);
+
             const [success, batchInfoList] = await getBatchInfo(batch.name);
+
+            console.log(batchInfoList);
             
             // NOTE: If no batch entries found 
             if (!success) {
