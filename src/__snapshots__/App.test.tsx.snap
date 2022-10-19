@@ -204,6 +204,14 @@ Object {
                   <td
                     class="table__cell "
                   >
+                    <span
+                      class="status status--success"
+                      title="batchStatus0"
+                    />
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
                     <a
                       aria-label="View run status 24/03/2021 11:30:00"
                       data-testid="view-OPN_24032021_113000"
@@ -236,6 +244,14 @@ Object {
                     >
                       3 weeks ago
                     </time>
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
+                    <span
+                      class="status status--success"
+                      title="batchStatus1"
+                    />
                   </td>
                   <td
                     class="table__cell "
@@ -485,6 +501,14 @@ Object {
                 <td
                   class="table__cell "
                 >
+                  <span
+                    class="status status--success"
+                    title="batchStatus0"
+                  />
+                </td>
+                <td
+                  class="table__cell "
+                >
                   <a
                     aria-label="View run status 24/03/2021 11:30:00"
                     data-testid="view-OPN_24032021_113000"
@@ -517,6 +541,14 @@ Object {
                   >
                     3 weeks ago
                   </time>
+                </td>
+                <td
+                  class="table__cell "
+                >
+                  <span
+                    class="status status--success"
+                    title="batchStatus1"
+                  />
                 </td>
                 <td
                   class="table__cell "
