@@ -58,7 +58,6 @@ function BatchesList(): ReactElement {
         }
 
         batchListResponse.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
-        // setBatchList(batchListResponse.slice(0, 10));
 
         // NOTE: Cut down batch size to 10 before iterating over the batch
         // NOTE: Loop through batch list:
@@ -88,8 +87,9 @@ function BatchesList(): ReactElement {
             };
         });
         
-        const batchListWithStatus: DataDeliveryBatchData[] | any[] = await Promise.allSettled(batchListPromises);
-        
+        const batchListWithStatus = await Promise.all(batchListPromises).then(batch => {
+            return batch;
+        });
         setBatchList(batchListWithStatus);
     }
 
