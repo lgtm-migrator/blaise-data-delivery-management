@@ -13,7 +13,6 @@ import BatchStatusList from "./BatchStatusList";
 
 function BatchesList(): ReactElement {
     const [batchList, setBatchList] = useState<DataDeliveryBatchData[]>([]);
-    const [batchInfoList, setBatchInfoList] = useState<DataDeliveryFileStatus[]>([]);
     const [listError, setListError] = useState<string>("Loading ...");
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -87,16 +86,16 @@ function BatchesList(): ReactElement {
             });
 
             const batchStatus = determineOverallStatus(batchEntryStatuses);
-            
+
             return {
                 ...batch,
                 status: batchStatus
             }
         });
         
-        console.log(batchListWithStatus);
+        console.log(batchListWithStatus, "HELLO");
         
-        setBatchList(batchListWithStatus);
+        setBatchList(batchListResponse);
     }
 
     if (loading) {
