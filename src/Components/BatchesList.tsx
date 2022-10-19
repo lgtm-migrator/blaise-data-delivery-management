@@ -79,8 +79,8 @@ function BatchesList(): ReactElement {
             if (!success) {
                 return {
                     ...batch,
-                    status: 'dead'
-                }
+                    status: "dead"
+                };
             }
 
             const batchEntryStatuses: string[] = batchInfoList.map((infoList: DataDeliveryFileStatus) => {
@@ -92,7 +92,7 @@ function BatchesList(): ReactElement {
             return {
                 ...batch,
                 status: batchStatus
-            }
+            };
         });
         
         console.log(batchListWithStatus, "HELLO");
@@ -147,7 +147,7 @@ function BatchesList(): ReactElement {
                                                 </td>
                                                 {/* NOTE: Placeholder for UI testing */}
                                                 <td className="table__cell ">
-                                                    <span title={`batchStatus${index}`} className={`status status--${'success'}`}/>
+                                                    <span title={`batchStatus${index}`} className={`status status--${"success"}`}/>
                                                 </td>
                                                 <td className="table__cell ">
                                                     <Link
