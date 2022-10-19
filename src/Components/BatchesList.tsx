@@ -97,10 +97,7 @@ function BatchesList(): ReactElement {
             };
         });
         
-        let batchListModified;
-        await Promise.all(batchListWithStatus).then(batch => {
-            batchListModified.push(batch);
-        });
+        const batchListModified = await Promise.allSettled(batchListWithStatus);
         
         console.log(batchListModified, "HELLO");
 
