@@ -46,7 +46,7 @@ function BatchesList(): ReactElement {
         // NOTE: Changed from const to let:
         //  the batch size is cut down to 10 earlier on before setting into state
         //  allow modification of properties, i.e. adding status into object
-        let [success, batchListResponse] = await getAllBatches();
+        const [success, batchListResponse] = await getAllBatches();
         setLoading(false);
 
         if (!success) {
@@ -62,9 +62,9 @@ function BatchesList(): ReactElement {
 
         batchListResponse.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
         // NOTE: Cut down batch size to 10 before iterating over the batch
-        batchListResponse = batchListResponse.slice(0, 10);
+        // batchListResponse = batchListResponse.slice(0, 10);
 
-        setBatchList(batchListResponse);
+        setBatchList(batchListResponse.slice(0, 10));
 
         // NOTE: Loop through batch list:
         //          await batch info for each batch:
