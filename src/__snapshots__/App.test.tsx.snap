@@ -205,7 +205,7 @@ Object {
                     class="table__cell "
                   >
                     <span
-                      class="status status--success"
+                      class="status status--pending"
                       title="batchStatus0"
                     />
                   </td>
@@ -249,7 +249,7 @@ Object {
                     class="table__cell "
                   >
                     <span
-                      class="status status--success"
+                      class="status status--pending"
                       title="batchStatus1"
                     />
                   </td>
@@ -502,7 +502,7 @@ Object {
                   class="table__cell "
                 >
                   <span
-                    class="status status--success"
+                    class="status status--pending"
                     title="batchStatus0"
                   />
                 </td>
@@ -546,7 +546,7 @@ Object {
                   class="table__cell "
                 >
                   <span
-                    class="status status--success"
+                    class="status status--pending"
                     title="batchStatus1"
                   />
                 </td>
