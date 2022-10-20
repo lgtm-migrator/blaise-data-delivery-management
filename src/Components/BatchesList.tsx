@@ -140,7 +140,7 @@ function BatchesList(): ReactElement {
                                                 </td>
                                                 {/* NOTE: Placeholder for UI testing */}
                                                 <td className="table__cell ">
-                                                    <span title={`batchStatus${index}`} className={`status status--${"success"}`}/>
+                                                    <span title={`batchStatus${index}`} className={`status status--${batch.status}`}/>
                                                 </td>
                                                 <td className="table__cell ">
                                                     <Link
