@@ -8,8 +8,6 @@ import TimeAgo from "react-timeago";
 import { DataDeliveryFileStatus } from "../../Interfaces";
 import { getBatchInfo } from "../utilities/http";
 import { getDDFileStatusStyle } from "../utilities/BatchStatusColour";
-import { readFile } from "fs";
-import BatchStatusList from "./BatchStatusList";
 
 function determineOverallStatus(batchEntryStatuses: string[]) {
     const redAlerts = batchEntryStatuses.includes("error");
