@@ -63,7 +63,7 @@ function BatchesList(): ReactElement {
                     ...batch,
                     status: "dead"
                 };
-            };
+            }
 
             const batchEntryStatuses: string[] = batchInfoList.map((infoList: DataDeliveryFileStatus) => {
                 return getDDFileStatusStyle(infoList.state, undefined);
