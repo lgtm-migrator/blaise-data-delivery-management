@@ -10,17 +10,17 @@ import { getBatchInfo } from "../utilities/http";
 import { getDDFileStatusStyle } from "../utilities/BatchStatusColour";
 
 function determineOverallStatus(batchEntryStatuses: string[]) {
-    const redAlerts: boolean = batchEntryStatuses.includes("error");
-    const greyAlerts: boolean = batchEntryStatuses.includes("dead");
-    const amberAlerts: boolean = batchEntryStatuses.includes("pending");
-    
-    if (redAlerts) {
+    const hasRedAlerts: boolean = batchEntryStatuses.includes("error");
+    const hasGreyAlerts: boolean = batchEntryStatuses.includes("dead");
+    const hasAmberAlerts: boolean = batchEntryStatuses.includes("pending");
+
+    if (hasRedAlerts) {
         return "error";
     }
-    else if (greyAlerts) {
+    else if (hasGreyAlerts) {
         return "dead";
     }
-    else if (amberAlerts) {
+    else if (hasAmberAlerts) {
         return "pending";
     }
     else {
@@ -54,7 +54,7 @@ function BatchesList(): ReactElement {
         }
 
         batchListResponse.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
-
+        
         const batchListPromises = batchListResponse.slice(0, 10).map(async (batch: DataDeliveryBatchData) => {
             const [success, batchInfoList] = await getBatchInfo(batch.name);
 
@@ -75,7 +75,7 @@ function BatchesList(): ReactElement {
                 status: batchStatus
             };
         });
-        
+
         const batchListWithStatus: DataDeliveryBatchData[] = await Promise.all(batchListPromises).then(batch => {
             return batch;
         });
@@ -128,7 +128,10 @@ function BatchesList(): ReactElement {
                                                     {<TimeAgo live={false} date={batch.date}/>}
                                                 </td>
                                                 <td className="table__cell ">
-                                                    <span title={`batchStatus${index}`} className={`status status--${batch.status}`}/>
+                                                    <span className={`status status--${batch.status}`}
+                                                        aria-label={`Survey ${batch.name} overall status is ${batch.status}`}
+                                                        data-testid={`${batch.name}-status-${batch.status}`}
+                                                    />
                                                 </td>
                                                 <td className="table__cell ">
                                                     <Link
