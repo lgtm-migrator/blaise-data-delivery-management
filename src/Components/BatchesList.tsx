@@ -17,15 +17,13 @@ function determineOverallStatus(batchEntryStatuses: string[]) {
     if (hasRedAlerts) {
         return "error";
     }
-    else if (hasGreyAlerts) {
+    if (hasGreyAlerts) {
         return "dead";
     }
-    else if (hasAmberAlerts) {
+    if (hasAmberAlerts) {
         return "pending";
     }
-    else {
-        return "success";
-    }
+    return "success";
 }
 
 function BatchesList(): ReactElement {
@@ -76,9 +74,7 @@ function BatchesList(): ReactElement {
             };
         });
 
-        const batchListWithStatus: DataDeliveryBatchData[] = await Promise.all(batchListPromises).then(batch => {
-            return batch;
-        });
+        const batchListWithStatus: DataDeliveryBatchData[] = await Promise.all(batchListPromises);
         setBatchList(batchListWithStatus);
     }
 
@@ -114,7 +110,7 @@ function BatchesList(): ReactElement {
                                 </thead>
                                 <tbody className="table__body">
                                 {
-                                    batchList.map((batch: DataDeliveryBatchData, index) => {
+                                    batchList.map((batch: DataDeliveryBatchData) => {
                                         return (
                                             <tr className="table__row" key={batch.name}
                                                 data-testid={"batches-table-row"}>
