@@ -4,7 +4,7 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { Router } from "react-router";
-import { render, waitFor, cleanup } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
 import { DataDeliveryBatchData, DataDeliveryFileStatus } from "../../Interfaces";
 import { createMemoryHistory } from "history";
@@ -70,24 +70,13 @@ describe("Check snapshot of BatchList:", () => {
                 <BatchesList/>
             </Router>
         );
-        
-        expect(screen.queryByText(/Loading/i)).toBeInTheDocument();
-        
-        await waitFor(() => {
-            expect(screen.getByText(/Survey/)).toBeDefined();
-            expect(screen.getByText(/Data delivery run time/)).toBeDefined();
-            expect(screen.getByText(/Status/)).toBeDefined();
-            expect(screen.getAllByText(/View run status/)).toBeDefined();
-            expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
-        });
 
-        await waitFor(() => {
-            expect(screen.getByText(/Survey/)).toBeDefined();
-            expect(screen.getByText(/Data delivery run time/)).toBeDefined();
-            expect(screen.getByText(/Status/)).toBeDefined();
-            expect(screen.getAllByText(/View run status/)).toBeDefined();
-            expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
-        });
+        expect(screen.queryByText(/Loading/i)).toBeInTheDocument();
+        expect(await screen.findByText(/Survey/)).toBeDefined();
+        expect(await screen.findByText(/Data delivery run time/)).toBeDefined();
+        expect(await screen.findByText(/Status/)).toBeDefined();
+        expect(await screen.findAllByText(/View run status/)).toBeDefined();
+        expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
     });
 });
 
@@ -243,12 +232,7 @@ describe("Check status component color:", () => {
             </Router>
         );
 
-        expect(screen.queryByText(/Loading/i)).toBeInTheDocument();
-
-        await waitFor(() => {
-            expect(screen.getByTestId(/OPN_24032021_113000-status-error/i)).toBeDefined();
-            expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
-        });
+        expect(await screen.findByTestId(/OPN_24032021_113000-status-error/)).toBeDefined();
     });
 
     it("displays a grey circle when a batch entry is inactive", async () => {
@@ -261,13 +245,8 @@ describe("Check status component color:", () => {
                 <BatchesList/>
             </Router>
         );
-
-        expect(screen.queryByText(/Loading/i)).toBeInTheDocument();
-
-        await waitFor(() => {
-            expect(screen.getByTestId(/OPN_12032021_023400-status-dead/i)).toBeDefined();
-            expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
-        });
+        
+        expect(await screen.findByTestId(/OPN_12032021_023400-status-dead/)).toBeDefined();
     });
 
     it("displays an amber circle when a batch entry is not in_arc, inactive or errored", async () => {
@@ -281,12 +260,7 @@ describe("Check status component color:", () => {
             </Router>
         );
 
-        expect(screen.queryByText(/Loading/i)).toBeInTheDocument();
-
-        await waitFor(() => {
-            expect(screen.getByTestId(/LM_12032021_023398-status-pending/i)).toBeDefined();
-            expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
-        });
+        expect(await screen.findByTestId(/LM_12032021_023398-status-pending/)).toBeDefined();
     });
 
     it("displays a green circle when a batch entry is in_arc", async () => {
@@ -300,11 +274,6 @@ describe("Check status component color:", () => {
             </Router>
         );
 
-        expect(screen.queryByText(/Loading/i)).toBeInTheDocument();
-
-        await waitFor(() => {
-            expect(screen.getByTestId(/LM_12032021_876000-status-success/i)).toBeDefined();
-            expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
-        });
+        expect(await screen.findByTestId(/LM_12032021_876000-status-success/)).toBeDefined();
     });
 });
