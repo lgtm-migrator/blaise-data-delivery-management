@@ -6,31 +6,10 @@ import "@testing-library/jest-dom";
 import { Router } from "react-router";
 import { render, waitFor, cleanup } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
-import flushPromises, { mock_server_request_function, mock_server_request_Return_JSON } from "../tests/utils";
-import { getAllBatches, getBatchInfo } from "../utilities/http";
+import { mock_server_request_Return_JSON } from "../tests/utils";
 import { DataDeliveryBatchData } from "../../Interfaces";
 import { createMemoryHistory } from "history";
-import MockDate from "mockdate";
 import BatchesList from "./BatchesList";
-
-const BatchInfoList = [
-    {
-        batch: "OPN_26032021_121540",
-        dd_filename: "OPN2004A",
-        instrumentName: "OPN2004A",
-        prefix: "dd",
-        state: "inactive",
-        updated_at: "2021-03-26T12:21:10+00:00"
-    },
-    {
-        batch: "OPN_26032021_121540",
-        dd_filename: "dd_OPN2101A_26032021_121540.zip",
-        instrumentName: "OPN2101A",
-        prefix: "dd",
-        state: "generated",
-        updated_at: "2021-03-26T12:21:10+00:00"
-    }
-];
 
 describe("Batches List:", () => {
     const batches: DataDeliveryBatchData[] = [
@@ -111,5 +90,5 @@ describe("Batches List:", () => {
             expect(screen.getAllByTitle(/batchStatus/i)).toBeDefined();
             expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
         });
-    })
+    });
 });

@@ -10,9 +10,9 @@ import { getBatchInfo } from "../utilities/http";
 import { getDDFileStatusStyle } from "../utilities/BatchStatusColour";
 
 function determineOverallStatus(batchEntryStatuses: string[]) {
-    const redAlerts = batchEntryStatuses.includes("error");
-    const greyAlerts = batchEntryStatuses.includes("dead");
-    const amberAlerts = batchEntryStatuses.includes("pending");
+    const redAlerts: boolean = batchEntryStatuses.includes("error");
+    const greyAlerts: boolean = batchEntryStatuses.includes("dead");
+    const amberAlerts: boolean = batchEntryStatuses.includes("pending");
     
     if (redAlerts) {
         return "error";
@@ -49,30 +49,21 @@ function BatchesList(): ReactElement {
             return;
         }
 
-        console.log(batchListResponse);
-
         if (batchListResponse.length === 0) {
             setListError("No data delivery runs found.");
         }
 
         batchListResponse.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
 
-        // NOTE: Cut down batch size to 10 before iterating over the batch
-        // NOTE: Loop through batch list:
-        //          await batch info for each batch:
-        //              iterate over batch entries and return array of statuses
-        //              determine overall batch statuses using array of statuses      
-        //              return modified batch data with status
-        //          return list of batch data with status defined
         const batchListPromises = batchListResponse.slice(0, 10).map(async (batch: DataDeliveryBatchData) => {
             const [success, batchInfoList] = await getBatchInfo(batch.name);
-            // NOTE: If no batch entries found 
+
             if (!success) {
                 return {
                     ...batch,
                     status: "dead"
                 };
-            }
+            };
 
             const batchEntryStatuses: string[] = batchInfoList.map((infoList: DataDeliveryFileStatus) => {
                 return getDDFileStatusStyle(infoList.state, undefined);
@@ -85,7 +76,7 @@ function BatchesList(): ReactElement {
             };
         });
         
-        const batchListWithStatus = await Promise.all(batchListPromises).then(batch => {
+        const batchListWithStatus: DataDeliveryBatchData[] = await Promise.all(batchListPromises).then(batch => {
             return batch;
         });
         setBatchList(batchListWithStatus);
@@ -136,7 +127,6 @@ function BatchesList(): ReactElement {
                                                 <td className="table__cell ">
                                                     {<TimeAgo live={false} date={batch.date}/>}
                                                 </td>
-                                                {/* NOTE: Placeholder for UI testing */}
                                                 <td className="table__cell ">
                                                     <span title={`batchStatus${index}`} className={`status status--${batch.status}`}/>
                                                 </td>
