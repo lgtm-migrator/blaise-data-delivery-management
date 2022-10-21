@@ -196,7 +196,7 @@ Object {
                   >
                     <time
                       datetime="2021-03-24T11:30:00.000Z"
-                      title="2021-03-24 11:30"
+                      title="2021-03-24T11:30:00.000Z"
                     >
                       6 days ago
                     </time>
@@ -205,8 +205,9 @@ Object {
                     class="table__cell "
                   >
                     <span
-                      class="status status--pending"
-                      title="batchStatus0"
+                      aria-label="Survey OPN_24032021_113000 overall status is dead"
+                      class="status status--dead"
+                      data-testid="OPN_24032021_113000-status-dead"
                     />
                   </td>
                   <td
@@ -240,7 +241,7 @@ Object {
                   >
                     <time
                       datetime="2021-03-12T02:30:00.000Z"
-                      title="2021-03-12 02:30"
+                      title="2021-03-12T02:30:00.000Z"
                     >
                       3 weeks ago
                     </time>
@@ -249,8 +250,9 @@ Object {
                     class="table__cell "
                   >
                     <span
-                      class="status status--pending"
-                      title="batchStatus1"
+                      aria-label="Survey OPN_12032021_023000 overall status is dead"
+                      class="status status--dead"
+                      data-testid="OPN_12032021_023000-status-dead"
                     />
                   </td>
                   <td
@@ -493,7 +495,7 @@ Object {
                 >
                   <time
                     datetime="2021-03-24T11:30:00.000Z"
-                    title="2021-03-24 11:30"
+                    title="2021-03-24T11:30:00.000Z"
                   >
                     6 days ago
                   </time>
@@ -502,8 +504,9 @@ Object {
                   class="table__cell "
                 >
                   <span
-                    class="status status--pending"
-                    title="batchStatus0"
+                    aria-label="Survey OPN_24032021_113000 overall status is dead"
+                    class="status status--dead"
+                    data-testid="OPN_24032021_113000-status-dead"
                   />
                 </td>
                 <td
@@ -537,7 +540,7 @@ Object {
                 >
                   <time
                     datetime="2021-03-12T02:30:00.000Z"
-                    title="2021-03-12 02:30"
+                    title="2021-03-12T02:30:00.000Z"
                   >
                     3 weeks ago
                   </time>
@@ -546,8 +549,9 @@ Object {
                   class="table__cell "
                 >
                   <span
-                    class="status status--pending"
-                    title="batchStatus1"
+                    aria-label="Survey OPN_12032021_023000 overall status is dead"
+                    class="status status--dead"
+                    data-testid="OPN_12032021_023000-status-dead"
                   />
                 </td>
                 <td

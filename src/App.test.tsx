@@ -8,6 +8,11 @@ import {createMemoryHistory} from "history";
 import {Router} from "react-router";
 import {DataDeliveryBatchData} from "../Interfaces";
 import MockDate from "mockdate";
+import MockAdapter from "axios-mock-adapter";
+import axios from "axios";
+
+// Create Mock adapter for Axios requests
+const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
 
 describe("React homepage", () => {
 
@@ -29,7 +34,7 @@ describe("React homepage", () => {
 
     beforeAll(() => {
         MockDate.set(new Date("2021-03-30T02:30:00.000Z"));
-        mock_server_request_Return_JSON(200, batches);
+        mock.onGet("/api/batch").reply(200, batches);
     });
 
     afterAll(() => {
@@ -86,7 +91,7 @@ describe("React homepage", () => {
 describe("Given the API returns an empty list", () => {
 
     beforeAll(() => {
-        mock_server_request_Return_JSON(200, []);
+        mock.onGet("/api/batch").reply(200, []);
     });
 
     it("it should render with a message to inform the user in the list", async () => {
