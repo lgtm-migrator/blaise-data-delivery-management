@@ -161,6 +161,14 @@ Object {
                     scope="col"
                   >
                     <span>
+                      Status
+                    </span>
+                  </th>
+                  <th
+                    class="table__header "
+                    scope="col"
+                  >
+                    <span>
                       View run status
                     </span>
                   </th>
@@ -188,10 +196,19 @@ Object {
                   >
                     <time
                       datetime="2021-03-24T11:30:00.000Z"
-                      title="2021-03-24 11:30"
+                      title="2021-03-24T11:30:00.000Z"
                     >
                       6 days ago
                     </time>
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
+                    <span
+                      aria-label="Survey OPN_24032021_113000 overall status is dead"
+                      class="status status--dead"
+                      data-testid="OPN_24032021_113000-status-dead"
+                    />
                   </td>
                   <td
                     class="table__cell "
@@ -224,10 +241,19 @@ Object {
                   >
                     <time
                       datetime="2021-03-12T02:30:00.000Z"
-                      title="2021-03-12 02:30"
+                      title="2021-03-12T02:30:00.000Z"
                     >
                       3 weeks ago
                     </time>
+                  </td>
+                  <td
+                    class="table__cell "
+                  >
+                    <span
+                      aria-label="Survey OPN_12032021_023000 overall status is dead"
+                      class="status status--dead"
+                      data-testid="OPN_12032021_023000-status-dead"
+                    />
                   </td>
                   <td
                     class="table__cell "
@@ -434,6 +460,14 @@ Object {
                   scope="col"
                 >
                   <span>
+                    Status
+                  </span>
+                </th>
+                <th
+                  class="table__header "
+                  scope="col"
+                >
+                  <span>
                     View run status
                   </span>
                 </th>
@@ -461,10 +495,19 @@ Object {
                 >
                   <time
                     datetime="2021-03-24T11:30:00.000Z"
-                    title="2021-03-24 11:30"
+                    title="2021-03-24T11:30:00.000Z"
                   >
                     6 days ago
                   </time>
+                </td>
+                <td
+                  class="table__cell "
+                >
+                  <span
+                    aria-label="Survey OPN_24032021_113000 overall status is dead"
+                    class="status status--dead"
+                    data-testid="OPN_24032021_113000-status-dead"
+                  />
                 </td>
                 <td
                   class="table__cell "
@@ -497,10 +540,19 @@ Object {
                 >
                   <time
                     datetime="2021-03-12T02:30:00.000Z"
-                    title="2021-03-12 02:30"
+                    title="2021-03-12T02:30:00.000Z"
                   >
                     3 weeks ago
                   </time>
+                </td>
+                <td
+                  class="table__cell "
+                >
+                  <span
+                    aria-label="Survey OPN_12032021_023000 overall status is dead"
+                    class="status status--dead"
+                    data-testid="OPN_12032021_023000-status-dead"
+                  />
                 </td>
                 <td
                   class="table__cell "
