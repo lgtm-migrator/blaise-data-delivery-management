@@ -11,62 +11,17 @@ import "@testing-library/jest-dom";
 import flushPromises from "../../tests/utils";
 import {mock_fetch_requests} from "./functions";
 import {BatchList, StatusDescriptions} from "./mock_objects";
+import MockAdapter from "axios-mock-adapter";
+import axios from "axios";
+
+// Create Mock adapter for Axios requests
+const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
 
 // Load in feature details from .feature file
 const feature = loadFeature(
     "./src/features/view_run_exceptions.feature",
     {tagFilter: "not @server and not @integration"}
 );
-
-const mock_server_responses_batches_list_fails = (url: string) => {
-    console.log(url);
-    if (url.includes("/api/batch/OPN_26032021_112954")) {
-        return Promise.resolve({
-            status: 500,
-            json: () => Promise.resolve({}),
-        });
-    } else if (url.includes("/api/batch")) {
-        return Promise.resolve({
-            status: 500,
-            json: () => Promise.resolve({}),
-        });
-    } else if (url.includes("/api/state/descriptions")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve(StatusDescriptions),
-        });
-    } else {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve([]),
-        });
-    }
-};
-
-const mock_server_responses_batch_info_fails = (url: string) => {
-    console.log(url);
-    if (url.includes("/api/batch/OPN_26032021_112954")) {
-        return Promise.resolve({
-            status: 500,
-            json: () => Promise.resolve({}),
-        });
-    } else if (url.includes("/api/batch")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve(BatchList),
-        });
-    } else if (url.includes("/api/state/descriptions")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve(StatusDescriptions),
-        });
-    } else {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve([]),
-        });
-    }
-};
 
 defineFeature(feature, test => {
     afterEach(() => {
@@ -77,19 +32,19 @@ defineFeature(feature, test => {
 
     beforeEach(() => {
         cleanup();
-
     });
 
     test("List all recent Data Delivery runs fails", ({given, when, then}) => {
         given("I have launched the Data Delivery Management", () => {
-            mock_fetch_requests(mock_server_responses_batches_list_fails);
+            mock.onGet("/api/batch/OPN_26032021_112954").reply(500, {});
+            mock.onGet("/api/batch").reply(500, {});
+
             const history = createMemoryHistory();
             render(
                 <Router history={history}>
                     <App/>
                 </Router>
             );
-
         });
 
         when("I view the landing page and the list fails to load", async () => {
@@ -106,7 +61,9 @@ defineFeature(feature, test => {
 
     test("View run status fails", ({given, when, then, and}) => {
         given("I can see the run I wish to see the status of", async () => {
-            mock_fetch_requests(mock_server_responses_batch_info_fails);
+            mock.onGet("/api/batch/OPN_26032021_112954").reply(500, {});
+            mock.onGet("/api/batch").reply(200, BatchList);
+            
             const history = createMemoryHistory();
             render(
                 <Router history={history}>
@@ -118,7 +75,6 @@ defineFeature(feature, test => {
             });
             expect(screen.getByText(/Data delivery runs/i)).toBeDefined();
             expect(screen.getByText(/26\/03\/2021 11:29:54/i)).toBeDefined();
-
         });
 
         when("I select the 'View run status' link", async () => {

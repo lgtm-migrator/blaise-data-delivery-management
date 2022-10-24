@@ -5,6 +5,27 @@ import {DataDeliveryBatchData} from "../../Interfaces";
 import {Link} from "react-router-dom";
 import TimeAgo from "react-timeago";
 
+import { DataDeliveryFileStatus } from "../../Interfaces";
+import { getBatchInfo } from "../utilities/http";
+import { getDDFileStatusStyle } from "../utilities/BatchStatusColour";
+
+function determineOverallStatus(batchEntryStatuses: string[]) {
+    const hasRedAlerts: boolean = batchEntryStatuses.includes("error");
+    const hasGreyAlerts: boolean = batchEntryStatuses.includes("dead");
+    const hasAmberAlerts: boolean = batchEntryStatuses.includes("pending");
+
+    if (hasRedAlerts) {
+        return "error";
+    }
+    if (hasGreyAlerts) {
+        return "dead";
+    }
+    if (hasAmberAlerts) {
+        return "pending";
+    }
+    return "success";
+}
+
 function BatchesList(): ReactElement {
     const [batchList, setBatchList] = useState<DataDeliveryBatchData[]>([]);
     const [listError, setListError] = useState<string>("Loading ...");
@@ -18,7 +39,7 @@ function BatchesList(): ReactElement {
         setBatchList([]);
         setLoading(true);
 
-        const [success, batchList] = await getAllBatches();
+        const [success, batchListResponse] = await getAllBatches();
         setLoading(false);
 
         if (!success) {
@@ -26,14 +47,35 @@ function BatchesList(): ReactElement {
             return;
         }
 
-        console.log(batchList);
-
-        if (batchList.length === 0) {
+        if (batchListResponse.length === 0) {
             setListError("No data delivery runs found.");
         }
 
-        batchList.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
-        setBatchList(batchList.slice(0, 10));
+        batchListResponse.sort((a: DataDeliveryBatchData, b: DataDeliveryBatchData) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+        
+        const batchListPromises = batchListResponse.slice(0, 10).map(async (batch: DataDeliveryBatchData) => {
+            const [success, batchInfoList] = await getBatchInfo(batch.name);
+
+            if (!success) {
+                return {
+                    ...batch,
+                    status: "dead"
+                };
+            }
+
+            const batchEntryStatuses: string[] = batchInfoList.map((infoList: DataDeliveryFileStatus) => {
+                return getDDFileStatusStyle(infoList.state, undefined);
+            });
+            const batchStatus = determineOverallStatus(batchEntryStatuses);
+
+            return {
+                ...batch,
+                status: batchStatus
+            };
+        });
+
+        const batchListWithStatus: DataDeliveryBatchData[] = await Promise.all(batchListPromises);
+        setBatchList(batchListWithStatus);
     }
 
     if (loading) {
@@ -59,6 +101,9 @@ function BatchesList(): ReactElement {
                                         <span>Run started</span>
                                     </th>
                                     <th scope="col" className="table__header ">
+                                        <span>Status</span>
+                                    </th>
+                                    <th scope="col" className="table__header ">
                                         <span>View run status</span>
                                     </th>
                                 </tr>
@@ -77,6 +122,12 @@ function BatchesList(): ReactElement {
                                                 </td>
                                                 <td className="table__cell ">
                                                     {<TimeAgo live={false} date={batch.date}/>}
+                                                </td>
+                                                <td className="table__cell ">
+                                                    <span className={`status status--${batch.status}`}
+                                                        aria-label={`Survey ${batch.name} overall status is ${batch.status}`}
+                                                        data-testid={`${batch.name}-status-${batch.status}`}
+                                                    />
                                                 </td>
                                                 <td className="table__cell ">
                                                     <Link

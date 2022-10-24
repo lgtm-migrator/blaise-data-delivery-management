@@ -1,6 +1,11 @@
 import { cleanup } from "@testing-library/react";
 import { mock_server_request_function, mock_server_request_Return_JSON } from "../../tests/utils";
 import { getAllBatches, getBatchInfo, getBatchStatusDescriptions } from "./dataDeliveryStatus";
+import MockAdapter from "axios-mock-adapter";
+import axios from "axios";
+
+// Create Mock adapter for Axios requests
+const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
 
 const BatchList = [
     { survey: "OPN", date: "2021-03-26T11:29:54.000Z", name: "OPN_26032021_112954" },
@@ -12,51 +17,37 @@ const BatchList = [
 describe("Function getAllBatches(filename: string) ", () => {
 
     it("It should return true with data if the list is returned successfully", async () => {
-        mock_server_request_Return_JSON(200, BatchList);
+        mock.onGet("/api/batch").reply(200, BatchList);
         const [success, batches] = await getAllBatches();
         expect(success).toBeTruthy();
         expect(batches).toEqual(batches);
     });
 
     it("It should return true with an empty list if a 404 is returned from the server", async () => {
-        mock_server_request_Return_JSON(404, []);
+        mock.onGet("/api/batch").reply(404, []);
         const [success, batches] = await getAllBatches();
         expect(success).toBeTruthy();
         expect(batches).toEqual([]);
     });
 
     it("It should return false with an empty list if request returns an error code", async () => {
-        mock_server_request_Return_JSON(500, {});
-        const [success, batches] = await getAllBatches();
-        expect(success).toBeFalsy();
-        expect(batches).toEqual([]);
-    });
-
-    it("It should return false with an empty list if request JSON is not a list", async () => {
-        mock_server_request_function(() =>
-            Promise.resolve({
-                status: 200,
-                json: () => Promise.reject("Failed"),
-            })
-        );
+        mock.onGet("/api/batch").reply(500, {});
         const [success, batches] = await getAllBatches();
         expect(success).toBeFalsy();
         expect(batches).toEqual([]);
     });
 
     it("It should return false with an empty list if request JSON is invalid", async () => {
-        mock_server_request_Return_JSON(200, { name: "NAME" });
+        mock.onGet("/api/batch").reply(200, { name: "NAME" });
         const [success, batches] = await getAllBatches();
         expect(success).toBeFalsy();
         expect(batches).toEqual([]);
     });
 
     it("It should return false with an empty list if request call fails", async () => {
-        mock_server_request_function(() =>
-            Promise.resolve(() => {
-                throw "error";
-            })
-        );
+        mock.onGet("/api/batch").reply(() => {
+            throw "error";
+        });
         const [success, batches] = await getAllBatches();
         expect(success).toBeFalsy();
         expect(batches).toEqual([]);
@@ -90,51 +81,37 @@ const BatchInfoList = [
 describe("Function getBatchInfo(filename: string) ", () => {
 
     it("It should return true with data if the list is returned successfully", async () => {
-        mock_server_request_Return_JSON(200, BatchInfoList);
+        mock.onGet("/api/batch/OPN_26032021_121540").reply(200, BatchInfoList);
         const [success, batchInfo] = await getBatchInfo("OPN_26032021_121540");
         expect(success).toBeTruthy();
         expect(batchInfo).toEqual(batchInfo);
     });
 
     it("It should return true with an empty list if a 404 is returned from the server", async () => {
-        mock_server_request_Return_JSON(404, []);
+        mock.onGet("/api/batch/OPN_26032021_121540").reply(404, []);
         const [success, batchInfo] = await getBatchInfo("OPN_26032021_121540");
         expect(success).toBeTruthy();
         expect(batchInfo).toEqual([]);
     });
 
     it("It should return false with an empty list if request returns an error code", async () => {
-        mock_server_request_Return_JSON(500, {});
-        const [success, batchInfo] = await getBatchInfo("OPN_26032021_121540");
-        expect(success).toBeFalsy();
-        expect(batchInfo).toEqual([]);
-    });
-
-    it("It should return false with an empty list if request JSON is not a list", async () => {
-        mock_server_request_function(() =>
-            Promise.resolve({
-                status: 200,
-                json: () => Promise.reject("Failed"),
-            })
-        );
+        mock.onGet("/api/batch/OPN_26032021_121540").reply(500, {});
         const [success, batchInfo] = await getBatchInfo("OPN_26032021_121540");
         expect(success).toBeFalsy();
         expect(batchInfo).toEqual([]);
     });
 
     it("It should return false with an empty list if request JSON is invalid", async () => {
-        mock_server_request_Return_JSON(200, { name: "NAME" });
+        mock.onGet("/api/batch/OPN_26032021_121540").reply(200, { name: "NAME" });
         const [success, batchInfo] = await getBatchInfo("OPN_26032021_121540");
         expect(success).toBeFalsy();
         expect(batchInfo).toEqual([]);
     });
 
     it("It should return false with an empty list if request call fails", async () => {
-        mock_server_request_function(() =>
-            Promise.resolve(() => {
-                throw "error";
-            })
-        );
+        mock.onGet("/api/batch/OPN_26032021_121540").reply(() => {
+            throw "error";
+        });
         const [success, batchInfo] = await getBatchInfo("OPN_26032021_121540");
         expect(success).toBeFalsy();
         expect(batchInfo).toEqual([]);

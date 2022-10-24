@@ -11,53 +11,17 @@ import "@testing-library/jest-dom";
 import flushPromises from "../../tests/utils";
 import {mock_fetch_requests} from "./functions";
 import {BatchInfoList, BatchList, StatusDescriptions} from "./mock_objects";
+import MockAdapter from "axios-mock-adapter";
+import axios from "axios";
 
+// Create Mock adapter for Axios requests
+const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
 
 // Load in feature details from .feature file
 const feature = loadFeature(
     "./src/features/view_run_status_empty_lists.feature",
     {tagFilter: "not @server and not @integration"}
 );
-
-const mock_server_responses_no_batches = (url: string) => {
-    console.log(url);
-    if (url.includes("/api/batch/OPN_26032021_112954")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve(BatchInfoList),
-        });
-    } else if (url.includes("/api/batch")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve([]),
-        });
-    } else if (url.includes("/api/state/descriptions")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve(StatusDescriptions),
-        });
-    }
-};
-
-const mock_server_responses_empty_batch = (url: string) => {
-    console.log(url);
-    if (url.includes("/api/batch/OPN_26032021_112954")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve([]),
-        });
-    } else if (url.includes("/api/batch")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve(BatchList),
-        });
-    } else if (url.includes("/api/state/descriptions")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve(StatusDescriptions),
-        });
-    }
-};
 
 defineFeature(feature, test => {
     afterEach(() => {
@@ -72,7 +36,9 @@ defineFeature(feature, test => {
 
     test("No recent Data Delivery runs found", ({given, when, then}) => {
         given("I have launched the Data Delivery Management", () => {
-            mock_fetch_requests(mock_server_responses_no_batches);
+            mock.onGet("/api/batch/OPN_26032021_112954").reply(200, BatchInfoList);
+            mock.onGet("/api/batch").reply(200, []);
+
             const history = createMemoryHistory();
             render(
                 <Router history={history}>
@@ -96,7 +62,9 @@ defineFeature(feature, test => {
 
     test("No files found in run", ({given, when, then, and}) => {
         given("I can see the run I wish to see the status of", async () => {
-            mock_fetch_requests(mock_server_responses_empty_batch);
+            mock.onGet("/api/batch/OPN_26032021_112954").reply(200, []);
+            mock.onGet("/api/batch").reply(200, BatchList);
+
             const history = createMemoryHistory();
             render(
                 <Router history={history}>
