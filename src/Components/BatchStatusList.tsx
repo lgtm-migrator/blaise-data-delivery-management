@@ -103,7 +103,9 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
                                                                     {instrumentName}
                                                                 </td>
                                                                 <td className="table__cell ">
-                                                                    <span className={`status status--${getDDFileStatusStyle(state, error_info)}`}>
+                                                                    <span className={`status status--${getDDFileStatusStyle(state, error_info)}`}
+                                                                        data-testid={`${instrumentName}-status--${getDDFileStatusStyle(state, error_info)}`}
+                                                                    >
                                                                         {
                                                                             (error_info === null || error_info === undefined || error_info === "" ?
                                                                                 statusDescriptionList[state]
