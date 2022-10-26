@@ -25,7 +25,6 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
 
     const { batch } = (location as Location).state || { batch: batch_to_data(location.pathname.split("/")[2]) };
 
-
     useEffect(() => {
         callGetBatchList().then(() => console.log("callGetBatchList Complete"));
     }, []);
@@ -42,8 +41,6 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
             setListError("Unable to load batch info");
             return;
         }
-
-        console.log(batchList);
 
         if (batchList.length === 0) {
             setListError("No data delivery files for this run found.");
