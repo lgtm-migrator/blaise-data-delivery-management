@@ -63,19 +63,19 @@ describe("Check snapshot of BatchList:", () => {
         expect(wrapper).toMatchSnapshot();
     });
 
-    it("displays table headings", async () => {
+    it("displays table headings including loader/spinner)", async () => {
         const history = createMemoryHistory();
-        const wrapper = render(
+        render(
             <Router history={history}>
                 <BatchesList/>
             </Router>
         );
 
         expect(screen.queryByText(/Loading/i)).toBeInTheDocument();
-        expect(await screen.findByText(/Survey/)).toBeDefined();
-        expect(await screen.findByText(/Data delivery run time/)).toBeDefined();
-        expect(await screen.findByText(/Status/)).toBeDefined();
-        expect(await screen.findAllByText(/View run status/)).toBeDefined();
+        expect(await screen.findByText(/Survey/)).toBeVisible();
+        expect(await screen.findByText(/Data delivery run time/)).toBeVisible();
+        expect(await screen.findByText(/Status/)).toBeVisible();
+        expect(await screen.findAllByText(/View run status/)).toBeVisible();
         expect(screen.queryByText(/Loading/i)).not.toBeInTheDocument();
     });
 });
@@ -226,7 +226,7 @@ describe("Check status component color:", () => {
         mock.onGet("/api/batch/OPN_24032021_113000").reply(200, errorBatchInfoList);
         
         const history = createMemoryHistory();
-        const wrapper = render(
+        render(
             <Router history={history}>
                 <BatchesList/>
             </Router>
@@ -240,7 +240,7 @@ describe("Check status component color:", () => {
         mock.onGet("/api/batch/OPN_12032021_023400").reply(200, deadBatchInfoList);
         
         const history = createMemoryHistory();
-        const wrapper = render(
+        render(
             <Router history={history}>
                 <BatchesList/>
             </Router>
@@ -254,7 +254,7 @@ describe("Check status component color:", () => {
         mock.onGet("/api/batch/LM_12032021_023398").reply(200, pendingBatchInfoList);
         
         const history = createMemoryHistory();
-        const wrapper = render(
+        render(
             <Router history={history}>
                 <BatchesList/>
             </Router>
@@ -268,7 +268,7 @@ describe("Check status component color:", () => {
         mock.onGet("/api/batch/LM_12032021_876000").reply(200, successBatchInfoList);
         
         const history = createMemoryHistory();
-        const wrapper = render(
+        render(
             <Router history={history}>
                 <BatchesList/>
             </Router>
