@@ -18,7 +18,6 @@ afterEach(() => {
     jest.resetAllMocks();
 });
 
-
 it("We can get back Auth headers with a token", async () => {
     const uniqueToken = "A Token";
     mock_AuthToken(uniqueToken);
@@ -26,15 +25,14 @@ it("We can get back Auth headers with a token", async () => {
 
     const authHeader = await googleAuthProvider.getAuthHeader();
 
-    expect(authHeader).toEqual({Authorization: `Bearer ${uniqueToken}`});
+    expect(authHeader).toEqual({ Authorization: `Bearer ${uniqueToken}` });
     expect(mockedGetGoogleAuthToken).toBeCalledWith("DDS_CLIENT_ID");
 });
-
 
 it("We get a new token when a token has expired", async () => {
     console.log = jest.fn();
     // Setup old token for 30 seconds in the past
-    const older_token = jwt.sign({foo: "bar", exp: Math.floor(Date.now() / 1000) - 30}, "shhhhh");
+    const older_token = jwt.sign({ foo: "bar", exp: Math.floor(Date.now() / 1000) - 30 }, "shhhhh");
     mock_AuthToken(older_token);
     const googleAuthProvider = new AuthProvider("DDS_CLIENT_ID");
     await googleAuthProvider.getAuthHeader();
@@ -45,15 +43,14 @@ it("We get a new token when a token has expired", async () => {
 
     const authHeader = await googleAuthProvider.getAuthHeader();
 
-    expect(authHeader).toEqual({Authorization: `Bearer ${updatedToken}`});
+    expect(authHeader).toEqual({ Authorization: `Bearer ${updatedToken}` });
     expect(console.log).toHaveBeenCalledWith("Auth Token Expired, Calling for new Google auth Token");
 });
-
 
 it("We receive the same token if it hasn't expired", async () => {
     console.log = jest.fn();
     // Setup token for an hour in the future
-    const older_token = jwt.sign({foo: "bar", exp: Math.floor(Date.now() / 1000) + (60 * 60)}, "shhhhh");
+    const older_token = jwt.sign({ foo: "bar", exp: Math.floor(Date.now() / 1000) + (60 * 60) }, "shhhhh");
     mock_AuthToken(older_token);
     const googleAuthProvider = new AuthProvider("DDS_CLIENT_ID");
     await googleAuthProvider.getAuthHeader();
@@ -65,10 +62,9 @@ it("We receive the same token if it hasn't expired", async () => {
     const authHeader = await googleAuthProvider.getAuthHeader();
 
     // Token should not have been updated
-    expect(authHeader).toEqual({Authorization: `Bearer ${older_token}`});
+    expect(authHeader).toEqual({ Authorization: `Bearer ${older_token}` });
     expect(mockedGetGoogleAuthToken).toHaveBeenCalledTimes(1);
 });
-
 
 it("We get a new token when a token is invalid", async () => {
     console.log = jest.fn();
@@ -83,6 +79,6 @@ it("We get a new token when a token is invalid", async () => {
 
     const authHeader = await googleAuthProvider.getAuthHeader();
 
-    expect(authHeader).toEqual({Authorization: `Bearer ${updatedToken}`});
+    expect(authHeader).toEqual({ Authorization: `Bearer ${updatedToken}` });
     expect(console.log).toHaveBeenCalledWith("Failed to decode token, Calling for new Google auth Token");
 });
