@@ -50,7 +50,6 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
         setBatchList(batchList);
     }
 
-
     return (
         <>
             <Breadcrumbs BreadcrumbList={
@@ -94,7 +93,6 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
                                                         instrumentName,
                                                         error_info
                                                     }: DataDeliveryFileStatus) => {
-
                                                         return (
                                                             <tr className="table__row" key={dd_filename}
                                                                 data-testid={"batch-table-row"}>
