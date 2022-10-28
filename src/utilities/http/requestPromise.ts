@@ -2,25 +2,24 @@ import axios, { Method } from "axios";
 
 type PromiseResponse = [number, any];
 
-function requestPromiseJson(method: string, url: string, body: any = null): Promise<PromiseResponse> {
-    return new Promise((resolve: (object: PromiseResponse) => void, reject: (error: string) => void) => {
-        fetch(url, {
+async function requestPromiseJson(method: string, url: string, body: any = null): Promise<PromiseResponse> {
+    try {
+        const response = await fetch(url, {
             "method": method,
             "body": body
-        })
-            .then(async response => {
-                response.json().then(
-                    data => (resolve([response.status, data]))
-                ).catch((error) => {
-                    console.log(`Failed to read JSON from response, Error: ${error}`);
-                    resolve([response.status, null]);
-                });
-            })
-            .catch(err => {
-                console.log(err);
-                reject(err);
-            });
-    });
+        });
+        try {
+            const data = await response.json();
+            return [response.status, data];
+    
+        } catch (error) {
+            console.log(`Failed to read JSON from response, Error: ${error}`);
+            return [response.status, null];
+        }
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }
 
 type PromiseResponseList = [boolean, any[]];
@@ -52,4 +51,4 @@ async function requestPromiseJsonList(method: Method, url: string, body: any = n
     }
 }
 
-export {requestPromiseJson, requestPromiseJsonList};
+export { requestPromiseJson, requestPromiseJsonList };
