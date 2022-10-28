@@ -1,6 +1,6 @@
-import {cleanup} from "@testing-library/react";
-import {mock_server_request_function, mock_server_request_Return_JSON} from "../../tests/utils";
-import {sendDataDeliveryRequest} from "./dataDelivery";
+import { cleanup } from "@testing-library/react";
+import { mock_server_request_function, mock_server_request_Return_JSON } from "../../tests/utils";
+import { sendDataDeliveryRequest } from "./dataDelivery";
 
 describe("Function sendDataDeliveryRequest() ", () => {
 
@@ -46,7 +46,7 @@ describe("Function sendDataDeliveryRequest() ", () => {
     });
 
     it("It should return false if request JSON is invalid", async () => {
-        mock_server_request_Return_JSON(200, {name: "NAME"});
+        mock_server_request_Return_JSON(200, { name: "NAME" });
         const success = await sendDataDeliveryRequest();
         expect(success).toBeFalsy();
     });

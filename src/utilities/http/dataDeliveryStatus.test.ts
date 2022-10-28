@@ -5,14 +5,13 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 // Create Mock adapter for Axios requests
-const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
+const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
 
 const BatchList = [
     { survey: "OPN", date: "2021-03-26T11:29:54.000Z", name: "OPN_26032021_112954" },
     { survey: "OPN", date: "2021-03-25T14:58:38.000Z", name: "OPN_25032021_145838" },
     { survey: "OPN", date: "2021-03-24T16:50:33.000Z", name: "OPN_24032021_165033" }
 ];
-
 
 describe("Function getAllBatches(filename: string) ", () => {
 

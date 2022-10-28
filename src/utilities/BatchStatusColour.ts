@@ -3,14 +3,14 @@ export function getDDFileStatusStyle(status: string, errorInfo: string | null | 
         return "error";
     }
     switch (status) {
-        case "inactive":
-            return "dead";
-        case "in_arc":
-            return "success";
+    case "inactive":
+        return "dead";
+    case "in_arc":
+        return "success";
 
-        case "errored":
-            return "error";
-        default:
-            return "pending";
+    case "errored":
+        return "error";
+    default:
+        return "pending";
     }
 }

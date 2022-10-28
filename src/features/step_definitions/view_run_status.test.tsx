@@ -15,7 +15,7 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 // Create Mock adapter for Axios requests
-const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
+const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
 
 // Load in feature details from .feature file
 const feature = loadFeature(
