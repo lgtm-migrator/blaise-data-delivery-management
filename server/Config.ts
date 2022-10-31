@@ -42,7 +42,7 @@ export function getEnvironmentVariables(): EnvironmentVariables {
     }
 
     if (DDS_CLIENT_ID === undefined) {
-        console.error("DATA_DELIVERY_AZURE_PIPELINE_NO environment variable has not been set");
+        console.error("DATA_DELIVERY_DDS_CLIENT_ID environment variable has not been set");
         DDS_CLIENT_ID = "ENV_VAR_NOT_SET";
     }
 
