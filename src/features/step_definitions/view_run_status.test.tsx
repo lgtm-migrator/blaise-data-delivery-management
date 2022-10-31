@@ -9,7 +9,6 @@ import { Router } from "react-router";
 import "@testing-library/jest-dom";
 // Mock elements
 import flushPromises from "../../tests/utils";
-import { mock_fetch_requests } from "./functions";
 import { BatchInfoList, BatchList, StatusDescriptions } from "./mock_objects";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
@@ -23,16 +22,6 @@ const feature = loadFeature(
     { tagFilter: "not @server and not @integration" }
 );
 
-const mock_server_responses = (url: string) => {
-    console.log(url);
-    if (url.includes("/api/state/descriptions")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve(StatusDescriptions),
-        });
-    }
-};
-
 defineFeature(feature, test => {
     afterEach(() => {
         jest.clearAllMocks();
@@ -44,7 +33,7 @@ defineFeature(feature, test => {
         cleanup();
         mock.onGet("/api/batch/OPN_26032021_112954").reply(200, BatchInfoList);
         mock.onGet("/api/batch").reply(200, BatchList);
-        mock_fetch_requests(mock_server_responses);
+        mock.onGet("/api/state/descriptions").reply(200, StatusDescriptions);
     });
 
     test("List all recent Data Delivery runs", ({ given, when, then, and }) => {

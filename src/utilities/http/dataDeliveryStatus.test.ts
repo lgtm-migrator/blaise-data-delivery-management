@@ -137,32 +137,28 @@ const StatusDescriptions = {
 describe("Function getBatchStatusDescriptions(filename: string) ", () => {
 
     it("It should return true with data if the list is returned successfully", async () => {
-        mock_server_request_Return_JSON(200, StatusDescriptions);
+        mock.onGet("/api/state/descriptions").reply(200, StatusDescriptions);
         const [success, batchStatusDescriptions] = await getBatchStatusDescriptions();
         expect(success).toBeTruthy();
         expect(batchStatusDescriptions).toEqual(batchStatusDescriptions);
     });
 
     it("It should return true with an empty list if a 404 is returned from the server", async () => {
-        mock_server_request_Return_JSON(404, []);
+        mock.onGet("/api/state/descriptions").reply(404, []);
         const [success, batchStatusDescriptions] = await getBatchStatusDescriptions();
         expect(success).toBeTruthy();
         expect(batchStatusDescriptions).toEqual({});
     });
 
     it("It should return false with an empty list if request returns an error code", async () => {
-        mock_server_request_Return_JSON(500, {});
+        mock.onGet("/api/state/descriptions").reply(500, {});
         const [success, batchStatusDescriptions] = await getBatchStatusDescriptions();
         expect(success).toBeFalsy();
         expect(batchStatusDescriptions).toEqual({});
     });
 
     it("It should return false with an empty list if request call fails", async () => {
-        mock_server_request_function(() =>
-            Promise.resolve(() => {
-                throw "error";
-            })
-        );
+        mock.onPost("/api/state/descriptions").reply(() => Promise.reject("error"));
         const [success, batchStatusDescriptions] = await getBatchStatusDescriptions();
         expect(success).toBeFalsy();
         expect(batchStatusDescriptions).toEqual({});

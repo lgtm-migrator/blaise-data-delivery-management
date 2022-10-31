@@ -2,20 +2,21 @@ import axios, { Method } from "axios";
 
 type PromiseResponse = [number, any];
 
-async function requestPromiseJson(method: string, url: string, body: any = null): Promise<PromiseResponse> {
+async function requestPromiseJson(method: Method, url: string, body: any = null): Promise<PromiseResponse> {
     try {
-        const response = await fetch(url, {
-            "method": method,
-            "body": body
+        const response = await axios({
+            url: url,
+            method: method,
+            data: body,
+            validateStatus: () => true,
         });
-        try {
-            const data = await response.json();
-            return [response.status, data];
-    
-        } catch (error) {
-            console.log(`Failed to read JSON from response, Error: ${error}`);
+        
+        const data = response.data; 
+
+        if (!data) {
             return [response.status, null];
         }
+        return [response.status, data];
     } catch (error) {
         console.log(error);
         throw error;
