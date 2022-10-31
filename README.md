@@ -33,7 +33,7 @@ Create a .env file in the root of the project and add the following variables:
 |---------------------------------|---------------------------------------------------------------------------------|------------------------------|
 | PROJECT_ID                      | To run locally, set this to the unique GCP project ID. Set to anything when testing locally.                                                                  | `ons-blaise-dev-<env>`      |
 | DATA_DELIVERY_STATUS_API        | The URL the [Blaise data delivery status](https://github.com/ONSdigital/blaise-data-delivery-management)| BLAISE_API_URL                | Url that the [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest) is running on to send calls to. | localhost:5008 |
-| DDS_CLIENT_ID                        | Client ID to authenticate with DDS - navigate to the GCP console, search for IAP, click the three dots on right of the service and select OAuth. Client Id will be on the right.  | Dev | 
+| DDS_CLIENT_ID                        | Client ID to authenticate with DDS - navigate to the GCP console, search for IAP, click the three dots on right of the service and select OAuth. Client Id will be on the right.  | something.apps.googleusercontent.com | 
 | GOOGLE_APPLICATION_CREDENTIALS                        | JSON service account key (see below for how to obtain)  | keys.json |
 ||**The following variables are only used for triggering data delivery - they do not need to be set to get DDM running locally**|| 
 | AZURE_AUTH_TOKEN                | Azure token to authenticate with the Azure rest API - only needed for manually triggering Data Delivery, not needed to get it running locally | super0unique0token  |
