@@ -1,18 +1,18 @@
 import React from "react";
-import {render, waitFor, cleanup} from "@testing-library/react";
+import { render, waitFor, cleanup } from "@testing-library/react";
 import App from "./App";
 import "@testing-library/jest-dom";
-import flushPromises, {mock_server_request_Return_JSON} from "./tests/utils";
-import {act} from "react-dom/test-utils";
-import {createMemoryHistory} from "history";
-import {Router} from "react-router";
-import {DataDeliveryBatchData} from "../Interfaces";
+import flushPromises from "./tests/utils";
+import { act } from "react-dom/test-utils";
+import { createMemoryHistory } from "history";
+import { Router } from "react-router";
+import { DataDeliveryBatchData } from "../Interfaces";
 import MockDate from "mockdate";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 // Create Mock adapter for Axios requests
-const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
+const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
 
 describe("React homepage", () => {
 
@@ -30,7 +30,6 @@ describe("React homepage", () => {
             name: "OPN_12032021_023000"
         }
     ];
-
 
     beforeAll(() => {
         MockDate.set(new Date("2021-03-30T02:30:00.000Z"));
@@ -62,7 +61,7 @@ describe("React homepage", () => {
 
     it("should render correctly", async () => {
         const history = createMemoryHistory();
-        const {getByText, queryByText, getAllByText} = render(
+        const { getByText, queryByText, getAllByText } = render(
             <Router history={history}>
                 <App/>
             </Router>
@@ -87,7 +86,6 @@ describe("React homepage", () => {
     });
 });
 
-
 describe("Given the API returns an empty list", () => {
 
     beforeAll(() => {
@@ -96,14 +94,13 @@ describe("Given the API returns an empty list", () => {
 
     it("it should render with a message to inform the user in the list", async () => {
         const history = createMemoryHistory();
-        const {getByText, queryByText} = render(
+        const { getByText, queryByText } = render(
             <Router history={history}>
                 <App/>
             </Router>
         );
 
         expect(queryByText(/Loading/i)).toBeInTheDocument();
-
 
         await waitFor(() => {
             expect(getByText(/No data delivery runs found./i)).toBeDefined();

@@ -9,7 +9,7 @@ export interface EnvironmentVariables {
 }
 
 export function getEnvironmentVariables(): EnvironmentVariables {
-    let {PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID} = process.env;
+    let { PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID } = process.env;
 
     if (PROJECT_ID === undefined) {
         console.error("PROJECT_ID environment variable has not been set");
@@ -46,6 +46,5 @@ export function getEnvironmentVariables(): EnvironmentVariables {
         DDS_CLIENT_ID = "ENV_VAR_NOT_SET";
     }
 
-
-    return {PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID};
+    return { PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID };
 }
