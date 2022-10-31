@@ -1,5 +1,4 @@
 import { cleanup } from "@testing-library/react";
-import { mock_server_request_function, mock_server_request_Return_JSON } from "../../tests/utils";
 import { getAllBatches, getBatchInfo, getBatchStatusDescriptions } from "./dataDeliveryStatus";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
