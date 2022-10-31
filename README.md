@@ -66,6 +66,10 @@ To create a keys.json file:
 gcloud iam service-accounts keys create keys.json --iam-account ons-blaise-v2-dev-<sandbox>@appspot.gserviceaccount.com`
 ```
 
+You can also export the Google application credentials as a runtime variable rather than including in the .env file above:
+
+export GOOGLE_APPLICATION_CREDENTIALS=keys.json
+
 Run Node.js and React.js via the package.json script:
 ```shell script
 yarn dev
