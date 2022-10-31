@@ -15,7 +15,7 @@ This project is a React application which when build is rendered by a Node.js ex
 
 To run Blaise Data Delivery Management locally, you'll need to have [Node installed](https://nodejs.org/en/), as well as [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable).
 
-To have the list of instruments load on the page you can set the url to the service running in App Engine in a sandbox.
+To have the list of instruments load on the page you can set the URL to the service running in App Engine in a sandbox. Details for how to find this URL can be found in the .env table below.
 
 Clone the repository:
 ```shell script
@@ -31,23 +31,23 @@ Create a .env file in the root of the project and add the following variables:
 
 | Variable | Description | Example |
 |---------------------------------|---------------------------------------------------------------------------------|------------------------------|
-| PROJECT_ID                      | To run locally, set this to the unique GCP project ID. Set to anything when testing locally.                                                                  | `ons-blaise-dev-<env>`      |
-| DATA_DELIVERY_STATUS_API        | The URL the [Blaise data delivery status](https://github.com/ONSdigital/blaise-data-delivery-management)| BLAISE_API_URL                | Url that the [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest) is running on to send calls to. | localhost:5008 |
+| DATA_DELIVERY_STATUS_API        | The URL the Data Delivery Status service is running on to send calls to| `https://dev-<env>-ddstatus.social-surveys.gcp.onsdigital.uk` |
 | DDS_CLIENT_ID                        | Client ID to authenticate with DDS - navigate to the GCP console, search for IAP, click the three dots on right of the service and select OAuth. Client Id will be on the right.  | something.apps.googleusercontent.com | 
 | GOOGLE_APPLICATION_CREDENTIALS                        | JSON service account key (see below for how to obtain)  | keys.json |
-||**The following variables are only used for triggering data delivery - they do not need to be set to get DDM running locally**|| 
-| AZURE_AUTH_TOKEN                | Azure token to authenticate with the Azure rest API - only needed for manually triggering Data Delivery, not needed to get it running locally | super0unique0token  |
+||**The following variables are only used for triggering data delivery - they do not need to be set to get DDM running locally**||
+| PROJECT_ID                      | Project ID of the environment you are running DDM in                                                                  | `ons-blaise-dev-<env>`      | 
+| AZURE_AUTH_TOKEN                | Azure token to authenticate with the Azure rest API | super0unique0token  |
 | ENV_NAME                        | Environment label  | Dev | 
 | GIT_BRANCH                      | Branch that data delivery pipeline will run from (this is usually inline with the environment name) | Main | 
 | DATA_DELIVERY_AZURE_PIPELINE_NO | The number for the data delivery pipeline in Azure  | 46 | 
 
 
-The .env file should be setup as below. **DO NOT COMMIT THIS FILE**
+Depending on the above variables being used, the .env file should be setup as below. **DO NOT COMMIT THIS FILE**
 ```.env
 DATA_DELIVERY_STATUS_API=https://dev-<env>-ddstatus.social-surveys.gcp.onsdigital.uk
-PROJECT_ID=ons-blaise-v2-dev
 DDS_CLIENT_ID=blah
 GOOGLE_APPLICATION_CREDENTIALS=keys.json
+PROJECT_ID=ons-blaise-v2-dev
 AZURE_AUTH_TOKEN=super0unique0token
 ENV_NAME=Dev
 GIT_BRANCH=main
