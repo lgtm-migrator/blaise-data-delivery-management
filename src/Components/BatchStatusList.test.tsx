@@ -151,9 +151,9 @@ describe("Check run table:", () => {
             </Router>
         );
         
-        expect(await screen.findByText(dateFormatter(batchRuns[0].updated_at).format("DD/MM/YYYY HH:mm:ss"))); // 24/03/2021 12:21:10
-        expect(await screen.findByText(dateFormatter(batchRuns[1].updated_at).format("DD/MM/YYYY HH:mm:ss"))); // 25/03/2021 12:21:10
-        expect(await screen.findByText(dateFormatter(batchRuns[2].updated_at).format("DD/MM/YYYY HH:mm:ss"))); // 26/03/2021 12:21:10
-        expect(await screen.findByText(dateFormatter(batchRuns[3].updated_at).format("DD/MM/YYYY HH:mm:ss"))); // 27/03/2021 12:21:10
+        expect(await screen.findByText(dateFormatter(batchRuns[0].updated_at).format("DD/MM/YYYY HH:mm:ss"))).toBeVisible(); // 24/03/2021 12:21:10
+        expect(await screen.findByText(dateFormatter(batchRuns[1].updated_at).format("DD/MM/YYYY HH:mm:ss"))).toBeVisible(); // 25/03/2021 12:21:10
+        expect(await screen.findByText(dateFormatter(batchRuns[2].updated_at).format("DD/MM/YYYY HH:mm:ss"))).toBeVisible(); // 26/03/2021 12:21:10
+        expect(await screen.findByText(dateFormatter(batchRuns[3].updated_at).format("DD/MM/YYYY HH:mm:ss"))).toBeVisible(); // 27/03/2021 12:21:10
     });
 });

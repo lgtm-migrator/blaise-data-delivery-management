@@ -4,7 +4,7 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { Switch, Route, Router } from "react-router-dom";
-import { render, act, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
 import { createMemoryHistory } from "history";
 import userEvent from "@testing-library/user-event";
