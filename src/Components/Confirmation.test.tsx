@@ -4,12 +4,16 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { Switch, Route, Router } from "react-router-dom";
-import { render } from "@testing-library/react";
+import { render, act, waitFor } from "@testing-library/react";
 import { screen } from "@testing-library/dom";
 import { createMemoryHistory } from "history";
 import userEvent from "@testing-library/user-event";
 import Confirmation from "./Confirmation";
-import { sendDataDeliveryRequest } from "../utilities/http";
+import MockAdapter from "axios-mock-adapter";
+import axios from "axios";
+
+// Create Mock adapter for Axios requests
+const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
 
 const mockRoute = "/trigger";
 
@@ -75,8 +79,9 @@ describe("Check form:", () => {
         expect(screen.getByLabelText("No, do not trigger Data Delivery")).toBeChecked();
     });
 
-    // NOTE: This behaviour is tested in trigger_data_delivery (maybe mock sendDataDeliveryRequest()???)
-    it.skip("calls sendDataDeliverRequest() when 'Yes' is the selected form option and confirmed", async () => {
+    it("redirects to the homepage with a success message when api is triggered successfully", async () => {
+        mock.onPost("/api/trigger").reply(200, "completed");
+
         const history = createMemoryHistory({
             initialEntries: [mockRoute]
         });
@@ -94,8 +99,38 @@ describe("Check form:", () => {
         const confirmBtn = screen.getByRole("button", { name: "Continue" });
         userEvent.click(radioBtnForYes);
         userEvent.click(confirmBtn);
+        await waitFor(() => 
+        { 
+            expect(history.location.pathname).toEqual("/");
+        });
+        expect(history.location.state).toEqual({ "status": "Triggered Data Delivery successfully, It may take a few minutes for the run to appear in the table below." });
+    });
+
+    it("redirects to the homepage with a failure message when api is triggered unsuccessfully", async () => {
+        mock.onPost("/api/trigger").reply(200, "failed");
+
+        const history = createMemoryHistory({
+            initialEntries: [mockRoute]
+        });
+        render(
+            <Router history={history}>
+                <Switch>
+                    <Route path={mockRoute}>
+                        <Confirmation />
+                    </Route>
+                </Switch>
+            </Router>
+        );
         
-        expect(sendDataDeliveryRequest).toHaveBeenCalled();
+        const radioBtnForYes = screen.getByText("Yes, trigger Data Delivery");
+        const confirmBtn = screen.getByRole("button", { name: "Continue" });
+        userEvent.click(radioBtnForYes);
+        userEvent.click(confirmBtn);
+        await waitFor(() => 
+        { 
+            expect(history.location.pathname).toEqual("/");
+        });
+        expect(history.location.state).toEqual({ "status": "Failed to trigger Data Delivery." });
     });
 
     it("navigates back to the homepage when 'No' is the selected form option and confirmed", async () => {
