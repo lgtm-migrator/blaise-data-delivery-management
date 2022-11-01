@@ -10,6 +10,7 @@
     "build-react": "react-scripts build",
     "test": "jest --coverage --watchAll=false",
     "gcp-build": "react-scripts build && tsc --project tsconfig.server.json",
+    "lint": "eslint . --ext .ts --ext .tsx",
     "lint-fix": "node_modules/.bin/eslint . --fix"
   },
   "proxy": "http://localhost:5004",

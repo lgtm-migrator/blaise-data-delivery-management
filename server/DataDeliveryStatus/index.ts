@@ -1,19 +1,19 @@
-import express, {Request, Response, Router} from "express";
-import {EnvironmentVariables} from "../Config";
-import {batch_to_data, dd_filename_to_data} from "../../src/Functions";
-import {DataDeliveryBatchData, DataDeliveryFileStatus} from "../../Interfaces";
-import {SendAPIRequest} from "../SendRequest";
+import express, { Request, Response, Router } from "express";
+import { EnvironmentVariables } from "../Config";
+import { batch_to_data, dd_filename_to_data } from "../../src/Functions";
+import { DataDeliveryBatchData, DataDeliveryFileStatus } from "../../Interfaces";
+import { SendAPIRequest } from "../SendRequest";
 import * as PinoHttp from "pino-http";
 import AuthProvider from "../AuthProvider";
 
 export default function DataDeliveryStatus(environmentVariables: EnvironmentVariables, logger: PinoHttp.HttpLogger): Router {
-    const {DATA_DELIVERY_STATUS_API, DDS_CLIENT_ID}: EnvironmentVariables = environmentVariables;
+    const { DATA_DELIVERY_STATUS_API, DDS_CLIENT_ID }: EnvironmentVariables = environmentVariables;
     const router = express.Router();
 
     const authProvider = new AuthProvider(DDS_CLIENT_ID);
 
     router.get("/api/batch/:batchName", async function (req: ResponseQuery, res: Response) {
-        const {batchName} = req.params;
+        const { batchName } = req.params;
         logger(req, res);
         req.log.info(`Called get batch status with batch ${batchName}`);
 

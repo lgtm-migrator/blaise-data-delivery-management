@@ -1,12 +1,12 @@
-import express, {NextFunction, Request, Response} from "express";
+import express, { NextFunction, Request, Response } from "express";
 import path from "path";
 import ejs from "ejs";
 import dotenv from "dotenv";
-import {getEnvironmentVariables} from "./Config";
+import { getEnvironmentVariables } from "./Config";
 import createLogger from "./pino";
 
 if (process.env.NODE_ENV !== "production") {
-    dotenv.config({path: __dirname + "/../../.env"});
+    dotenv.config({ path: __dirname + "/../../.env" });
 }
 
 const server = express();
@@ -36,7 +36,7 @@ server.use("/", DataDeliveryStatus(environmentVariables, logger));
 // Health Check endpoint
 server.get("/ddm-ui/:version/health", async function (req: Request, res: Response) {
     console.log("Heath Check endpoint called");
-    res.status(200).json({healthy: true});
+    res.status(200).json({ healthy: true });
 });
 
 server.get("*", function (req: Request, res: Response) {

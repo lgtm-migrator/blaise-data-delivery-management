@@ -1,6 +1,5 @@
 import { DataDeliveryBatchData } from "../../../Interfaces";
 
-
 export const BatchList: DataDeliveryBatchData[] = [
     { survey: "OPN", date: new Date("2021-03-26T11:29:54.000Z"), dateString: "26/03/2021 11:29:54", name: "OPN_26032021_112954" },
     { survey: "OPN", date: new Date("2021-03-25T14:58:38.000Z"), dateString: "25/03/2021 14:58:38", name: "OPN_25032021_145838" },

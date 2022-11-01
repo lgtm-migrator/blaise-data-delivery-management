@@ -1,26 +1,25 @@
 // React
 import React from "react";
 // Test modules
-import {defineFeature, loadFeature} from "jest-cucumber";
-import {act, cleanup, fireEvent, render, screen} from "@testing-library/react";
-import {createMemoryHistory} from "history";
+import { defineFeature, loadFeature } from "jest-cucumber";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import App from "../../App";
-import {Router} from "react-router";
+import { Router } from "react-router";
 import "@testing-library/jest-dom";
 // Mock elements
 import flushPromises from "../../tests/utils";
-import {mock_fetch_requests} from "./functions";
-import {BatchList, StatusDescriptions} from "./mock_objects";
+import { BatchList } from "./mock_objects";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 // Create Mock adapter for Axios requests
-const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
+const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
 
 // Load in feature details from .feature file
 const feature = loadFeature(
     "./src/features/view_run_exceptions.feature",
-    {tagFilter: "not @server and not @integration"}
+    { tagFilter: "not @server and not @integration" }
 );
 
 defineFeature(feature, test => {
@@ -34,7 +33,7 @@ defineFeature(feature, test => {
         cleanup();
     });
 
-    test("List all recent Data Delivery runs fails", ({given, when, then}) => {
+    test("List all recent Data Delivery runs fails", ({ given, when, then }) => {
         given("I have launched the Data Delivery Management", () => {
             mock.onGet("/api/batch/OPN_26032021_112954").reply(500, {});
             mock.onGet("/api/batch").reply(500, {});
@@ -59,7 +58,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test("View run status fails", ({given, when, then, and}) => {
+    test("View run status fails", ({ given, when, then, and }) => {
         given("I can see the run I wish to see the status of", async () => {
             mock.onGet("/api/batch/OPN_26032021_112954").reply(500, {});
             mock.onGet("/api/batch").reply(200, BatchList);

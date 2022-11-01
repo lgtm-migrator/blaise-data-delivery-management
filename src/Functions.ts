@@ -1,5 +1,4 @@
-import {DataDeliveryBatchData, DataDeliveryFile} from "../Interfaces";
-
+import { DataDeliveryBatchData, DataDeliveryFile } from "../Interfaces";
 
 type DateTypes = [Date, string]
 
@@ -22,7 +21,6 @@ function generateDateFromString(dateString: string, timeString: string): DateTyp
         `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
     ];
 }
-
 
 export function dd_filename_to_data(dd_filename: string): DataDeliveryFile {
     if (!dd_filename.match(/^[a-zA-Z]{2}_.{8,}_[0-9]{8}_[0-9]{4,}/)) {
@@ -67,4 +65,4 @@ export function batch_to_data(batchName: string): DataDeliveryBatchData {
     };
 }
 
-export default {dd_filename_to_data, batch_to_data};
+export default { dd_filename_to_data, batch_to_data };

@@ -1,22 +1,21 @@
 // React
 import React from "react";
 // Test modules
-import {defineFeature, loadFeature} from "jest-cucumber";
-import {act, cleanup, fireEvent, render, screen, waitFor} from "@testing-library/react";
-import {createMemoryHistory} from "history";
+import { defineFeature, loadFeature } from "jest-cucumber";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import App from "../../App";
-import {Router} from "react-router";
+import { Router } from "react-router";
 import "@testing-library/jest-dom";
 // Mock elements
 import flushPromises from "../../tests/utils";
-import {mock_fetch_requests} from "./functions";
-import {BatchInfoList, BatchList, StatusDescriptions} from "./mock_objects";
-
+import { mock_fetch_requests } from "./functions";
+import { BatchList, StatusDescriptions } from "./mock_objects";
 
 // Load in feature details from .feature file
 const feature = loadFeature(
     "./src/features/trigger_data_delivery.feature",
-    {tagFilter: "not @server and not @integration"}
+    { tagFilter: "not @server and not @integration" }
 );
 
 const mock_server_responses = (url: string) => {
@@ -70,7 +69,7 @@ defineFeature(feature, test => {
         cleanup();
     });
 
-    test.skip("Trigger data delivery", ({given, when, then, and}) => {
+    test.skip("Trigger data delivery", ({ given, when, then, and }) => {
         given("I have launched the Data Delivery Management", async () => {
             mock_fetch_requests(mock_server_responses);
             const history = createMemoryHistory();
@@ -114,7 +113,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test.skip("Trigger data delivery fails", ({given, when, then, and}) => {
+    test.skip("Trigger data delivery fails", ({ given, when, then, and }) => {
         given("I have launched the Data Delivery Management", async () => {
             mock_fetch_requests(mock_server_responses_trigger_fails);
             const history = createMemoryHistory();
@@ -163,7 +162,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test.skip("Cancel Trigger data delivery", ({given, when, then, and}) => {
+    test.skip("Cancel Trigger data delivery", ({ given, when, then, and }) => {
         given("I have been presented with a confirmation to trigger data delivery", async () => {
             mock_fetch_requests(mock_server_responses_trigger_fails);
             const history = createMemoryHistory();
@@ -198,7 +197,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test.skip("Cancel Trigger data delivery confirmation", ({given, when, then, and}) => {
+    test.skip("Cancel Trigger data delivery confirmation", ({ given, when, then, and }) => {
         given("I have been presented with a confirmation to trigger data delivery", async () => {
             mock_fetch_requests(mock_server_responses_trigger_fails);
             const history = createMemoryHistory();
@@ -233,7 +232,7 @@ defineFeature(feature, test => {
         });
     });
 
-    test.skip("Don't select an option", ({given, when, then}) => {
+    test.skip("Don't select an option", ({ given, when, then }) => {
         given("I have been presented with a confirmation to trigger data delivery", async () => {
             mock_fetch_requests(mock_server_responses_trigger_fails);
             const history = createMemoryHistory();
