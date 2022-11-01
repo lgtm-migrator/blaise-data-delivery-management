@@ -25,7 +25,6 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
 
     const { batch } = (location as Location).state || { batch: batch_to_data(location.pathname.split("/")[2]) };
 
-
     useEffect(() => {
         callGetBatchList().then(() => console.log("callGetBatchList Complete"));
     }, []);
@@ -43,8 +42,6 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
             return;
         }
 
-        console.log(batchList);
-
         if (batchList.length === 0) {
             setListError("No data delivery files for this run found.");
         }
@@ -52,7 +49,6 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
         batchList.sort((a: DataDeliveryFileStatus, b: DataDeliveryFileStatus) => new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf());
         setBatchList(batchList);
     }
-
 
     return (
         <>
@@ -97,7 +93,6 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
                                                         instrumentName,
                                                         error_info
                                                     }: DataDeliveryFileStatus) => {
-
                                                         return (
                                                             <tr className="table__row" key={dd_filename}
                                                                 data-testid={"batch-table-row"}>
@@ -106,7 +101,9 @@ function BatchStatusList({ statusDescriptionList }: Props): ReactElement {
                                                                     {instrumentName}
                                                                 </td>
                                                                 <td className="table__cell ">
-                                                                    <span className={`status status--${getDDFileStatusStyle(state, error_info)}`}>
+                                                                    <span className={`status status--${getDDFileStatusStyle(state, error_info)}`}
+                                                                        data-testid={`${instrumentName}-status--${getDDFileStatusStyle(state, error_info)}`}
+                                                                    >
                                                                         {
                                                                             (error_info === null || error_info === undefined || error_info === "" ?
                                                                                 statusDescriptionList[state]

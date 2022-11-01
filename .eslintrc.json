@@ -1,5 +1,9 @@
 {
-    "ignorePatterns": ["node_modules/*","dist/*","build/*"],
+    "ignorePatterns": [
+        "node_modules/*",
+        "dist/*",
+        "build/*"
+    ],
     "env": {
         "browser": true,
         "es2021": true,
@@ -35,11 +39,35 @@
             "error",
             "always"
         ],
-        "no-undef": "off"
+        "no-undef": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "indent": [
+            "error",
+            4
+        ],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "no-multiple-empty-lines": [
+            "error", 
+            { "max": 1 }
+        ],
+        "space-in-parens": [
+            "error", 
+            "never"
+        ],
+        "no-multi-spaces": "error",
+        "comma-spacing": [
+            "error", 
+            { "before": false, "after": true }
+        ]
     },
     "overrides": [
         {
-            "files": ["*.js"],
+            "files": [
+                "*.js"
+            ],
             "rules": {
                 "@typescript-eslint/no-var-requires": "off"
             }
@@ -47,7 +75,8 @@
     ],
     "settings": {
         "react": {
-            "createClass": "createReactClass", // Regex for Component Factory to use,
+            "createClass": "createReactClass", 
+            // Regex for Component Factory to use,
             // default to "createReactClass"
             "pragma": "React",  // Pragma to use, default to "React"
             "fragment": "Fragment",  // Fragment to use (may be a property of <pragma>), default to "Fragment"

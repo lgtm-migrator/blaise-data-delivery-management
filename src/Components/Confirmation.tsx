@@ -1,7 +1,7 @@
-import React, {ReactElement, useState} from "react";
-import {Redirect, useHistory} from "react-router-dom";
-import {ONSButton, ONSPanel} from "blaise-design-system-react-components";
-import {sendDataDeliveryRequest} from "../utilities/http";
+import React, { ReactElement, useState } from "react";
+import { Redirect, useHistory } from "react-router-dom";
+import { ONSButton, ONSPanel } from "blaise-design-system-react-components";
+import { sendDataDeliveryRequest } from "../utilities/http";
 import Breadcrumbs from "./Breadcrumbs";
 
 function Confirmation(): ReactElement {
@@ -45,12 +45,12 @@ function Confirmation(): ReactElement {
                 redirect && <Redirect
                     to={{
                         pathname: "/",
-                        state: {status: message}
+                        state: { status: message }
                     }}/>
             }
             <Breadcrumbs BreadcrumbList={
                 [
-                    {link: "/", title: "Home"},
+                    { link: "/", title: "Home" },
                 ]
             }/>
 
@@ -108,36 +108,36 @@ function confirmDeleteRadios(setConfirm: (value: (((prevState: (boolean | null))
             <div className="radios__items">
 
                 <p className="radios__item">
-            <span className="radio">
-            <input
-                type="radio"
-                id="confirm-overwrite"
-                className="radio__input js-radio "
-                value="True"
-                name="confirm-delete"
-                aria-label="No"
-                onChange={() => setConfirm(true)}
-            />
-            <label className="radio__label " htmlFor="confirm-overwrite">
+                    <span className="radio">
+                        <input
+                            type="radio"
+                            id="confirm-overwrite"
+                            className="radio__input js-radio "
+                            value="True"
+                            name="confirm-delete"
+                            aria-label="No"
+                            onChange={() => setConfirm(true)}
+                        />
+                        <label className="radio__label " htmlFor="confirm-overwrite">
             Yes, trigger Data Delivery
-            </label>
-            </span></p>
+                        </label>
+                    </span></p>
                 <br/>
                 <p className="radios__item">
-            <span className="radio">
-            <input
-                type="radio"
-                id="cancel-keep"
-                className="radio__input js-radio "
-                value="False"
-                name="confirm-delete"
-                aria-label="Yes"
-                onChange={() => setConfirm(false)}
-            />
-            <label className="radio__label " htmlFor="cancel-keep">
+                    <span className="radio">
+                        <input
+                            type="radio"
+                            id="cancel-keep"
+                            className="radio__input js-radio "
+                            value="False"
+                            name="confirm-delete"
+                            aria-label="Yes"
+                            onChange={() => setConfirm(false)}
+                        />
+                        <label className="radio__label " htmlFor="cancel-keep">
             No, do not trigger Data Delivery
-            </label>
-            </span>
+                        </label>
+                    </span>
                 </p>
             </div>
         </fieldset>

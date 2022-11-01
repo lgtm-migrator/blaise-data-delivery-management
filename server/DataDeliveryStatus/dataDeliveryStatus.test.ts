@@ -1,5 +1,5 @@
 import app from "../server"; // Link to your server file
-import supertest, {Response} from "supertest";
+import supertest, { Response } from "supertest";
 
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
@@ -13,13 +13,12 @@ import {
 // Mock Express Server
 const request = supertest(app);
 // Create Mock adapter for Axios requests
-const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
-const jsonHeaders = {"content-type": "application/json"};
+const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
+const jsonHeaders = { "content-type": "application/json" };
 
 describe("Data Delivery Get all batches from API", () => {
     it("should return a 200 status and an empty json list when API returns a empty list", async done => {
         mock.onGet(/\/v1\/batch$/).reply(200, [], jsonHeaders);
-
 
         const response: Response = await request.get("/api/batch");
 
@@ -30,7 +29,6 @@ describe("Data Delivery Get all batches from API", () => {
 
     it("should return a 200 status and an empty json list when API returns batches witch blank names", async done => {
         mock.onGet(/\/v1\/batch$/).reply(200, ["", "", ""], jsonHeaders);
-
 
         const response: Response = await request.get("/api/batch");
 
@@ -52,7 +50,7 @@ describe("Data Delivery Get all batches from API", () => {
     });
 
     it("should return a 400 status if the content type is not application/json", async done => {
-        mock.onGet(/\/v1\/batch$/).reply(200, BatchListFromAPI, {"content-type": "bacon"});
+        mock.onGet(/\/v1\/batch$/).reply(200, BatchListFromAPI, { "content-type": "bacon" });
 
         const response: Response = await request.get("/api/batch");
 
@@ -89,7 +87,6 @@ describe("Data Delivery Get a specific batch from API", () => {
     it("should return a 200 status and an empty json list when API returns a empty list", async done => {
         mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(200, [], jsonHeaders);
 
-
         const response: Response = await request.get("/api/batch/OPN_26032021_112954");
 
         expect(response.status).toEqual(200);
@@ -109,7 +106,7 @@ describe("Data Delivery Get a specific batch from API", () => {
     });
 
     it("should return a 400 status if the content type is not application/json", async done => {
-        mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(200, BatchListFromAPI, {"content-type": "bacon"});
+        mock.onGet(/\/v1\/batch\/OPN_26032021_112954$/).reply(200, BatchListFromAPI, { "content-type": "bacon" });
 
         const response: Response = await request.get("/api/batch/OPN_26032021_112954");
 
@@ -154,7 +151,7 @@ describe("Data Delivery Get status descriptions", () => {
     });
 
     it("should return a 400 status if the content type is not application/json", async done => {
-        mock.onGet(/\/v1\/state\/descriptions$/).reply(200, BatchListFromAPI, {"content-type": "bacon"});
+        mock.onGet(/\/v1\/state\/descriptions$/).reply(200, BatchListFromAPI, { "content-type": "bacon" });
 
         const response: Response = await request.get("/api/state/descriptions");
 

@@ -1,4 +1,4 @@
-import {getEnvironmentVariables} from "./Config";
+import { getEnvironmentVariables } from "./Config";
 
 describe("Config setup", () => {
     afterEach(() => {
@@ -6,9 +6,8 @@ describe("Config setup", () => {
         jest.resetModules();
     });
 
-
     it("should return the correct environment variables", () => {
-        const {PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID} = getEnvironmentVariables();
+        const { PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID } = getEnvironmentVariables();
 
         expect(PROJECT_ID).toBe("a-project-name");
         expect(DATA_DELIVERY_STATUS_API).toBe("mock-api");
@@ -28,8 +27,7 @@ describe("Config setup", () => {
             DATA_DELIVERY_AZURE_PIPELINE_NO: undefined,
         });
 
-        const {PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID} = getEnvironmentVariables();
-
+        const { PROJECT_ID, DATA_DELIVERY_STATUS_API, AZURE_AUTH_TOKEN, ENV_NAME, GIT_BRANCH, DATA_DELIVERY_AZURE_PIPELINE_NO, DDS_CLIENT_ID } = getEnvironmentVariables();
 
         expect(PROJECT_ID).toBe("ENV_VAR_NOT_SET");
         expect(DATA_DELIVERY_STATUS_API).toBe("ENV_VAR_NOT_SET");

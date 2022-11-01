@@ -14,14 +14,14 @@ export default class AuthProvider {
         if (!this.isValidToken()) {
             this.token = await getGoogleAuthToken(this.DDS_CLIENT_ID);
         }
-        return {Authorization: `Bearer ${this.token}`};
+        return { Authorization: `Bearer ${this.token}` };
     }
 
     private isValidToken(): boolean {
         if (this.token === "") {
             return false;
         }
-        const decodedToken = jwt.decode(this.token, {json: true});
+        const decodedToken = jwt.decode(this.token, { json: true });
         if (decodedToken === null) {
             console.log("Failed to decode token, Calling for new Google auth Token");
             return false;

@@ -1,6 +1,5 @@
 import Functions from "./Functions";
 
-
 describe("DD file to data test", () => {
     it.each([
         ["dd_OPN2102T_12032021_023052.zip", "OPN2102T", "dd"],

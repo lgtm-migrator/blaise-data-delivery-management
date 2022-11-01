@@ -1,8 +1,8 @@
-import React, {ReactElement, useEffect, useState} from "react";
-import {ErrorBoundary, ONSButton, ONSLoadingPanel, ONSPanel} from "blaise-design-system-react-components";
-import {getAllBatches} from "../utilities/http";
-import {DataDeliveryBatchData} from "../../Interfaces";
-import {Link} from "react-router-dom";
+import React, { ReactElement, useEffect, useState } from "react";
+import { ErrorBoundary, ONSButton, ONSLoadingPanel, ONSPanel } from "blaise-design-system-react-components";
+import { getAllBatches } from "../utilities/http";
+import { DataDeliveryBatchData } from "../../Interfaces";
+import { Link } from "react-router-dom";
 import TimeAgo from "react-timeago";
 
 import { DataDeliveryFileStatus } from "../../Interfaces";
@@ -90,59 +90,59 @@ function BatchesList(): ReactElement {
                             ?
                             <table id="batches-table" className="table ">
                                 <thead className="table__head u-mt-m">
-                                <tr className="table__row">
-                                    <th scope="col" className="table__header ">
-                                        <span>Survey</span>
-                                    </th>
-                                    <th scope="col" className="table__header ">
-                                        <span>Data delivery run time</span>
-                                    </th>
-                                    <th scope="col" className="table__header ">
-                                        <span>Run started</span>
-                                    </th>
-                                    <th scope="col" className="table__header ">
-                                        <span>Status</span>
-                                    </th>
-                                    <th scope="col" className="table__header ">
-                                        <span>View run status</span>
-                                    </th>
-                                </tr>
+                                    <tr className="table__row">
+                                        <th scope="col" className="table__header ">
+                                            <span>Survey</span>
+                                        </th>
+                                        <th scope="col" className="table__header ">
+                                            <span>Data delivery run time</span>
+                                        </th>
+                                        <th scope="col" className="table__header ">
+                                            <span>Run started</span>
+                                        </th>
+                                        <th scope="col" className="table__header ">
+                                            <span>Status</span>
+                                        </th>
+                                        <th scope="col" className="table__header ">
+                                            <span>View run status</span>
+                                        </th>
+                                    </tr>
                                 </thead>
                                 <tbody className="table__body">
-                                {
-                                    batchList.map((batch: DataDeliveryBatchData) => {
-                                        return (
-                                            <tr className="table__row" key={batch.name}
-                                                data-testid={"batches-table-row"}>
-                                                <td className="table__cell ">
-                                                    {batch.survey}
-                                                </td>
-                                                <td className="table__cell ">
-                                                    {batch.dateString}
-                                                </td>
-                                                <td className="table__cell ">
-                                                    {<TimeAgo live={false} date={batch.date}/>}
-                                                </td>
-                                                <td className="table__cell ">
-                                                    <span className={`status status--${batch.status}`}
-                                                        aria-label={`Survey ${batch.name} overall status is ${batch.status}`}
-                                                        data-testid={`${batch.name}-status-${batch.status}`}
-                                                    />
-                                                </td>
-                                                <td className="table__cell ">
-                                                    <Link
-                                                        aria-label={`View run status ${batch.dateString}`}
-                                                        data-testid={`view-${batch.name}`}
-                                                        to={{
-                                                            pathname: `/batch/${batch.name}`,
-                                                            state: {batch: batch}
-                                                        }
-                                                        }>View run status</Link>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
-                                }
+                                    {
+                                        batchList.map((batch: DataDeliveryBatchData) => {
+                                            return (
+                                                <tr className="table__row" key={batch.name}
+                                                    data-testid={"batches-table-row"}>
+                                                    <td className="table__cell ">
+                                                        {batch.survey}
+                                                    </td>
+                                                    <td className="table__cell ">
+                                                        {batch.dateString}
+                                                    </td>
+                                                    <td className="table__cell ">
+                                                        {<TimeAgo live={false} date={batch.date}/>}
+                                                    </td>
+                                                    <td className="table__cell ">
+                                                        <span className={`status status--${batch.status}`}
+                                                            aria-label={`Survey ${batch.name} overall status is ${batch.status}`}
+                                                            data-testid={`${batch.name}-status-${batch.status}`}
+                                                        />
+                                                    </td>
+                                                    <td className="table__cell ">
+                                                        <Link
+                                                            aria-label={`View run status ${batch.dateString}`}
+                                                            data-testid={`view-${batch.name}`}
+                                                            to={{
+                                                                pathname: `/batch/${batch.name}`,
+                                                                state: { batch: batch }
+                                                            }
+                                                            }>View run status</Link>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                    }
                                 </tbody>
                             </table>
                             :

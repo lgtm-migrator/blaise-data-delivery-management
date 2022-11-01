@@ -20,5 +20,4 @@ interface DataDeliveryFileStatus {
     error_info: string
 }
 
-
-export type {DataDeliveryFile, DataDeliveryBatchData, DataDeliveryFileStatus};
+export type { DataDeliveryFile, DataDeliveryBatchData, DataDeliveryFileStatus };

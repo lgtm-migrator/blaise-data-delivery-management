@@ -9,29 +9,18 @@ import { Router } from "react-router";
 import "@testing-library/jest-dom";
 // Mock elements
 import flushPromises from "../../tests/utils";
-import { mock_fetch_requests } from "./functions";
 import { BatchInfoList, BatchList, StatusDescriptions } from "./mock_objects";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 // Create Mock adapter for Axios requests
-const mock = new MockAdapter(axios, {onNoMatch: "throwException"});
+const mock = new MockAdapter(axios, { onNoMatch: "throwException" });
 
 // Load in feature details from .feature file
 const feature = loadFeature(
     "./src/features/view_run_status.feature",
     { tagFilter: "not @server and not @integration" }
 );
-
-const mock_server_responses = (url: string) => {
-    console.log(url);
-    if (url.includes("/api/state/descriptions")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve(StatusDescriptions),
-        });
-    }
-};
 
 defineFeature(feature, test => {
     afterEach(() => {
@@ -44,7 +33,7 @@ defineFeature(feature, test => {
         cleanup();
         mock.onGet("/api/batch/OPN_26032021_112954").reply(200, BatchInfoList);
         mock.onGet("/api/batch").reply(200, BatchList);
-        mock_fetch_requests(mock_server_responses);
+        mock.onGet("/api/state/descriptions").reply(200, StatusDescriptions);
     });
 
     test("List all recent Data Delivery runs", ({ given, when, then, and }) => {
