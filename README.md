@@ -11,110 +11,84 @@ Service to see the status of data delivery files and manually trigger data deliv
 
 This project is a React application which when build is rendered by a Node.js express server.
 
-### Setup
-
-#### Prerequisites
+### First time setup
+---
 To run Blaise Data Delivery Management locally, you'll need to have [Node installed](https://nodejs.org/en/), as well as [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable).
-To have the list of instruments load on the page, you'll need to have [Blaise data delivery status](https://github.com/ONSdigital/blaise-data-delivery-management) running locally (On a Windows machine), or you
-can set the url to the service running in App Engine in a sandbox.
 
-#### Setup locally steps
-Clone the Repo
+To have the list of instruments load on the page you can set the URL to the Data Delivery Status (DDS) service running in App Engine in a sandbox. Details for how to find this URL can be found in the .env table below.
+
+Clone the repository:
 ```shell script
 git clone https://github.com/ONSdigital/blaise-data-delivery-management.git
 ```
 
-Create a new .env file and add the following variables.
+and install the project dependencies:
+```shell script
+yarn install
+```
 
-| Variable                        | Description                                                                     | Var Example                  |
+Create a .env file in the root of the project and add the following variables:
+
+| Variable | Description | Example |
 |---------------------------------|---------------------------------------------------------------------------------|------------------------------|
-| PORT                            | Optional variable, specify the Port for express server to run on. If not passed in this is set as 5000 by default. <br><br>It's best not to set this as the react project will try and use the variable as well and conflict. By default React project locally runs on port 3000.                                              | 5009                         |
-| PROJECT_ID                      | GCP Project ID                                                                  | ons-blaise-dev-matt55        |
-| DATA_DELIVERY_STATUS_API        | The URL the [Blaise data delivery status](https://github.com/ONSdigital/blaise-data-delivery-management)| BLAISE_API_URL                | Url that the [Blaise Rest API](https://github.com/ONSdigital/blaise-api-rest) is running on to send calls to. | localhost:5008 |
-| AZURE_AUTH_TOKEN                | Azure token to authenticate with the Azure rest API  | super0unique0token  |
-| ENV_NAME                        | Environment label  | Dev | 
-| GIT_BRANCH                      | Branch that data delivery pipeline will run from (this is usually inline with the environment name) | Main | 
-| DATA_DELIVERY_AZURE_PIPELINE_NO | The number for the data delivery pipeline in Azure  | 46 | 
+| DDS_API_URL        | The URL the Data Delivery Status (DDS) service is running on to send calls to| `https://dev-<env>-ddstatus.social-surveys.gcp.onsdigital.uk` |
+| DDS_CLIENT_ID                        | Client ID to authenticate with Data Delivery Status (DDS). To obtain: 1. navigate to the GCP console, search for IAP, click "Identity-Aware-Proxy", click the three dots on right of the data-delivery-status service and select OAuth. Client Id will be on the right.  | something.apps.googleusercontent.com | 
+| GOOGLE_APPLICATION_CREDENTIALS                        | JSON service account key (see below for how to obtain)  | keys.json |
 
-
-
-The .env file should be setup as below
+The .env file should be setup as below. **DO NOT COMMIT THIS FILE**
 ```.env
-PORT=5001
-DATA_DELIVERY_STATUS_API=https://data-delivery-status-dot-ons-blaise-v2-dev-matt01.nw.r.appspot.com
-PROJECT_ID=ons-blaise-v2-dev
-AZURE_AUTH_TOKEN=super0unique0token
-ENV_NAME=Dev
-GIT_BRANCH=main
-DATA_DELIVERY_AZURE_PIPELINE_NO=46
+DDS_API_URL=https://dev-<env>-ddstatus.social-surveys.gcp.onsdigital.uk
+DDS_CLIENT_ID=blah
+GOOGLE_APPLICATION_CREDENTIALS=keys.json
+```
+### Google application credentials
+---
+To get the service working locally, you need
+to [obtain a JSON service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys), this
+will need to be a service account with create and list permissions. Save the service account key
+as  `keys.json` and place in the root of the project. Providing the NODE_ENV is not production, then the GCP storage
+config will attempt to use this file. **DO NOT COMMIT THIS FILE**
 
+
+To create a keys.json file:
+```shell
+gcloud iam service-accounts keys create keys.json --iam-account ons-blaise-v2-dev-<sandbox>@appspot.gserviceaccount.com`
 ```
 
-Install required modules
+You can also export the Google application credentials as a runtime variable rather than including in the .env file above:
+```shell
+export GOOGLE_APPLICATION_CREDENTIALS=keys.json
+```
+
+If you get the following message:
+```shell
+unmet preconditions
+```
+Go to GCP > Select the dev project > IAM > Service Accounts. ons-blaise-v2-dev@appspot.gserviceaccount.com will likely have the max 10 keys.  Select the kebab menu on the right > Manage keys and delete a selection of the oldest keys, for example the oldest 3.
+
+### Running locally
+---
+Run Node.js and React.js via the package.json script:
 ```shell script
-yarn
+yarn dev
 ```
 
+The UI should now be accessible via:
+http://localhost:3000/
 
-##### Run commands
-
-The following run commands are available, these are all setup in the `package.json` under `scripts`.
-
-| Command                | Description                                                                                                                                               |
-|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `yarn server`          | Starts the complied express server (Used by App Engine to start the server), Note: The server will need to be complied and the React Project will need to be built first.  |
-| `yarn start-server`    | Complies Typescript and starts the express server, Note: For the website to be rendered the React Project will need to be built.                          |
-| `yarn start-react`     | Starts react project in local development setup with quick reloading on making changes. Note: For instruments to be shown the server needs to be running. |
-| `yarn build-react`     | Compiles build project ready to be served by express. The build in outputted to the the `build` directory which express points to with the var `buildFolder` in `server/server.js`.                       |
-| `yarn test`            | Runs all tests for server and React Components and outputs coverage statistics.                                                                           |
-| `gcp-build`            | Used by CloudBuild to build the React app and compile the server for App Engine                                                                               |
-
-##### Simple setup for local development
-
-Setup express project that handles the requests to the [Blaise data delivery status](https://github.com/ONSdigital/blaise-data-delivery-management).
-By default, will be running on PORT 5000.
-
-```shell script
-yarn start-server
-```
-
-Next to make sure the React project make requests the express server make sure the proxy option is set to the right port
-in the 'package.json'
-
-```.json
-"proxy": "http://localhost:5000",
-```
-
-Run the React project for local development. By default, this will be running
-on [http://localhost:3000/](http://localhost:3000/)
-
-```shell script
-yarn start-react
-```
-
-To test express sever serving the React project, you need to compile the React project, then you can see it running
-at [http://localhost:5000/](http://localhost:5000/)
-
-```shell script
-yarn build-react
-```
-
-### Tests
-The [Jest testing framework](https://jestjs.io/en/) has been setup in this project, all tests currently reside in the `tests` directory.
-This currently only running tests on the health check endpoint, haven't got the hang of mocking Axios yet.
- 
-To run all tests run
+### Executing tests
+---
+Tests can be run via the package.json script:
 ```shell script
 yarn test
 ```
 
-Other test command can be seen in the Run Commands section above.
-
-Deploying to app engine
-
-To deploy the locally edited service to app engine in your environment, you can run trigger the cloudbuild trigger with the following line, changing the environment variables as needed. 
-```.shell
-gcloud builds submit --substitutions=_PROJECT_ID=ons-blaise-v2-dev-matt56,_BLAISE_API_URL=/,_BUCKET_NAME=ons-blaise-dev-matt56-survey-bucket-44,_SERVER_PARK=gusty
+To prevent tests from printing messages through the console tests can be run silently via the package.json script:
+```shell script
+yarn test --silent
 ```
 
-Copyright (c) 2021 Crown Copyright (Government Digital Service)
+Test snapshots can be updated via:
+```shell script
+yarn test -u
+```
