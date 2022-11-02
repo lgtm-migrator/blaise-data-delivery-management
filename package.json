@@ -11,9 +11,10 @@
     "test": "jest --coverage --watchAll=false",
     "gcp-build": "react-scripts build && tsc --project tsconfig.server.json",
     "lint": "eslint . --ext .ts --ext .tsx",
-    "lint-fix": "node_modules/.bin/eslint . --fix"
+    "lint-fix": "node_modules/.bin/eslint . --fix",
+    "dev": "concurrently --kill-others-on-fail \"yarn start-server\" \"yarn start-react\""
   },
-  "proxy": "http://localhost:5004",
+  "proxy": "http://localhost:5000",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -66,6 +67,7 @@
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.16.1",
     "axios-mock-adapter": "^1.19.0",
+    "concurrently": "^7.0.0",
     "cross-env": "^7.0.2",
     "eslint": "^7.21.0",
     "eslint-plugin-react": "^7.21.5",
